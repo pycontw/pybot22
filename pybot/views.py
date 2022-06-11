@@ -1,21 +1,10 @@
-import re
-import toml
-import random
-
 import discord
-from discord.ext import commands
+
+from pybot.utils import update_client_lang
 
 
-credentials = toml.load(open('env.cred'))
-TOKEN = credentials['DISCORD_TOKEN']
-GUILD = credentials['DISCORD_GUILD']
-
-intents = discord.Intents.default()
-intents.message_content = True
-bot = commands.Bot(command_prefix='!', intents=intents)
-
-
-class Dropdown(discord.ui.Select):
+# CKP: short for Chan Kan Pon (Japanese of paper scissors stone game)
+class CKPDropdown(discord.ui.Select):
     STR_TO_EMOJI_VALUE = {
         'Paper': ':hand_splayed:',
         'Scissors': ':v:',
@@ -55,13 +44,14 @@ class Dropdown(discord.ui.Select):
             )
 
 
-class DropdownView(discord.ui.View):
-    def __init__(self, members):
-        super().__init__()
+class CKPDropdownView(discord.ui.View):
+    def __init__(self, members, timeout=10):
+        super().__init__(timeout=timeout)
 
         # Adds the dropdown to our view object.
         self.members = [m for m in members if not m.bot]
-        self.add_item(Dropdown())
+        self.timeout = timeout
+        self.add_item(CKPDropdown())
 
     def check_winner(self, selection_status):
         if len(selection_status) < len(self.members):
@@ -88,61 +78,31 @@ class DropdownView(discord.ui.View):
         return winner_msg
 
 
-@bot.event
-async def on_ready():
-    print(f'{bot.user.name} has connected!')
+class LanguageButton(discord.ui.Button['Language']):
+    LANGUAGE_LABEL_TO_CODE_MAP = {
+        '中文': 'zh_TW',
+        'English': 'EN',
+    }
+
+    def __init__(self, resp_copy: str, label: str = None):
+        super().__init__(label=label)
+        self.resp_copy = resp_copy
+
+    async def callback(self, interaction: discord.Interaction):
+        assert self.view is not None
+        view: LanguageSelectionView = self.view
+        view.stop()
+        await update_client_lang(uid=self.view.uid, lang=self.LANGUAGE_LABEL_TO_CODE_MAP[self.label])
+        await interaction.response.send_message(content=self.resp_copy)
 
 
-@bot.command(name='barcode')
-async def barcode(ctx):
-    if ctx.channel.id != 982232875715932162:
-        # general channel
-        return
-
-    az_chrs = [chr(i) for i in range(ord('A'), ord('Z')+1)]
-    prefix = random.choices(az_chrs, k=2)
-    prefix = ''.join(prefix)
-    nums = random.choices(range(10), k=4)
-    nums = ''.join([str(v) for v in nums])
-    barcode = f'{prefix}-{nums}'
-
-    await ctx.send(barcode)
-
-
-@bot.command(name='redeem')
-async def redeem(ctx, barcode: str):
-    if ctx.channel.id != 982232875715932162:
-        return
-    if not re.match(r'[A-Z]{2}-\d{4}$', barcode):
-        await ctx.send('Wrong barcode format.')
-        return
-
-    if hash(barcode) % 3 == 0:
-        msg = 'Congratulations:crown:  You have won the prize.'
-    else:
-        msg = 'Ohoh...:poop: This barcode doesn\'t match any prize.'
-    await ctx.send(msg)
-
-
-@bot.command()
-async def dice(ctx, upper: int = 6):
-    print(ctx.channel.type == discord.ChannelType.private)
-    await ctx.send(random.choice(range(upper)))
-
-
-@bot.command()
-async def chan_kan_pon(
-    ctx: commands.Context,
-    specified_members: commands.Greedy[discord.Member] = None
-):
-    if specified_members:
-        members = specified_members
-    elif isinstance(ctx.channel, discord.DMChannel):
-        members = [ctx.author, ctx.channel.me]
-    else:
-        members = ctx.channel.recipients
-    await ctx.send('Paper scissors stone!', view=DropdownView(members=members))
-
-
-bot.run(TOKEN)
-
+class LanguageSelectionView(discord.ui.View):
+    def __init__(self, uid: str):
+        super().__init__()
+        self.uid = uid
+        tw_copy = '你選擇了中文，之後所有對話將預設語言為中文顯示。'\
+            '若是想更改語言，可隨時在對話框輸入指令 `!change_language` 更改語言。'
+        en_copy = 'You\'ve chosen English. All the following conversation will be shown in English.' \
+            'If you want to change language setting, type command `!change_language` anytime to modify.'
+        self.add_item(LanguageButton(resp_copy=tw_copy, label='中文'))
+        self.add_item(LanguageButton(resp_copy=en_copy, label='English'))

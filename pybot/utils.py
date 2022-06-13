@@ -1,3 +1,4 @@
+import discord
 
 from pybot.database import cursor
 

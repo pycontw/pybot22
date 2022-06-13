@@ -1,6 +1,7 @@
 import discord
 
 from pybot.utils import update_client_lang
+from pybot.constants import SPONSOR_QUESTION_ANSWERS
 
 
 # CKP: short for Chan Kan Pon (Japanese of paper scissors stone game)
@@ -28,7 +29,7 @@ class CKPDropdown(discord.ui.Select):
 
     async def callback(self, interaction: discord.Interaction):
         assert self.view is not None
-        view: DropdownView = self.view
+        view: CKPDropdownView = self.view
         selected = self.values[0]
         emoji_str = self.STR_TO_EMOJI_VALUE[selected]
         user = interaction.user
@@ -101,8 +102,54 @@ class LanguageSelectionView(discord.ui.View):
         super().__init__()
         self.uid = uid
         tw_copy = '你選擇了中文，之後所有對話將預設語言為中文顯示。'\
-            '若是想更改語言，可隨時在對話框輸入指令 `!change_language` 更改語言。'
-        en_copy = 'You\'ve chosen English. All the following conversation will be shown in English.' \
-            'If you want to change language setting, type command `!change_language` anytime to modify.'
+            '若是想更改語言，可隨時在對話框輸入指令 `!change_language` 修改。'
+        en_copy = 'You\'ve choose English. All the following conversation will be shown in English.' \
+            'If you want to change the language setting, type command `!change_language` anytime to modify.'
         self.add_item(LanguageButton(resp_copy=tw_copy, label='中文'))
         self.add_item(LanguageButton(resp_copy=en_copy, label='English'))
+
+
+class SponsorshipAnswerDropdown(discord.ui.Select):
+    def __init__(self, question_id: str, placeholder: str):
+        # Four options, from A to D.
+        options = [
+            discord.SelectOption(label=chr(ascii))
+            for ascii in range(ord('A'), ord('D')+1)
+        ]
+        super().__init__(placeholder=placeholder, min_values=1, max_values=1, options=options)
+
+        self.qid = question_id
+
+    async def callback(self, interaction: discord.Interaction):
+        answer = SPONSOR_QUESTION_ANSWERS[self.qid]
+        selected = self.values[0]
+        correct = (answer == selected)
+
+        view: SponsorshipAnswerView = self.view
+        resp_msg = view.get_response_message(correct)
+        view.stop()
+        await interaction.response.send_message(resp_msg)
+
+
+class SponsorshipAnswerView(discord.ui.View):
+    def __init__(self, question_id: str, lang: str, timeout=30):
+        super().__init__(timeout=timeout)
+
+        placeholder = {
+            'zh_TW': '選擇您的答案',
+            'EN': 'Please choose your answer'
+        }[lang]
+
+        self.add_item(SponsorshipAnswerDropdown(question_id=question_id, placeholder=placeholder))
+        self.lang = lang
+
+    def get_response_message(self, correct: bool):
+        if correct:
+            return {
+                'zh_TW': '恭喜你答對惹:tada:',
+                'EN': 'You got the right answer!:tada:',
+            }[self.lang]
+        return {
+            'zh_TW': '喔喔...答錯了:broken_heart:',
+            'EN': 'Ohoh...The answer is not correct :broken_heart:',
+        }[self.lang]

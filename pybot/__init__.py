@@ -23,7 +23,8 @@ async def _init_client(ctx):
     await ctx.send(
         '嗨嗨你好:wave: 請先選擇您的語言\n' \
         'Hi hi :wave: Please select your language first.',
-        view=LanguageSelectionView(uid=ctx.author.id)
+        view=LanguageSelectionView(uid=ctx.author.id),
+        ephemeral=True,
     )
 
 
@@ -32,7 +33,7 @@ class PyBot22(commands.Bot):
         super().__init__(**kwargs)
 
         # Register init_client to the command
-        self._init_command = self.command(name='init_client')(_init_client)
+        self._init_command = self.command(name='init_client', hidden=True)(_init_client)
 
     async def get_context(self, message, *, cls=PyBot22Context):
         return await super().get_context(message, cls=cls)
@@ -40,8 +41,12 @@ class PyBot22(commands.Bot):
     async def on_message(self, message: discord.Message):
         # Overwrite the original function to allow trigger by another bot.
         ctx = await self.get_context(message)
+        if ctx.author.id == self.application_id:
+            # The bot itself
+            return
+
         client_lang = await check_client_has_lang(ctx.author.id)
-        if not client_lang:
+        if ctx.invoked_with and not client_lang:
             ctx.command = self._init_command
             await self.invoke(ctx)
         else:
@@ -56,6 +61,7 @@ def _get_intents():
     intents = discord.Intents.default()
     intents.message_content = True
     intents.members = True
+    return intents
 
 
 bot = PyBot22(command_prefix='!', intents=_get_intents())

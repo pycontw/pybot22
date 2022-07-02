@@ -14,7 +14,8 @@ def _parse_token():
 
 
 def main():
-    bot.run(_parse_token())
+    # bot.run(_parse_token())
+    bot.run('OTgyMjMzNTkyOTc5NjUyNjUw.GK2lOl.3GhwSrl_TH3mzwhvMhY18eDHEdmvwTPpWkc5fY')
 
 
 if __name__ == '__main__':

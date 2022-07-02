@@ -13,7 +13,7 @@ from pybot.translation import (
 from pybot.views import (
     CKPDropdownView,
     LanguageSelectionView,
-    SponsorshipAnswerView,
+    SponsorshipQuestionView,
 )
 
 
@@ -37,50 +37,15 @@ async def change_language(ctx: commands.Context):
 
 
 @bot.command()
-async def answer(ctx: commands.Context, question_id: str):
+async def answer(ctx: commands.Context):
     if not check_is_private_chat_with_bot(ctx.channel):
         await ctx.send(COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG[ctx.client_lang])
         return
 
-    if question_id not in SPONSOR_QUESTION_ANSWERS:
-        await ctx.send(QUESTION_ID_NOT_FOUND_MSG[ctx.client_lang])
-        return
-
     await ctx.send(
-        view=SponsorshipAnswerView(question_id=question_id, lang=ctx.client_lang),
+        view=SponsorshipQuestionView(lang=ctx.client_lang),
         ephemeral=True,
     )
-
-
-@bot.command(name='barcode')
-async def barcode(ctx):
-    if ctx.channel.id != 982232875715932162:
-        # general channel
-        return
-
-    az_chrs = [chr(i) for i in range(ord('A'), ord('Z')+1)]
-    prefix = random.choices(az_chrs, k=2)
-    prefix = ''.join(prefix)
-    nums = random.choices(range(10), k=4)
-    nums = ''.join([str(v) for v in nums])
-    barcode = f'{prefix}-{nums}'
-
-    await ctx.send(barcode)
-
-
-@bot.command(name='redeem')
-async def redeem(ctx, barcode: str):
-    if ctx.channel.id != 982232875715932162:
-        return
-    if not re.match(r'[A-Z]{2}-\d{4}$', barcode):
-        await ctx.send('Wrong barcode format.')
-        return
-
-    if hash(barcode) % 3 == 0:
-        msg = 'Congratulations:crown:  You have won the prize.'
-    else:
-        msg = 'Ohoh...:poop: This barcode doesn\'t match any prize.'
-    await ctx.send(msg)
 
 
 @bot.command()
@@ -109,3 +74,16 @@ async def chan_kan_pon(
         'Paper scissors stone! Please submit in 10 seconds.',
         view=CKPDropdownView(members=members, timeout=10)
     )
+
+
+@bot.command(
+    help='Too shy to express your love? Let PyBot helps you!',
+    usage='"<user_name>" "<your_confession_message>"',
+)
+async def confess_to(ctx: commands.Context, member: discord.Member, content: str):
+    if not check_is_private_chat_with_bot(ctx.channel):
+        await ctx.send(COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG[ctx.client_lang])
+        return
+
+    ctx.channel = bot.get_channel(982251980221214731)  # feature channel
+    await ctx.send(member.mention + content)

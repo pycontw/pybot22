@@ -1,16 +1,17 @@
 
 import discord
 from discord.ext import commands
+from discord.ext.commands import errors
 
-from pybot.utils import check_client_has_lang
+from pybot.database import check_client_has_lang
 from pybot.views import LanguageSelectionView
-from pybot.database import cursor
+from pybot.database import cursor, record_command_event
 
 
 class PyBot22Context(commands.Context):
     async def get_client_lang(self):
-        lang = await check_client_has_lang(self.author.id)
-        return lang if lang is not None else 'HAHAH'
+        lang = None #await check_client_has_lang(self.author.id)
+        return lang if lang is not None else 'zh_TW'
 
 
 async def _init_client(ctx):
@@ -45,16 +46,24 @@ class PyBot22(commands.Bot):
             # The bot itself
             return
 
-        client_lang = await check_client_has_lang(ctx.author.id)
+        client_lang = 'zh_TW' #await check_client_has_lang(ctx.author.id)
         if ctx.invoked_with and not client_lang:
             ctx.command = self._init_command
             await self.invoke(ctx)
         else:
             ctx.client_lang = client_lang
             await self.invoke(ctx)
+        await record_command_event(ctx.author.id, ctx.author.name, ctx.invoked_with)
 
     async def on_ready(self):
         print(f'{self.user.name} has connected!')
+
+    async def on_command_error(self, ctx: commands.Context, exception: errors.CommandError):
+        if isinstance(exception, errors.MissingRequiredArgument):
+            await ctx.send(
+                'Commands missing required arguments.'
+                f'\nUsage: `{self.command_prefix}{ctx.command.name} {ctx.command.usage}`'
+            )
 
 
 def _get_intents():

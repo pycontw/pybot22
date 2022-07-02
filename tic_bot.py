@@ -154,6 +154,9 @@ class Dropdown(discord.ui.Select):
         self.selection_status = {}
 
     async def callback(self, interaction: discord.Interaction):
+        await interaction.response.send_modal(AnswerTextInput())
+
+    async def _callback(self, interaction: discord.Interaction):
         assert self.view is not None
         view: DropdownView = self.view
         selected = self.values[0]
@@ -172,11 +175,11 @@ class Dropdown(discord.ui.Select):
 
 
 class DropdownView(discord.ui.View):
-    def __init__(self, members):
+    def __init__(self, members=None):
         super().__init__()
 
         # Adds the dropdown to our view object.
-        self.members = [m for m in members if not m.bot]
+        #self.members = [m for m in members if not m.bot]
         self.add_item(Dropdown())
 
     def check_winner(self, selection_status):
@@ -204,6 +207,19 @@ class DropdownView(discord.ui.View):
         return winner_msg
 
 
+class AnswerTextInput(discord.ui.Modal, title='Hahaha'):
+    answer = discord.ui.TextInput(label='Answer', style=discord.TextStyle.paragraph)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message(f'Thanks for your response, {self.name}!', ephemeral=True)
+
+
+class TextInputView(discord.ui.View):
+    def __init__(self):
+        super().__init__()
+        self.add_item(AnswerTextInput())
+
+
 bot = TicTacToeBot()
 
 
@@ -228,5 +244,10 @@ async def chan_kan_pon(
     await ctx.send('Paper scissors stone!', view=DropdownView(members=members))
 
 
-TOKEN = toml.load(open('env.cred'))['DISCORD_TOKEN']
+@bot.command()
+async def answer(ctx):
+    await ctx.send('hahaha', view=DropdownView())
+
+
+TOKEN = 'OTgyMjMzNTkyOTc5NjUyNjUw.GK2lOl.3GhwSrl_TH3mzwhvMhY18eDHEdmvwTPpWkc5fY'
 bot.run(TOKEN)

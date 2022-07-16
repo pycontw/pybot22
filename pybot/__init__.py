@@ -3,9 +3,10 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import errors
 
-from pybot.database import check_client_has_lang
-from pybot.views import LanguageSelectionView
+from pybot.database import check_client_has_lang, query_question
+from pybot.views import LanguageSelectionView, SponsorshipQuestionView
 from pybot.database import cursor, record_command_event
+from pybot.constants import INIT_GAME_MESSAGES
 
 
 class PyBot22Context(commands.Context):
@@ -46,14 +47,16 @@ class PyBot22(commands.Bot):
             # The bot itself
             return
 
-        client_lang = 'zh_TW' #await check_client_has_lang(ctx.author.id)
+        client_lang = await check_client_has_lang(ctx.author.id)
         if ctx.invoked_with and not client_lang:
             ctx.command = self._init_command
             await self.invoke(ctx)
         else:
             ctx.client_lang = client_lang
             await self.invoke(ctx)
-        await record_command_event(ctx.author.id, ctx.author.name, ctx.invoked_with)
+
+        if ctx.invoked_with:
+            await record_command_event(ctx.author.id, ctx.author.name, ctx.invoked_with)
 
     async def on_ready(self):
         print(f'{self.user.name} has connected!')
@@ -64,12 +67,31 @@ class PyBot22(commands.Bot):
                 'Commands missing required arguments.'
                 f'\nUsage: `{self.command_prefix}{ctx.command.name} {ctx.command.usage}`'
             )
+        else:
+            await super().on_command_error(ctx, exception)
+
+    async def on_reaction_add(self, reaction: discord.Reaction, user: discord.Member):
+        if (
+            user.id == self.application_id
+            or (channel_id := reaction.message.channel.id) not in INIT_GAME_MESSAGES.keys()
+            or reaction.emoji not in INIT_GAME_MESSAGES[channel_id]['emoji_to_qid']
+        ):
+            return
+
+        question_id = INIT_GAME_MESSAGES[channel_id]['emoji_to_qid'][reaction.emoji]
+        client_lang = await check_client_has_lang(user.id)
+        question = await query_question(question_id, client_lang)
+        await user.send(
+            question,
+            view=SponsorshipQuestionView(qid=question_id, user=user, lang=client_lang)
+        )
 
 
 def _get_intents():
     intents = discord.Intents.default()
     intents.message_content = True
     intents.members = True
+    intents.reactions = True
     return intents
 
 

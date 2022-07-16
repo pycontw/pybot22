@@ -1,7 +1,7 @@
 import discord
 
-from pybot.database import update_client_lang, record_answer_event
-from pybot.constants import SPONSOR_QUESTION_ANSWERS
+from pybot.database import query_question_answer, update_client_lang, record_answer_event
+from pybot.constants import QID_TO_SPONSOR_QUESTION
 from pybot.translation import (
     QUESTION_MODAL_TITLE,
     CORRECT_ANSWER_RESPONSE,
@@ -115,7 +115,7 @@ class LanguageSelectionView(discord.ui.View):
 
 
 class SponsorshipQuestionModal(discord.ui.Modal):
-    answer = discord.ui.TextInput(label='Answer', style=discord.TextStyle.short)
+    answer_input = discord.ui.TextInput(label='Answer', style=discord.TextStyle.short)
 
     def __init__(self, question_id: str, user: discord.Member, lang: str):
         super().__init__(title=QUESTION_MODAL_TITLE[lang])
@@ -124,8 +124,8 @@ class SponsorshipQuestionModal(discord.ui.Modal):
         self.user = user
 
     async def on_submit(self, interaction: discord.Interaction):
-        user_ans = self.answer.value
-        answer = SPONSOR_QUESTION_ANSWERS[self.qid]
+        user_ans = self.answer_input.value
+        answer = await query_question_answer(self.qid, self.lang)
         if user_ans == answer:
             resp_msg = CORRECT_ANSWER_RESPONSE[self.lang]
         else:
@@ -134,38 +134,17 @@ class SponsorshipQuestionModal(discord.ui.Modal):
         await record_answer_event(self.qid, self.user.id, user_ans)
 
 
-class SponsorshipQuestionDropdown(discord.ui.Select):
-    def __init__(self, placeholder: str):
-        # Four options, from A to D.
-        options = [
-            discord.SelectOption(label=qid)
-            for qid in SPONSOR_QUESTION_ANSWERS
-        ]
-        super().__init__(placeholder=placeholder, min_values=1, max_values=1, options=options)
-
-    async def callback(self, interaction: discord.Interaction):
-        selected_qid = self.values[0]
-
-        view: SponsorshipQuestionView = self.view
-        await interaction.response.send_modal(
-            SponsorshipQuestionModal(
-                question_id=selected_qid,
-                user=view.user,
-                lang=view.lang,
-            )
-        )
-        view.stop()
-
-
 class SponsorshipQuestionView(discord.ui.View):
-    def __init__(self, user: discord.Member, lang: str, timeout=30):
+    def __init__(self, qid: str, user: discord.Member, lang: str, timeout: int = 30):
         super().__init__(timeout=timeout)
 
-        placeholder = {
-            'zh_TW': '選擇您要回答的問題',
-            'EN': 'Please choose a question to answer'
-        }[lang]
-
-        self.add_item(SponsorshipQuestionDropdown(placeholder=placeholder,))
+        self.qid = qid
         self.lang = lang
         self.user = user
+
+    @discord.ui.button(label='開始回答 / Start Answering')
+    async def trigger_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        button.disabled = True
+        await interaction.response.send_modal(
+            SponsorshipQuestionModal(question_id=self.qid, user=self.user, lang=self.lang)
+        )

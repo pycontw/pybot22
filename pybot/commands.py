@@ -1,19 +1,14 @@
-import re
 import random
 
 import discord
 from discord.ext import commands
 
 from pybot import bot
-from pybot.constants import SPONSOR_QUESTION_ANSWERS
-from pybot.translation import (
-    COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG,
-    QUESTION_ID_NOT_FOUND_MSG,
-)
+from pybot.constants import INIT_GAME_MESSAGES
+from pybot.translation import COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG
 from pybot.views import (
     CKPDropdownView,
     LanguageSelectionView,
-    SponsorshipQuestionView,
 )
 
 
@@ -32,18 +27,6 @@ async def change_language(ctx: commands.Context):
         '請選擇您的語言\n' \
         'Please select your language',
         view=LanguageSelectionView(uid=ctx.author.id),
-        ephemeral=True,
-    )
-
-
-@bot.command()
-async def answer(ctx: commands.Context):
-    if not check_is_private_chat_with_bot(ctx.channel):
-        await ctx.send(COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG[ctx.client_lang])
-        return
-
-    await ctx.send(
-        view=SponsorshipQuestionView(lang=ctx.client_lang),
         ephemeral=True,
     )
 
@@ -87,3 +70,25 @@ async def confess_to(ctx: commands.Context, member: discord.Member, content: str
 
     ctx.channel = bot.get_channel(982251980221214731)  # feature channel
     await ctx.send(member.mention + content)
+
+
+@bot.command(hidden=True)
+async def init_game(ctx: commands.Context):
+    # if not check_is_private_chat_with_bot(ctx.channel):
+    #     await ctx.send(COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG[ctx.client_lang])
+    #     return
+
+    target_channel = 997710004087967827
+    expected_messages = INIT_GAME_MESSAGES[target_channel]['messages']
+    channel = bot.get_channel(target_channel)
+
+    # Delete all sent messages, or the restarted bot won't be able to receive reactions.
+    await channel.delete_messages([msg async for msg in channel.history(oldest_first=True)])
+
+    # Send messages to channel
+    ctx.channel = channel
+    for msg_dict in expected_messages:
+        new_msg = await ctx.send(msg_dict['content'])
+        if emojis := msg_dict.get('emojis'):
+            for emoji in emojis:
+                await new_msg.add_reaction(emoji)

@@ -1,6 +1,11 @@
 import discord
 
-from pybot.database import query_question_answer, update_client_lang, record_answer_event
+from pybot.database import (
+    query_question_answer,
+    update_client_lang,
+    record_answer_event,
+    sync_update_client_lang,
+)
 from pybot.constants import QID_TO_SPONSOR_QUESTION
 from pybot.translation import (
     QUESTION_MODAL_TITLE,
@@ -98,14 +103,18 @@ class LanguageButton(discord.ui.Button['Language']):
         assert self.view is not None
         view: LanguageSelectionView = self.view
         view.stop()
-        await update_client_lang(uid=self.view.uid, lang=self.LANGUAGE_LABEL_TO_CODE_MAP[self.label])
+        if view.sync_update:
+            sync_update_client_lang(uid=self.view.uid, lang=self.LANGUAGE_LABEL_TO_CODE_MAP[self.label])
+        else:
+            await update_client_lang(uid=self.view.uid, lang=self.LANGUAGE_LABEL_TO_CODE_MAP[self.label])
         await interaction.response.send_message(content=self.resp_copy)
 
 
 class LanguageSelectionView(discord.ui.View):
-    def __init__(self, uid: str):
+    def __init__(self, uid: str, sync_update: bool = False):
         super().__init__()
         self.uid = uid
+        self.sync_update = sync_update
         tw_copy = '你選擇了中文，之後所有對話將預設語言為中文顯示。'\
             '若是想更改語言，可隨時在對話框輸入指令 `!change_language` 修改。'
         en_copy = 'You\'ve choose English. All the following conversation will be shown in English.' \
@@ -117,21 +126,31 @@ class LanguageSelectionView(discord.ui.View):
 class SponsorshipQuestionModal(discord.ui.Modal):
     answer_input = discord.ui.TextInput(label='Answer', style=discord.TextStyle.short)
 
-    def __init__(self, question_id: str, user: discord.Member, lang: str):
+    def __init__(
+        self,
+        question_id: str,
+        user: discord.Member,
+        lang: str,
+        trigger_view: 'SponsorshipQuestionView',
+    ):
         super().__init__(title=QUESTION_MODAL_TITLE[lang])
         self.lang = lang
         self.qid = question_id
         self.user = user
+        self.trigger_view = trigger_view
 
     async def on_submit(self, interaction: discord.Interaction):
         user_ans = self.answer_input.value
         answer = await query_question_answer(self.qid, self.lang)
         if user_ans == answer:
             resp_msg = CORRECT_ANSWER_RESPONSE[self.lang]
+            is_correct = True
+            self.trigger_view.stop()
         else:
             resp_msg = WRONG_ANSWER_RESPONSE[self.lang]
+            is_correct = False
         await interaction.response.send_message(resp_msg)
-        await record_answer_event(self.qid, self.user.id, user_ans)
+        await record_answer_event(self.qid, self.user.id, user_ans, is_correct)
 
 
 class SponsorshipQuestionView(discord.ui.View):
@@ -146,5 +165,10 @@ class SponsorshipQuestionView(discord.ui.View):
     async def trigger_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         button.disabled = True
         await interaction.response.send_modal(
-            SponsorshipQuestionModal(question_id=self.qid, user=self.user, lang=self.lang)
+            SponsorshipQuestionModal(
+                question_id=self.qid,
+                user=self.user, 
+                lang=self.lang,
+                trigger_view=self,
+            )
         )

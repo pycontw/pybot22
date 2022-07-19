@@ -78,17 +78,17 @@ async def init_game(ctx: commands.Context):
     #     await ctx.send(COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG[ctx.client_lang])
     #     return
 
-    target_channel = 997710004087967827
-    expected_messages = INIT_GAME_MESSAGES[target_channel]['messages']
-    channel = bot.get_channel(target_channel)
+    for target_channel in INIT_GAME_MESSAGES:
+        expected_messages = INIT_GAME_MESSAGES[target_channel]['messages']
+        channel = bot.get_channel(target_channel)
 
-    # Delete all sent messages, or the restarted bot won't be able to receive reactions.
-    await channel.delete_messages([msg async for msg in channel.history(oldest_first=True)])
+        # Delete all sent messages, or the restarted bot won't be able to receive reactions.
+        await channel.delete_messages([msg async for msg in channel.history(oldest_first=True)])
 
-    # Send messages to channel
-    ctx.channel = channel
-    for msg_dict in expected_messages:
-        new_msg = await ctx.send(msg_dict['content'])
-        if emojis := msg_dict.get('emojis'):
-            for emoji in emojis:
-                await new_msg.add_reaction(emoji)
+        # Send messages to channel
+        ctx.channel = channel
+        for msg_dict in expected_messages:
+            new_msg = await ctx.send(msg_dict['content'])
+            if emojis := msg_dict.get('emojis'):
+                for emoji in emojis:
+                    await new_msg.add_reaction(emoji)

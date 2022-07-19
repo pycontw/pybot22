@@ -1,3 +1,6 @@
+import asyncio
+from functools import partial
+from typing import Callable
 
 import discord
 from discord.ext import commands
@@ -30,6 +33,28 @@ async def _init_client(ctx):
     )
 
 
+async def _init_lang(user_id: str, user_name: str, send_func: Callable):
+    with cursor() as cur:
+        cur.execute('''
+            INSERT INTO profile (uid, name)
+            VALUES (%(uid)s, %(name)s)
+        ''', {'uid': user_id, 'name': user_name})
+
+    await send_func(
+        content='嗨嗨你好:wave: 請先選擇您的語言\n' \
+            'Hi hi :wave: Please select your language first.',
+        view=LanguageSelectionView(uid=user_id, sync_update=True),
+    )
+    
+    idx = 50
+    client_lang = None
+    while idx > 0 and not client_lang:
+        idx -=1
+        client_lang = await check_client_has_lang(user_id)
+        await asyncio.sleep(0.3)
+    return client_lang
+
+
 class PyBot22(commands.Bot):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -48,14 +73,16 @@ class PyBot22(commands.Bot):
             return
 
         client_lang = await check_client_has_lang(ctx.author.id)
-        if ctx.invoked_with and not client_lang:
-            ctx.command = self._init_command
-            await self.invoke(ctx)
-        else:
+        if ctx.invoked_with:
+            if not client_lang:
+                client_lang = await _init_lang(
+                    ctx.author.id,
+                    ctx.author.name,
+                    partial(ctx.send, ephemeral=True),
+                )
+
             ctx.client_lang = client_lang
             await self.invoke(ctx)
-
-        if ctx.invoked_with:
             await record_command_event(ctx.author.id, ctx.author.name, ctx.invoked_with)
 
     async def on_ready(self):
@@ -78,8 +105,11 @@ class PyBot22(commands.Bot):
         ):
             return
 
-        question_id = INIT_GAME_MESSAGES[channel_id]['emoji_to_qid'][reaction.emoji]
         client_lang = await check_client_has_lang(user.id)
+        if not client_lang:
+            client_lang = await _init_lang(user.id, user.name, user.send)
+
+        question_id = INIT_GAME_MESSAGES[channel_id]['emoji_to_qid'][reaction.emoji]
         question = await query_question(question_id, client_lang)
         await user.send(
             question,

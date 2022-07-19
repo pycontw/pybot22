@@ -55,20 +55,21 @@ async def record_command_event(uid: str, user_name: str, command: str):
         ''', data)
 
 
-async def record_answer_event(qid: str, uid: str, answer: str):
+async def record_answer_event(qid: str, uid: str, answer: str, is_correct: bool):
     data = {
         'event_id': gen_id(),
         'uid': uid,
         'question_id': qid,
         'received_answer': answer,
+        'is_correct': is_correct,
     }
     with cursor() as cur:
         cur.execute('''
             INSERT INTO
                 answer_event
-                (`event_id`, `uid`, `question_id`, `received_answer`)
+                (`event_id`, `uid`, `question_id`, `received_answer`, `is_correct`)
             VALUES
-                (%(event_id)s, %(uid)s, %(question_id)s, %(received_answer)s)
+                (%(event_id)s, %(uid)s, %(question_id)s, %(received_answer)s, %(is_correct)s)
         ''', data)
 
 
@@ -79,6 +80,12 @@ async def check_client_has_lang(uid: str):
 
 
 async def update_client_lang(uid: str, lang: str):
+    params = {'lang': lang, 'uid': uid}
+    with cursor() as cur:
+        cur.execute('UPDATE profile SET lang=%(lang)s WHERE uid=%(uid)s', params)
+
+
+def sync_update_client_lang(uid: str, lang: str):
     params = {'lang': lang, 'uid': uid}
     with cursor() as cur:
         cur.execute('UPDATE profile SET lang=%(lang)s WHERE uid=%(uid)s', params)

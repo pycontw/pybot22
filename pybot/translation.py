@@ -24,3 +24,8 @@ WRONG_ANSWER_RESPONSE = {
     'zh_TW': '喔喔...答錯了:broken_heart:',
     'EN': 'Ohoh...The answer is not correct :broken_heart:',
 }
+
+QUESTION_ANSWERED_REMINDER = {
+    'zh_TW': '（你已經回答過這題了，獎勵將無法重複領取）',
+    'EN': '(You have already answered to this question and further rewards won\'t be available)',
+}

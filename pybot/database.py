@@ -73,7 +73,7 @@ async def record_answer_event(qid: str, uid: str, answer: str, is_correct: bool)
         ''', data)
 
 
-async def check_client_has_lang(uid: str):
+async def check_client_has_lang(uid: str) -> str:
     with cursor() as cur:
         cur.execute('SELECT lang FROM profile WHERE uid=%(uid)s', {'uid': uid})
         return cur.fetchone()['lang'] if cur.rowcount > 0 else None
@@ -91,15 +91,45 @@ def sync_update_client_lang(uid: str, lang: str):
         cur.execute('UPDATE profile SET lang=%(lang)s WHERE uid=%(uid)s', params)
 
 
-async def query_question(qid: str, lang: str):
+async def query_question(qid: str, lang: str) -> dict:
     params = {'lang': lang, 'qid': qid}
     with cursor() as cur:
-        cur.execute('SELECT description FROM question WHERE qid=%(qid)s AND lang=%(lang)s', params)
-        return cur.fetchone()['description']
+        cur.execute('SELECT * FROM question WHERE qid=%(qid)s AND lang=%(lang)s', params)
+        return cur.fetchone()
 
 
-async def query_question_answer(qid: str, lang: str):
-    params = {'lang': lang, 'qid': qid}
+async def check_user_already_answered_qid(qid: str, uid: str) -> bool:
+    params = {'qid': qid, 'uid': uid, 'is_correct': True}
     with cursor() as cur:
-        cur.execute('SELECT answer FROM question WHERE qid=%(qid)s AND lang=%(lang)s', params)
-        return cur.fetchone()['answer']
+        cur.execute('''
+            SELECT
+                count(*) as cnt
+            FROM
+                answer_event
+            WHERE
+                uid=%(uid)s
+                AND question_id=%(qid)s
+                AND is_correct=%(is_correct)s
+        ''', params)
+        return cur.fetchone()['cnt'] > 0
+
+
+async def update_user_rewards(uid: str, add_coin: int, add_star: int) -> bool:
+    params = {
+        'add_coin': add_coin,
+        'add_star': add_star,
+        'uid': uid,
+    }
+    with cursor() as cur:
+        cur.execute('''
+            UPDATE
+                profile as tar
+            LEFT JOIN
+                profile as ori USING(uid)
+            SET
+                tar.coin=ori.coin+%(add_coin)s,
+                tar.star=ori.star+%(add_star)s
+            WHERE
+                tar.uid=%(uid)s
+        ''', params)
+        return cur.rowcount == 1

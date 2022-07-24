@@ -5,5 +5,6 @@ CREATE TABLE `answer_event` (
     `uid` VARCHAR(32) NOT NULL,
     `question_id` VARCHAR(64) NOT NULL,
     `received_answer` TEXT,
+    `is_correct` BOOLEAN DEFAULT 0,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

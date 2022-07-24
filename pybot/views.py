@@ -1,10 +1,10 @@
 import discord
 
 from pybot.database import (
-    query_question_answer,
     update_client_lang,
     record_answer_event,
     sync_update_client_lang,
+    update_user_rewards,
 )
 from pybot.constants import QID_TO_SPONSOR_QUESTION
 from pybot.translation import (
@@ -128,45 +128,55 @@ class SponsorshipQuestionModal(discord.ui.Modal):
 
     def __init__(
         self,
-        question_id: str,
+        q_info: dict,
         user: discord.Member,
         lang: str,
         trigger_view: 'SponsorshipQuestionView',
     ):
         super().__init__(title=QUESTION_MODAL_TITLE[lang])
         self.lang = lang
-        self.qid = question_id
+        self.q_info = q_info
         self.user = user
         self.trigger_view = trigger_view
 
     async def on_submit(self, interaction: discord.Interaction):
         user_ans = self.answer_input.value
-        answer = await query_question_answer(self.qid, self.lang)
+        answer = self.q_info['answer']
         if user_ans == answer:
             resp_msg = CORRECT_ANSWER_RESPONSE[self.lang]
             is_correct = True
             self.trigger_view.stop()
+            await update_user_rewards(self.user.id, self.q_info['coin'], self.q_info['star'])
         else:
             resp_msg = WRONG_ANSWER_RESPONSE[self.lang]
             is_correct = False
         await interaction.response.send_message(resp_msg)
-        await record_answer_event(self.qid, self.user.id, user_ans, is_correct)
+        await record_answer_event(self.q_info['qid'], self.user.id, user_ans, is_correct)
 
 
 class SponsorshipQuestionView(discord.ui.View):
-    def __init__(self, qid: str, user: discord.Member, lang: str, timeout: int = 30):
-        super().__init__(timeout=timeout)
+    def __init__(self, q_info: dict, user: discord.Member, lang: str, already_answered: bool):
+        super().__init__()
 
-        self.qid = qid
+        self.q_info = q_info
         self.lang = lang
         self.user = user
+        self.answer_counts = 0
+
+        self.already_answered = already_answered
 
     @discord.ui.button(label='開始回答 / Start Answering')
     async def trigger_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        button.disabled = True
+        if self.already_answered:
+            self.q_info['coin'] = 0
+            self.q_info['star'] = 0
+        else:
+            self.q_info['coin'] = int(max(1, pow(0.5, self.answer_counts) * self.q_info['coin']))
+            self.q_info['star'] = int(max(1, pow(0.5, self.answer_counts) * self.q_info['star']))
+        self.answer_counts += 1
         await interaction.response.send_modal(
             SponsorshipQuestionModal(
-                question_id=self.qid,
+                q_info=self.q_info,
                 user=self.user, 
                 lang=self.lang,
                 trigger_view=self,

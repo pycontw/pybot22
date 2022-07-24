@@ -6,7 +6,13 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import errors
 
-from pybot.database import check_client_has_lang, query_question
+from pybot.database import(
+    check_client_has_lang,
+    query_question,
+    check_user_already_answered_qid,
+)
+from pybot.schemas import QuestionType
+from pybot.translation import QUESTION_ANSWERED_REMINDER
 from pybot.views import LanguageSelectionView, SponsorshipQuestionView
 from pybot.database import cursor, record_command_event
 from pybot.constants import INIT_GAME_MESSAGES
@@ -98,24 +104,49 @@ class PyBot22(commands.Bot):
             await super().on_command_error(ctx, exception)
 
     async def on_reaction_add(self, reaction: discord.Reaction, user: discord.Member):
-        if (
-            user.id == self.application_id
-            or (channel_id := reaction.message.channel.id) not in INIT_GAME_MESSAGES.keys()
-            or reaction.emoji not in INIT_GAME_MESSAGES[channel_id]['emoji_to_qid']
-        ):
+        # Bot itself
+        if user.id == self.application_id:
             return
 
+        # Check emoji in question pool
+        if (
+            (channel_id := reaction.message.channel.id) not in INIT_GAME_MESSAGES.keys()
+            or reaction.emoji not in INIT_GAME_MESSAGES[channel_id]['emoji_to_qid']
+        ):
+            await reaction.remove(user)
+            return
+
+        # Init profile and language if first time
         client_lang = await check_client_has_lang(user.id)
         if not client_lang:
             client_lang = await _init_lang(user.id, user.name, user.send)
 
+        # Get question info dict
         question_id = INIT_GAME_MESSAGES[channel_id]['emoji_to_qid'][reaction.emoji]
-        question = await query_question(question_id, client_lang)
-        await user.send(
-            question,
-            view=SponsorshipQuestionView(qid=question_id, user=user, lang=client_lang)
-        )
+        q_info = await query_question(question_id, client_lang)
 
+        # Response with different view according to the question type
+        if q_info['q_type'] == QuestionType.TEXT:
+            
+            msg = q_info['description']
+            if already_answered := await check_user_already_answered_qid(question_id, user.id):
+                msg += QUESTION_ANSWERED_REMINDER[client_lang]
+            await user.send(
+                msg,
+                view=SponsorshipQuestionView(
+                    q_info=q_info,
+                    user=user,
+                    lang=client_lang,
+                    already_answered=already_answered,
+                )
+            )
+        elif q_info['q_type'] == QuestionType.SELECTION:
+            ...
+        elif q_info['q_type'] == QuestionType.QUESTIONARE:
+            ...
+
+        # Clear the reaction
+        await reaction.remove(user)
 
 def _get_intents():
     intents = discord.Intents.default()

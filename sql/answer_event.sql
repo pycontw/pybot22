@@ -6,5 +6,7 @@ CREATE TABLE `answer_event` (
     `question_id` VARCHAR(64) NOT NULL,
     `received_answer` TEXT,
     `is_correct` BOOLEAN DEFAULT 0,
-    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    INDEX uid_qid (`uid`, `question_id`)
 );

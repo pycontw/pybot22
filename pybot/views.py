@@ -6,8 +6,8 @@ from pybot.database import (
     sync_update_client_lang,
     update_user_rewards,
 )
-from pybot.constants import QID_TO_SPONSOR_QUESTION
 from pybot.translation import (
+    CORRECT_ANSWER_REWARD_MSG,
     QUESTION_MODAL_TITLE,
     CORRECT_ANSWER_RESPONSE,
     WRONG_ANSWER_RESPONSE,
@@ -144,6 +144,12 @@ class SponsorshipQuestionModal(discord.ui.Modal):
         answer = self.q_info['answer']
         if user_ans == answer:
             resp_msg = CORRECT_ANSWER_RESPONSE[self.lang]
+            if not self.trigger_view.already_answered:
+                reward_msg = CORRECT_ANSWER_REWARD_MSG[self.lang].format(
+                    coin=self.q_info['coin'],
+                    star=self.q_info['star'],
+                )
+                resp_msg = f'{resp_msg}\n{reward_msg}'
             is_correct = True
             self.trigger_view.stop()
             await update_user_rewards(self.user.id, self.q_info['coin'], self.q_info['star'])

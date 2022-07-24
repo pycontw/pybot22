@@ -73,6 +73,29 @@ async def record_answer_event(qid: str, uid: str, answer: str, is_correct: bool)
         ''', data)
 
 
+async def record_reaction_event(
+    qid: str,
+    uid: str,
+    channel_id: str,
+    channel_name: str,
+):
+    params = {
+        'event_id': gen_id(),
+        'qid': qid,
+        'uid': uid,
+        'channel_id': channel_id,
+        'channel_name': channel_name,
+    }
+    with cursor() as cur:
+        cur.execute('''
+            INSERT INTO
+                reaction_event
+                (`event_id`, `qid`, `uid`, `channel_id`, `channel_name`)
+            VALUES
+                (%(event_id)s, %(qid)s, %(uid)s, %(channel_id)s, %(channel_name)s)
+        ''', params)
+
+
 async def check_client_has_lang(uid: str) -> str:
     with cursor() as cur:
         cur.execute('SELECT lang FROM profile WHERE uid=%(uid)s', {'uid': uid})

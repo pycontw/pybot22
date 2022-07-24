@@ -10,6 +10,7 @@ from pybot.database import(
     check_client_has_lang,
     query_question,
     check_user_already_answered_qid,
+    record_reaction_event,
 )
 from pybot.schemas import QuestionType
 from pybot.translation import QUESTION_ANSWERED_REMINDER
@@ -105,14 +106,14 @@ class PyBot22(commands.Bot):
 
     async def on_reaction_add(self, reaction: discord.Reaction, user: discord.Member):
         # Bot itself
-        if user.id == self.application_id:
+        if (
+            user.id == self.application_id
+            or (channel_id := reaction.message.channel.id) not in INIT_GAME_MESSAGES
+        ):
             return
 
         # Check emoji in question pool
-        if (
-            (channel_id := reaction.message.channel.id) not in INIT_GAME_MESSAGES.keys()
-            or reaction.emoji not in INIT_GAME_MESSAGES[channel_id]['emoji_to_qid']
-        ):
+        if reaction.emoji not in INIT_GAME_MESSAGES[channel_id]['emoji_to_qid']:
             await reaction.remove(user)
             return
 
@@ -127,7 +128,6 @@ class PyBot22(commands.Bot):
 
         # Response with different view according to the question type
         if q_info['q_type'] == QuestionType.TEXT:
-            
             msg = q_info['description']
             if already_answered := await check_user_already_answered_qid(question_id, user.id):
                 msg += QUESTION_ANSWERED_REMINDER[client_lang]
@@ -147,6 +147,7 @@ class PyBot22(commands.Bot):
 
         # Clear the reaction
         await reaction.remove(user)
+        await record_reaction_event(question_id, user.id, channel_id, reaction.message.channel.name)
 
 def _get_intents():
     intents = discord.Intents.default()

@@ -1,29 +1,4 @@
 
-QID_TO_SPONSOR_QUESTION = {
-    'google_q1': {
-        'description': {
-            'zh_TW': '',
-            'EN': '',
-        },
-        'answer': 'A',
-    },
-    'sony_q2': {
-        'description': {
-            'zh_TW': '',
-            'EN': '',
-        },
-        'answer': 'Hello there, lack of inovation',
-    },
-    'yamaha_q1': {
-        'description': {
-            'zh_TW': '',
-            'EN': '',
-        },
-        'answer': 'Your best choice of everything',
-    },
-}
-
-
 INIT_GAME_MESSAGES = {
     997710004087967827: {  # ID of #test-answer channel
         'messages':[

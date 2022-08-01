@@ -13,6 +13,7 @@ from pybot.translation import (
     WRONG_ANSWER_RESPONSE,
 )
 
+from pybot.rank import rank_update
 
 # CKP: short for Chan Kan Pon (Japanese of paper scissors stone game)
 class CKPDropdown(discord.ui.Select):
@@ -153,6 +154,8 @@ class SponsorshipQuestionModal(discord.ui.Modal):
             is_correct = True
             self.trigger_view.stop()
             await update_user_rewards(self.user.id, self.q_info['coin'], self.q_info['star'])
+            # rank is in memory for light weight sync access in run time
+            rank_update(self.user.id, self.q_info['coin'])
         else:
             resp_msg = WRONG_ANSWER_RESPONSE[self.lang]
             is_correct = False

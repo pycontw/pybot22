@@ -8,5 +8,5 @@ CREATE TABLE `reaction_event` (
     `channel_name` VARCHAR(64) NOT NULL,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    INDEX uid_qid (`uid`, `question_id`)
+    INDEX uid_qid (`uid`, `qid`)
 );

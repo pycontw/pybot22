@@ -1,5 +1,6 @@
 import os
 import contextlib
+import asyncio
 
 import MySQLdb
 from MySQLdb.cursors import DictCursor
@@ -11,12 +12,12 @@ from pybot.utils import gen_id
 def db_conn():
     conn = MySQLdb.connect(
         use_unicode=True,
-        host='localhost',
+        host='localhost',        
         user='root',
         passwd=os.getenv('DB_PASSWORD'),
         db='pycon22',
         cursorclass=DictCursor,
-    )
+    )    
     try:
         yield conn
     except Exception:
@@ -156,3 +157,35 @@ async def update_user_rewards(uid: str, add_coin: int, add_star: int) -> bool:
                 tar.uid=%(uid)s
         ''', params)
         return cur.rowcount == 1
+
+
+async def query_user_name(uid: str) -> str:
+    with cursor() as cur:
+        cur.execute('SELECT name FROM profile WHERE uid=%(uid)s', {'uid': uid})
+        return cur.fetchone()['name'] if cur.rowcount > 0 else None
+
+# this is called by rank_init() function that should be sync
+def query_all_users_profile() -> dict:
+    with cursor() as cur:
+        cur.execute('SELECT uid, name, coin FROM profile')
+        return cur.fetchall() if cur.rowcount > 0 else None
+
+
+def _init_client(uid: str, name: str):
+    with cursor() as cur:
+        cur.execute('''
+            INSERT INTO profile (uid, name)
+            VALUES (%(uid)s, %(name)s)
+        ''', {'uid': uid, 'name': name})
+
+
+def db_test():
+    #_init_client("12345678", "test1")
+    #_init_client("12345679", "test2")
+
+    user_dict = query_all_users_profile()
+    print(user_dict)
+
+
+if __name__ == '__main__':
+    db_test()        

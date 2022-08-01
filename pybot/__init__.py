@@ -18,6 +18,8 @@ from pybot.views import LanguageSelectionView, SponsorshipQuestionView
 from pybot.database import cursor, record_command_event
 from pybot.constants import INIT_GAME_MESSAGES
 
+from pybot.rank import rank_init
+
 
 class PyBot22Context(commands.Context):
     async def get_client_lang(self):
@@ -68,6 +70,8 @@ class PyBot22(commands.Bot):
 
         # Register init_client to the command
         self._init_command = self.command(name='init_client', hidden=True)(_init_client)
+        
+        rank_init()
 
     async def get_context(self, message, *, cls=PyBot22Context):
         return await super().get_context(message, cls=cls)

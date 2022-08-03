@@ -14,7 +14,7 @@ from pybot.database import(
 )
 from pybot.schemas import QuestionType
 from pybot.translation import QUESTION_ANSWERED_REMINDER
-from pybot.views import LanguageSelectionView, SponsorshipQuestionView
+from pybot.views import LanguageSelectionView, SponsorshipQuestionView, GameSelectionView
 from pybot.database import cursor, record_command_event
 from pybot.constants import INIT_GAME_MESSAGES
 
@@ -125,12 +125,12 @@ class PyBot22(commands.Bot):
         # Get question info dict
         question_id = INIT_GAME_MESSAGES[channel_id]['emoji_to_qid'][reaction.emoji]
         q_info = await query_question(question_id, client_lang)
+        msg = q_info['description']
+        if already_answered := await check_user_already_answered_qid(question_id, user.id):
+            msg += QUESTION_ANSWERED_REMINDER[client_lang]
 
         # Response with different view according to the question type
         if q_info['q_type'] == QuestionType.TEXT:
-            msg = q_info['description']
-            if already_answered := await check_user_already_answered_qid(question_id, user.id):
-                msg += QUESTION_ANSWERED_REMINDER[client_lang]
             await user.send(
                 msg,
                 view=SponsorshipQuestionView(
@@ -141,7 +141,15 @@ class PyBot22(commands.Bot):
                 )
             )
         elif q_info['q_type'] == QuestionType.SELECTION:
-            ...
+            await user.send(
+                msg,
+                view=GameSelectionView(
+                    q_info=q_info,
+                    user=user,
+                    lang=client_lang,
+                    already_answered=already_answered,
+                )
+            )
         elif q_info['q_type'] == QuestionType.QUESTIONARE:
             ...
 

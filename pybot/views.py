@@ -1,3 +1,5 @@
+from typing import Dict
+
 import discord
 
 from pybot.database import (
@@ -188,3 +190,58 @@ class SponsorshipQuestionView(discord.ui.View):
                 trigger_view=self,
             )
         )
+
+
+class GameDropdown(discord.ui.Select):
+    def __init__(self, placeholder: str, q_options: Dict[str, str]):
+        options = []
+        for opt in q_options.values():
+            options.append(discord.SelectOption(label=opt))
+
+        super().__init__(placeholder=placeholder, options=options)
+
+    async def callback(self, interaction: discord.Interaction):
+        user_ans = self.values[0]
+        await self.view.check_ans_and_update_state(user_ans, interaction)
+
+
+class GameSelectionView(discord.ui.View):
+    def __init__(self, q_info: dict, user: discord.Member, lang: str, already_answered: bool):
+        super().__init__()
+
+        self.q_info = q_info
+        self.lang = lang
+        self.user = user
+        self.answer_counts = 0
+
+        self.already_answered = already_answered
+
+        self.add_item(
+            GameDropdown(
+                placeholder='Click Me!',
+                q_options=self.q_info['options']
+            )
+        )
+
+    async def check_ans_and_update_state(self, user_ans: str, interaction: discord.Interaction):
+        answer = self.q_info['answer']
+        if user_ans == answer:
+            # Calculate rewards
+            reward_coin = int(max(1, self.q_info['coin'] * pow(0.5, self.answer_counts)))
+
+            resp_msg = CORRECT_ANSWER_RESPONSE[self.lang]
+            if not self.already_answered:
+                reward_msg = CORRECT_ANSWER_REWARD_MSG[self.lang].format(
+                    coin=reward_coin,
+                    star=self.q_info['star'],
+                )
+                resp_msg = f'{resp_msg}\n{reward_msg}'
+            is_correct = True
+            self.stop()
+            await update_user_rewards(interaction.user.id, reward_coin, self.q_info['star'])
+        else:
+            resp_msg = WRONG_ANSWER_RESPONSE[self.lang]
+            is_correct = False
+            self.answer_counts += 1
+        await interaction.response.send_message(resp_msg)
+        await record_answer_event(self.q_info['qid'], interaction.user.id, user_ans, is_correct)

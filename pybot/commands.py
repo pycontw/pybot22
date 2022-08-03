@@ -92,3 +92,8 @@ async def init_game(ctx: commands.Context):
             if emojis := msg_dict.get('emojis'):
                 for emoji in emojis:
                     await new_msg.add_reaction(emoji)
+
+
+@bot.command()
+def add_score():
+    pass

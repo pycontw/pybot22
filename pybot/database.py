@@ -1,4 +1,5 @@
 import os
+import json
 import contextlib
 
 import MySQLdb
@@ -117,8 +118,22 @@ def sync_update_client_lang(uid: str, lang: str):
 async def query_question(qid: str, lang: str) -> dict:
     params = {'lang': lang, 'qid': qid}
     with cursor() as cur:
-        cur.execute('SELECT * FROM question WHERE qid=%(qid)s AND lang=%(lang)s', params)
-        return cur.fetchone()
+        cur.execute('''
+        SELECT
+            *
+        FROM
+            question as q
+        LEFT JOIN
+            question_options as qo
+            ON qo.qid=q.qid AND qo.lang=q.lang
+        WHERE
+            q.qid=%(qid)s
+            AND q.lang=%(lang)s
+        ''', params)
+        result = cur.fetchone()
+    if result and result['options']:
+        result['options'] = json.loads(result['options'])
+    return result
 
 
 async def check_user_already_answered_qid(qid: str, uid: str) -> bool:

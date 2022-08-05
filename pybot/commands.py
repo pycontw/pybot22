@@ -5,6 +5,7 @@ from discord.ext import commands
 
 from pybot import bot
 from pybot.constants import INIT_GAME_MESSAGES
+from pybot.database import check_user_is_staff, update_user_rewards
 from pybot.translation import COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG
 from pybot.views import (
     CKPDropdownView,
@@ -94,6 +95,14 @@ async def init_game(ctx: commands.Context):
                     await new_msg.add_reaction(emoji)
 
 
-@bot.command()
-def add_score():
-    pass
+@bot.command(hidden=True)
+async def staff_add_score(ctx: commands.Context, member: discord.Member, add_coin: int):
+    if (
+        not await check_user_is_staff(ctx.author.id)
+        or not check_is_private_chat_with_bot(ctx.channel)
+    ):
+        return
+
+    await update_user_rewards(member.id, add_coin, 0)
+    await ctx.send('Updated')
+    await member.send(f'You have received {add_coin} coins~')

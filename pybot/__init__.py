@@ -161,6 +161,7 @@ class PyBot22(commands.Bot):
         await reaction.remove(user)
         await record_reaction_event(question_id, user.id, channel_id, reaction.message.channel.name)
 
+
 def _get_intents():
     intents = discord.Intents.default()
     intents.message_content = True

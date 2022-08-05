@@ -1,7 +1,6 @@
 import os
 import json
 import contextlib
-import asyncio
 
 import MySQLdb
 from MySQLdb.cursors import DictCursor
@@ -13,12 +12,12 @@ from pybot.utils import gen_id
 def db_conn():
     conn = MySQLdb.connect(
         use_unicode=True,
-        host='localhost',        
+        host='localhost',
         user='root',
         passwd=os.getenv('DB_PASSWORD'),
         db='pycon22',
         cursorclass=DictCursor,
-    )    
+    )
     try:
         yield conn
     except Exception:
@@ -121,9 +120,21 @@ async def query_question(qid: str, lang: str) -> dict:
     with cursor() as cur:
         cur.execute('''
         SELECT
-            *
+            q.qid,
+            q.lang,
+            q.description,
+            q.answer,
+            qm.coin,
+            qm.star,
+            qm.emoji,
+            qm.q_type,
+            qm.channel_id,
+            qo.options
         FROM
             question as q
+        JOIN
+            question_meta as qm
+            ON qm.qid=q.qid
         LEFT JOIN
             question_options as qo
             ON qo.qid=q.qid AND qo.lang=q.lang
@@ -153,6 +164,12 @@ async def check_user_already_answered_qid(qid: str, uid: str) -> bool:
         return cur.fetchone()['cnt'] > 0
 
 
+async def check_user_is_staff(uid: str) -> bool:
+    with cursor() as cur:
+        cur.execute('SELECT is_staff FROM profile WHERE uid=%(uid)s', {'uid': uid})
+        return cur.fetchone()['is_staff']
+
+
 async def update_user_rewards(uid: str, add_coin: int, add_star: int) -> bool:
     params = {
         'add_coin': add_coin,
@@ -178,6 +195,7 @@ async def query_user_name(uid: str) -> str:
     with cursor() as cur:
         cur.execute('SELECT name FROM profile WHERE uid=%(uid)s', {'uid': uid})
         return cur.fetchone()['name'] if cur.rowcount > 0 else None
+
 
 # this is called by rank_init() function that should be sync
 def query_all_users_profile() -> dict:

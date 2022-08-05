@@ -2,7 +2,9 @@ import pqdict
 import asyncio
 from  pybot.database import query_user_name, query_all_users_profile
 
+
 rank_pq = pqdict.pqdict(reverse = True)
+
 
 def rank_init():
     user_tbl = query_all_users_profile()
@@ -10,12 +12,13 @@ def rank_init():
         rank_update(user_dt['uid'], user_dt['coin'])
     return
 
-def rank_update (user_id, coin):
+
+def rank_update(user_id, coin):
     user = user_id #str(user_id)
     if user in rank_pq:
         rank_pq.updateitem(user, coin)
     else:
-        rank_pq.additem(user, coin)     
+        rank_pq.additem(user, coin)
     return
 
 
@@ -29,8 +32,8 @@ async def rank_list_h2l() -> list:
 
     return rank_list
 
+
 def rank_test(update):
-    
     rank_init()
     if update == 1:
         rank_update("user#1", 16)
@@ -45,6 +48,3 @@ def rank_test(update):
 
 if __name__ == '__main__':
     rank_test(1)   
-
-
-

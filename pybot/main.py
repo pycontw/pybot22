@@ -1,8 +1,10 @@
 import os
 import toml
 
+
 from pybot import bot
 from pybot.commands import *
+from pybot.schedule_events import run_schedule_events
 
 
 def _parse_token():
@@ -14,8 +16,12 @@ def _parse_token():
 
 
 def main():
-    # bot.run(_parse_token())
-    bot.run('OTgyMjMzNTkyOTc5NjUyNjUw.GK2lOl.3GhwSrl_TH3mzwhvMhY18eDHEdmvwTPpWkc5fY')
+    try:
+        #stop_run_continuously = run_schedule_events()
+        bot.run('OTgyMjMzNTkyOTc5NjUyNjUw.GK2lOl.3GhwSrl_TH3mzwhvMhY18eDHEdmvwTPpWkc5fY')
+    finally:
+        #stop_run_continuously.set()
+        pass
 
 
 if __name__ == '__main__':

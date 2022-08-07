@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from functools import partial
 from typing import Callable
 
@@ -15,8 +16,7 @@ from pybot.database import(
 from pybot.schemas import QuestionType
 from pybot.translation import QUESTION_ANSWERED_REMINDER
 from pybot.views import LanguageSelectionView, SponsorshipQuestionView, GameSelectionView
-from pybot.database import cursor, record_command_event
-from pybot.constants import INIT_GAME_MESSAGES
+from pybot.database import cursor, record_command_event, sync_query_init_messages
 
 from pybot.rank import rank_init
 
@@ -105,19 +105,23 @@ class PyBot22(commands.Bot):
                 'Commands missing required arguments.'
                 f'\nUsage: `{self.command_prefix}{ctx.command.name} {ctx.command.usage}`'
             )
+        elif isinstance(exception, errors.CheckFailure):
+            print(f'Check failure: {str(exception)}')
         else:
             await super().on_command_error(ctx, exception)
 
     async def on_reaction_add(self, reaction: discord.Reaction, user: discord.Member):
+        init_message = sync_query_init_messages()
+
         # Bot itself
         if (
             user.id == self.application_id
-            or (channel_id := reaction.message.channel.id) not in INIT_GAME_MESSAGES
+            or (channel_id := reaction.message.channel.id) not in init_message
         ):
             return
 
         # Check emoji in question pool
-        if reaction.emoji not in INIT_GAME_MESSAGES[channel_id]['emoji_to_qid']:
+        if reaction.emoji not in init_message[channel_id]['emoji_to_qid']:
             await reaction.remove(user)
             return
 
@@ -127,14 +131,16 @@ class PyBot22(commands.Bot):
             client_lang = await _init_lang(user.id, user.name, user.send)
 
         # Get question info dict
-        question_id = INIT_GAME_MESSAGES[channel_id]['emoji_to_qid'][reaction.emoji]
+        question_id = init_message[channel_id]['emoji_to_qid'][reaction.emoji]
         q_info = await query_question(question_id, client_lang)
         msg = q_info['description']
         if already_answered := await check_user_already_answered_qid(question_id, user.id):
             msg += QUESTION_ANSWERED_REMINDER[client_lang]
 
         # Response with different view according to the question type
-        if q_info['q_type'] == QuestionType.TEXT:
+        if q_info['q_type'] == QuestionType.PURE_MESSAGE:
+            await user.send(q_info['description'])
+        elif q_info['q_type'] == QuestionType.TEXT:
             await user.send(
                 msg,
                 view=SponsorshipQuestionView(

@@ -1,11 +1,13 @@
 import os
 import json
 import contextlib
+from typing import Dict, List
+from functools import lru_cache
 
 import MySQLdb
 from MySQLdb.cursors import DictCursor
 
-from pybot.utils import gen_id
+from pybot.utils import gen_id, timed_cache
 
 
 @contextlib.contextmanager
@@ -148,6 +150,36 @@ async def query_question(qid: str, lang: str) -> dict:
     return result
 
 
+@timed_cache(seconds=10)
+def sync_query_init_messages() -> Dict[int, dict]:
+    with cursor() as cur:
+        cur.execute('''
+            SELECT
+                qm.qid,
+                qm.emoji,
+                ch.channel_id,
+                ch.welcome_msg
+            FROM
+                question_meta as qm
+            JOIN
+                channel as ch
+                ON qm.channel_id=ch.channel_id
+        ''')
+        data = cur.fetchall()
+
+    results = {}
+    for d in data:
+        channel_id = int(d['channel_id'])
+        if channel_id not in results:
+            results[channel_id] = {
+                'welcome_msg': d['welcome_msg'],
+                'emoji_to_qid': {},
+            }
+
+        results[channel_id]['emoji_to_qid'][d['emoji']] = d['qid']
+    return results
+
+
 async def check_user_already_answered_qid(qid: str, uid: str) -> bool:
     params = {'qid': qid, 'uid': uid, 'is_correct': True}
     with cursor() as cur:
@@ -164,7 +196,7 @@ async def check_user_already_answered_qid(qid: str, uid: str) -> bool:
         return cur.fetchone()['cnt'] > 0
 
 
-async def check_user_is_staff(uid: str) -> bool:
+def sync_check_user_is_staff(uid: str) -> bool:
     with cursor() as cur:
         cur.execute('SELECT is_staff FROM profile WHERE uid=%(uid)s', {'uid': uid})
         return cur.fetchone()['is_staff']
@@ -204,21 +236,18 @@ def query_all_users_profile() -> dict:
         return cur.fetchall() if cur.rowcount > 0 else None
 
 
-def _init_client(uid: str, name: str):
+async def query_user_rank_by_coin(limit=10) -> List[dict]:
     with cursor() as cur:
         cur.execute('''
-            INSERT INTO profile (uid, name)
-            VALUES (%(uid)s, %(name)s)
-        ''', {'uid': uid, 'name': name})
-
-
-def db_test():
-    #_init_client("12345678", "test1")
-    #_init_client("12345679", "test2")
-
-    user_dict = query_all_users_profile()
-    print(user_dict)
-
-
-if __name__ == '__main__':
-    db_test()        
+            SELECT
+                uid,
+                name,
+                coin
+            FROM
+                profile
+            ORDER BY
+                coin DESC
+            LIMIT
+                %(limit)s
+        ''', {'limit': limit})
+        return cur.fetchall()

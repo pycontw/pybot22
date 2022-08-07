@@ -13,3 +13,4 @@ class QuestionType(BaseEnum):
     TEXT = 'text'
     SELECTION = 'selection'
     QUESTIONARE= 'questionare'
+    PURE_MESSAGE = 'pure_message'

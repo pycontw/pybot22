@@ -225,6 +225,7 @@ class GameSelectionView(discord.ui.View):
                 q_options=self.q_info['options']
             )
         )
+        print('haha')
 
     async def check_ans_and_update_state(self, user_ans: str, interaction: discord.Interaction):
         answer = self.q_info['answer']

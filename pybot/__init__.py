@@ -120,8 +120,15 @@ class PyBot22(commands.Bot):
         ):
             return
 
+        if isinstance(reaction.emoji, str):
+            # Normal emoji
+            emoji = reaction.emoji
+        else:
+            # Custom emoji, which is type of discord.emoji.Emoji
+            emoji = reaction.emoji.name
+
         # Check emoji in question pool
-        if reaction.emoji not in init_message[channel_id]['emoji_to_qid']:
+        if emoji not in init_message[channel_id]['emoji_to_qid']:
             await reaction.remove(user)
             return
 
@@ -131,7 +138,7 @@ class PyBot22(commands.Bot):
             client_lang = await _init_lang(user.id, user.name, user.send)
 
         # Get question info dict
-        question_id = init_message[channel_id]['emoji_to_qid'][reaction.emoji]
+        question_id = init_message[channel_id]['emoji_to_qid'][emoji]
         q_info = await query_question(question_id, client_lang)
         msg = q_info['description']
         if already_answered := await check_user_already_answered_qid(question_id, user.id):

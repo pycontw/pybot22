@@ -86,6 +86,8 @@ async def embed(ctx: commands.Context):
     description = '\n'.join(messages)
     embed = discord.Embed(title='Rankings', description=description)
     embed.set_thumbnail(url=avatar_url)
+
+    ctx.channel = bot.get_channel(1006167895669223546)  # leaderboard channel
     await ctx.send(embed=embed)
 
 
@@ -93,12 +95,38 @@ async def embed(ctx: commands.Context):
 
 _check_is_staff = lambda ctx: sync_check_user_is_staff(ctx.author.id)
 
+CHANNELS_TO_EXCLUDE_FROM_INIT = {
+    1006167895669223546
+}
+
+
+async def _init_leaderbaord_channel(ctx: commands.Context, clear_msgs: bool = False):
+    channel  = bot.get_channel(1006167895669223546)
+    msgs = [msg async for msg in channel.history(oldest_first=True, limit=10)]
+    if clear_msgs:
+        await channel.delete_messages(msgs)
+        msgs = []
+
+    if not msgs:
+        ctx.channel = channel
+        await ctx.send('大地遊戲的排行榜，依照每個人獲得的金幣進行排名，每隔 XX 分鐘更新一次')
+
+
+@bot.command(hidden=True)
+async def init_leaderboard(ctx: commands.Context):
+    await _init_leaderbaord_channel(ctx, clear_msgs=True)
+
+
 @bot.command(hidden=True)
 @commands.check(_check_is_staff)
 async def init_game(ctx: commands.Context):
     init_messages = sync_query_init_messages()
     for target_channel, info_d in init_messages.items():
-        if DEV_ENV and target_channel not in DEV_CHANNELS:
+        if (
+            (DEV_ENV and target_channel not in DEV_CHANNELS)
+            or (not DEV_ENV and target_channel in DEV_CHANNELS)
+            or (target_channel in CHANNELS_TO_EXCLUDE_FROM_INIT)
+        ):
             continue
 
         welcome_msg = info_d['welcome_msg']
@@ -114,9 +142,11 @@ async def init_game(ctx: commands.Context):
             try:
                 await new_msg.add_reaction(emoji)
             except HTTPException:
-                print(bot.get_guild(1000406827491676170).emojis)
-                emoji = discord.utils.get(ctx.guild.emojis, name=emoji)
+                guild = bot.get_guild(1000406827491676170)  # main server
+                emoji = discord.utils.get(guild.emojis, name=emoji)
                 await new_msg.add_reaction(emoji)
+
+    await _init_leaderbaord_channel(ctx)
 
 
 @bot.command(hidden=True)

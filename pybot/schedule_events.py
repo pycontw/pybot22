@@ -2,9 +2,11 @@ import time
 import asyncio
 import threading
 
+import discord
 import schedule
 
 from pybot import bot
+from pybot.database import query_user_rank_by_coin
 
 
 def run_schedule_events(interval=1):
@@ -32,11 +34,22 @@ def task(func):
 
 
 @task
-async def test():
-    channel_id = 997710004087967827
+async def update_leaderboard():
+    channel_id = 1006167895669223546  # leaderboard channel
     channel = bot.get_channel(channel_id)
-    first_msg = [msg async for msg in channel.history(oldest_first=True)][0]
-    await first_msg.reply('⭐')
+    msgs = [msg async for msg in channel.history(oldest_first=True)]
+    if msgs:
+        ranked_users = await query_user_rank_by_coin()
+        messages = []
+        for idx, user_d in enumerate(ranked_users):
+            messages.append(f'#{idx+1} <@{user_d["uid"]}>: {user_d["coin"]}')
+
+        top_one_user = bot.get_user(int(ranked_users[0]['uid']))
+        avatar_url = top_one_user.display_avatar.url
+        description = '\n'.join(messages)
+        embed = discord.Embed(title='Rankings', description=description)
+        embed.set_thumbnail(url=avatar_url)
+        await msgs[0].reply(embed=embed)
 
 
-schedule.every(3).seconds.do(test)
+schedule.every(5).minutes.do(update_leaderboard)

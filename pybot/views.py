@@ -308,6 +308,7 @@ class InitGroupingQ5(BaseInitGroupingView):
         '求神拜佛跪貓貓/Pray to God and cat',
     ]
 
+
 GROUPING_QS = [
     InitGroupingQ1,
     InitGroupingQ2,
@@ -315,3 +316,6 @@ GROUPING_QS = [
     InitGroupingQ4,
     InitGroupingQ5,
 ]
+
+
+## -------- Admin commands -------- ##

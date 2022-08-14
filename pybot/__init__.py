@@ -51,6 +51,11 @@ async def _init_client(ctx):
 async def _init_grouping(user_id: str, send_func):
     timeout_seconds = 180
 
+    await send_func(
+        '請回答以下問題以進行遊戲分組\n' \
+        'Please also answer the following questions for game grouping.'
+    )
+
     for grouping_inst in GROUPING_QS:
         await send_func(
             content=grouping_inst.description,

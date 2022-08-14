@@ -330,7 +330,29 @@ async def _init_grouping(user_id: str, send_func):
 
 @bot.command()
 async def test(ctx: commands.Context):
-    await _init_grouping(ctx.author.id, ctx.send)
+    #await _init_grouping(ctx.author.id, ctx.send)
+    await ctx.send(
+        '填寫 Email 以收到大地遊戲得獎通知～\n' \
+        'Fill your email for receiving game award notification~',
+        view=EmailInputView()
+    )
+
+
+class EmailInputModal(discord.ui.Modal):
+    email_input = discord.ui.TextInput(
+        label='email',
+        placeholder='e.g. pycon.2022@gmail.com',
+        required=True,
+    )
+
+    async def on_submit(self, interaction: discord.Interaction):
+        print(f'Received your email: {self.email_input.value}')
+
+
+class EmailInputView(discord.ui.View):
+    @discord.ui.button(label='開始填寫/Start filling')
+    async def fill_in_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_modal(EmailInputModal(title='Email Filling Form'))
 
 
 TOKEN = 'OTgyMjMzNTkyOTc5NjUyNjUw.GK2lOl.3GhwSrl_TH3mzwhvMhY18eDHEdmvwTPpWkc5fY'

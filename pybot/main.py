@@ -2,7 +2,7 @@ import os
 import toml
 
 
-from pybot import bot
+from pybot import bot, test_bot
 from pybot.commands import *
 from pybot.schedule_events import run_schedule_events
 
@@ -17,10 +17,10 @@ def _parse_token():
 
 def main():
     try:
-        stop_run_continuously = run_schedule_events()
+        #stop_run_continuously = run_schedule_events()
         bot.run('OTgyMjMzNTkyOTc5NjUyNjUw.GK2lOl.3GhwSrl_TH3mzwhvMhY18eDHEdmvwTPpWkc5fY')
     finally:
-        stop_run_continuously.set()
+        #stop_run_continuously.set()
         pass
 
 

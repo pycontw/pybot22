@@ -1,2 +1,5 @@
 discord.py
 python-ulid
+toml
+sqlclient
+pqdict

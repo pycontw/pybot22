@@ -1,5 +1,6 @@
+import time
 import asyncio
-import logging
+import random
 from functools import partial
 from typing import Callable
 
@@ -15,7 +16,12 @@ from pybot.database import(
 )
 from pybot.schemas import QuestionType
 from pybot.translation import QUESTION_ANSWERED_REMINDER
-from pybot.views import LanguageSelectionView, SponsorshipQuestionView, GameSelectionView
+from pybot.views import (
+    LanguageSelectionView,
+    SponsorshipQuestionView,
+    GameSelectionView,
+    GROUPING_QS,
+)
 from pybot.database import cursor, record_command_event, sync_query_init_messages
 
 from pybot.rank import rank_init
@@ -42,7 +48,23 @@ async def _init_client(ctx):
     )
 
 
-async def _init_lang(user_id: str, user_name: str, send_func: Callable):
+async def _init_grouping(user_id: str, send_func):
+    timeout_seconds = 180
+
+    for grouping_inst in GROUPING_QS:
+        await send_func(
+            content=grouping_inst.description,
+            view=grouping_inst(timeout=timeout_seconds),
+        )
+
+    group = random.choice(['Cat', 'Dog', 'Bird'])
+    await send_func(
+        f'根據你的回答，你被分配到 **{group}** 組\n' \
+        f'According to your answer, you are distributed to group **{group}**.'
+    )
+
+
+async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Callable):
     with cursor() as cur:
         cur.execute('''
             INSERT INTO profile (uid, name)
@@ -54,7 +76,8 @@ async def _init_lang(user_id: str, user_name: str, send_func: Callable):
             'Hi hi :wave: Please select your language first.',
         view=LanguageSelectionView(uid=user_id, sync_update=True),
     )
-    
+    await _init_grouping(user_id, send_func)
+
     idx = 50
     client_lang = None
     while idx > 0 and not client_lang:
@@ -86,7 +109,7 @@ class PyBot22(commands.Bot):
         client_lang = await check_client_has_lang(ctx.author.id)
         if ctx.invoked_with:
             if not client_lang:
-                client_lang = await _init_lang(
+                client_lang = await _init_lang_and_grouping(
                     ctx.author.id,
                     ctx.author.name,
                     partial(ctx.send, ephemeral=True),
@@ -135,7 +158,7 @@ class PyBot22(commands.Bot):
         # Init profile and language if first time
         client_lang = await check_client_has_lang(user.id)
         if not client_lang:
-            client_lang = await _init_lang(user.id, user.name, user.send)
+            client_lang = await _init_lang_and_grouping(user.id, user.name, user.send)
 
         # Get question info dict
         question_id = init_message[channel_id]['emoji_to_qid'][emoji]

@@ -11,6 +11,7 @@ class BaseEnum(enum.Enum):
 
 class QuestionType(BaseEnum):
     TEXT = 'text'
-    SELECTION = 'selection'
+    SELECTION = 'selection'  # Will show the full text of every option.
+    OPTION_ONLY = 'option_only'  # Will only show A, B, C, and D.
     QUESTIONARE= 'questionare'
     PURE_MESSAGE = 'pure_message'

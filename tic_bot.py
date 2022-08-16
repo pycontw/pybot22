@@ -1,5 +1,9 @@
 import toml
+import time
+import asyncio
+import random
 from typing import List, Optional
+
 from discord.ext import commands
 import discord
 
@@ -247,6 +251,108 @@ async def chan_kan_pon(
 @bot.command()
 async def answer(ctx):
     await ctx.send('hahaha', view=DropdownView())
+
+
+## -------- Initialize Group Test -------- ##
+
+class InitGroupButton(discord.ui.Button):
+    async def callback(self, interaction: discord.Interaction):
+        view = self.view
+        for children in view.children:
+            children.style = discord.ButtonStyle.grey
+
+        self.style = discord.ButtonStyle.green
+        await interaction.response.edit_message(view=view)
+
+
+class BaseInitGroupingView(discord.ui.View):
+    description = ''
+    lables = []
+
+    def __init__(self, timeout: int = 180):
+        super().__init__(timeout=timeout)
+        for label in self.labels:
+            self.add_item(InitGroupButton(label=label))
+
+
+class InitGroupingQ1(BaseInitGroupingView):
+    description = '哪個程式語言最讚?\nWhich programming language is the best?'
+    labels = ['Java', 'Python', 'JavaScript']
+
+
+class InitGroupingQ2(BaseInitGroupingView):
+    description = '喜歡哪種食物?\nWhich food do you like more?'
+    labels = ['披薩/Pizza', '小籠包/xiaolongbao (soup dumplings)', '壽司/Sushi']
+
+
+class InitGroupingQ3(BaseInitGroupingView):
+    description = '夢想成為...?\nDream to be a...?'
+    labels = ['海賊王/Pirate king', '世界富豪/Magnate', '貓咪/Cat']
+
+
+class InitGroupingQ4(BaseInitGroupingView):
+    description = '最想擁有...?\nWish to have...?'
+    labels = ['阿拉丁神燈/Aladdin\'s lamp', '妹妹/Younger sister', '貓咪/Cat']
+
+
+class InitGroupingQ5(BaseInitGroupingView):
+    description = '當程式寫不出來的時候你會...?\nWhat would do while you stuck in coding...?'
+    labels = [
+        '蹲在馬桶上思考 20 分鐘/Sit on the toilet and think for 20 minutes',
+        '先睡一個小時的午覺/Take an 1-hour nap',
+        '求神拜佛跪貓貓/Pray to God and cat',
+    ]
+
+
+async def _init_grouping(user_id: str, send_func):
+    timeout_seconds = 180
+
+    questions = [
+        InitGroupingQ1,
+        InitGroupingQ2,
+        InitGroupingQ3,
+        InitGroupingQ4,
+        InitGroupingQ5,
+    ]
+
+    for grouping_inst in questions:
+        await send_func(
+            content=grouping_inst.description,
+            view=grouping_inst(timeout=timeout_seconds),
+        )
+
+    group = random.choice(['Cat', 'Dog', 'Bird'])
+    await send_func(
+        f'根據你的回答，你被分配到 **{group}** 組\n' \
+        f'According to your answer, you are distributed to group **{group}**.'
+    )
+
+
+@bot.command()
+async def test(ctx: commands.Context):
+    #await _init_grouping(ctx.author.id, ctx.send)
+    await ctx.send(
+        '填寫 Email 以收到大地遊戲得獎通知～\n' \
+        'Fill your email for receiving game award notification~',
+        view=EmailInputView()
+    )
+
+
+class EmailInputModal(discord.ui.Modal):
+    email_input = discord.ui.TextInput(
+        label='email',
+        placeholder='e.g. pycon.2022@gmail.com',
+        required=True,
+    )
+
+    async def on_submit(self, interaction: discord.Interaction):
+        print(f'Received your email: {self.email_input.value}')
+
+
+class EmailInputView(discord.ui.View):
+    @discord.ui.button(label='開始填寫/Start filling')
+    async def fill_in_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_modal(EmailInputModal(title='Email Filling Form'))
 
 
 TOKEN = 'OTgyMjMzNTkyOTc5NjUyNjUw.GK2lOl.3GhwSrl_TH3mzwhvMhY18eDHEdmvwTPpWkc5fY'

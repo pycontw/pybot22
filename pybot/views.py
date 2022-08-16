@@ -2,6 +2,7 @@ from typing import Dict
 
 import discord
 
+from pybot.schemas import QuestionType
 from pybot.database import (
     update_client_lang,
     record_answer_event,
@@ -126,6 +127,8 @@ class LanguageSelectionView(discord.ui.View):
         self.add_item(LanguageButton(resp_copy=en_copy, label='English'))
 
 
+## -------- Booth game section -------- ##
+
 class SponsorshipQuestionModal(discord.ui.Modal):
     answer_input = discord.ui.TextInput(label='Answer', style=discord.TextStyle.short)
 
@@ -196,10 +199,15 @@ class SponsorshipQuestionView(discord.ui.View):
 
 
 class GameDropdown(discord.ui.Select):
-    def __init__(self, placeholder: str, q_options: Dict[str, str]):
+    def __init__(self, placeholder: str, q_options: Dict[str, str], q_type: QuestionType):
         options = []
-        for opt in q_options.values():
-            options.append(discord.SelectOption(label=opt))
+        for opt_key, opt_val in q_options.items():
+            label = (
+                opt_key
+                if q_type == QuestionType.OPTIONS_ONLY
+                else opt_val
+            )
+            options.append(discord.SelectOption(label=label))
 
         super().__init__(placeholder=placeholder, options=options)
 
@@ -228,7 +236,6 @@ class GameSelectionView(discord.ui.View):
         # TODO, add input for others options
         #if self.q_info['q_type'] == QuestionType.QUESTIONARE:
             #self.others_input=discord.ui.TextInput(label='Others', style=discord.TextStyle.short)
-
         print('haha')
 
     async def check_ans_and_update_state(self, user_ans: str, interaction: discord.Interaction):
@@ -256,3 +263,66 @@ class GameSelectionView(discord.ui.View):
         #if user_ans == "Others":
             #user_ans = self.others_input.value
         await record_answer_event(self.q_info['qid'], interaction.user.id, user_ans, is_correct)
+
+
+## -------- Question views when initialization -------- ##
+
+class InitGroupButton(discord.ui.Button):
+    async def callback(self, interaction: discord.Interaction):
+        view = self.view
+        for children in view.children:
+            children.style = discord.ButtonStyle.grey
+
+        self.style = discord.ButtonStyle.green
+        await interaction.response.edit_message(view=view)
+
+
+class BaseInitGroupingView(discord.ui.View):
+    description = ''
+    lables = []
+
+    def __init__(self, timeout: int = 180):
+        super().__init__(timeout=timeout)
+        for label in self.labels:
+            self.add_item(InitGroupButton(label=label))
+
+
+class InitGroupingQ1(BaseInitGroupingView):
+    description = '哪個程式語言最讚?\nWhich programming language is the best?'
+    labels = ['Java', 'Python', 'JavaScript']
+
+
+class InitGroupingQ2(BaseInitGroupingView):
+    description = '喜歡哪種食物?\nWhich food do you like more?'
+    labels = ['披薩/Pizza', '小籠包/xiaolongbao (soup dumplings)', '壽司/Sushi']
+
+
+class InitGroupingQ3(BaseInitGroupingView):
+    description = '夢想成為...?\nDream to be a...?'
+    labels = ['海賊王/Pirate king', '世界富豪/Magnate', '貓咪/Cat']
+
+
+class InitGroupingQ4(BaseInitGroupingView):
+    description = '最想擁有...?\nWish to have...?'
+    labels = ['阿拉丁神燈/Aladdin\'s lamp', '妹妹/Younger sister', '貓咪/Cat']
+
+
+class InitGroupingQ5(BaseInitGroupingView):
+    description = '當程式寫不出來的時候你會...?\nWhat would do while you stuck in coding...?'
+    labels = [
+        '蹲在馬桶上思考 20 分鐘/Sit on the toilet and think for 20 minutes',
+        '先睡一個小時的午覺/Take an 1-hour nap',
+        '求神拜佛跪貓貓/Pray to God and cat',
+    ]
+
+
+GROUPING_QS = [
+    InitGroupingQ1,
+    InitGroupingQ2,
+    InitGroupingQ3,
+    InitGroupingQ4,
+    InitGroupingQ5,
+]
+
+
+## -------- Admin commands -------- ##

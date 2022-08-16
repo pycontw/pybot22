@@ -4,8 +4,8 @@ import contextlib
 from typing import Dict, List
 from functools import lru_cache
 
-import MySQLdb
-from MySQLdb.cursors import DictCursor
+#import MySQLdb
+#from MySQLdb.cursors import DictCursor
 
 from pybot.utils import gen_id, timed_cache
 

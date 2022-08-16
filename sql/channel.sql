@@ -1,4 +1,4 @@
-USE pybot22;
+USE pycon22;
 
 CREATE TABLE `channel` (
     `channel_id` VARCHAR(19) PRIMARY KEY,

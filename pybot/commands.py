@@ -6,7 +6,7 @@ from discord.errors import HTTPException
 
 from pybot import bot
 from pybot.settings import DEV_ENV, DEV_CHANNELS
-from pybot.database import query_user_rank_by_coin, sync_query_init_messages, sync_check_user_is_staff, update_user_rewards
+from pybot.database import query_user_has_starts, query_user_rank_by_coin, sync_query_init_messages, sync_check_user_is_staff, update_user_rewards
 from pybot.translation import COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG
 from pybot.views import (
     CKPDropdownView,
@@ -162,3 +162,35 @@ async def staff_add_score(ctx: commands.Context, member: discord.Member, add_coi
 @commands.check(_check_is_staff)
 async def staff_add_question(ctx: commands.Context):
     print('yeah')
+
+
+@bot.command(hidden=True)
+@commands.check(_check_is_staff)
+async def user_lotto(ctx: commands.Context, reward_n: int):
+    # reward_n: numbers of rewards, the first 1 is the first reward, etc
+    result = await query_user_has_starts(800, 5)
+    total_stars = 0
+    reward_list = []
+    for user in result:
+        total_stars += user["star"]
+
+    for i in range(reward_n):
+        rand = random.randint(1, total_stars)
+        #print(f'total_stars: {total_stars}')
+        #print(f'random_pick: {rand}')
+        star_n = 0
+        for user in result:
+            star_n += user["star"]
+            if star_n >= rand:
+                reward_list.append(user)
+                total_stars -= user["star"]
+                result.remove(user)
+                break
+    #print(f'reward_1-{reward_n}: {reward_list}')
+    messages = []
+    for idx, user_d in enumerate(reward_list):
+        messages.append(f'#{idx+1} <@{user_d["uid"]}>')
+
+    description = '\n'.join(messages)
+    embed = discord.Embed(title='Sponsor Rewards', description=description)
+    await ctx.send(embed=embed)

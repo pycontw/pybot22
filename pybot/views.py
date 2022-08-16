@@ -14,7 +14,7 @@ from pybot.translation import (
     CORRECT_ANSWER_RESPONSE,
     WRONG_ANSWER_RESPONSE,
 )
-
+from pybot.schemas import QuestionType
 from pybot.rank import rank_update
 
 # CKP: short for Chan Kan Pon (Japanese of paper scissors stone game)
@@ -225,11 +225,15 @@ class GameSelectionView(discord.ui.View):
                 q_options=self.q_info['options']
             )
         )
+        # TODO, add input for others options
+        #if self.q_info['q_type'] == QuestionType.QUESTIONARE:
+            #self.others_input=discord.ui.TextInput(label='Others', style=discord.TextStyle.short)
+
         print('haha')
 
     async def check_ans_and_update_state(self, user_ans: str, interaction: discord.Interaction):
         answer = self.q_info['answer']
-        if user_ans == answer:
+        if user_ans == answer or self.q_info['q_type'] == QuestionType.QUESTIONARE:
             # Calculate rewards
             reward_coin = int(max(1, self.q_info['coin'] * pow(0.5, self.answer_counts)))
 
@@ -248,4 +252,7 @@ class GameSelectionView(discord.ui.View):
             is_correct = False
             self.answer_counts += 1
         await interaction.response.send_message(resp_msg)
+        # TODO, add input for others options
+        #if user_ans == "Others":
+            #user_ans = self.others_input.value
         await record_answer_event(self.q_info['qid'], interaction.user.id, user_ans, is_correct)

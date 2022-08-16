@@ -6,5 +6,5 @@ CREATE TABLE `question_options` (
     `options` JSON NOT NULL,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY (`qid`, `option_id`, `lang`)
+    PRIMARY KEY (`qid`, `lang`)
 );

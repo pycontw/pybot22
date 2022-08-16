@@ -4,25 +4,33 @@ from  pybot.database import query_user_name, query_all_users_profile
 
 
 rank_pq = pqdict.pqdict(reverse = True)
-
+# disable user_rank that yoyo use another way to implement leader board
+rank_enabled = False
 
 def rank_init():
+    if rank_enabled != True:
+        return 
+
     user_tbl = query_all_users_profile()
     for user_dt in user_tbl:
         rank_update(user_dt['uid'], user_dt['coin'])
     return
 
 
-def rank_update(user_id, coin):
+def rank_update (user_id, coin):
+    if rank_enabled != True:
+        return 
     user = user_id #str(user_id)
     if user in rank_pq:
         rank_pq.updateitem(user, coin)
     else:
-        rank_pq.additem(user, coin)
+        rank_pq.additem(user, coin)     
     return
 
 
 async def rank_list_h2l() -> list:
+    if rank_enabled != True:
+        return 
     rank_list = [] #use list for ordered iteration
     _rank_pq_copy = rank_pq.copy()
     for user in _rank_pq_copy.popkeys():

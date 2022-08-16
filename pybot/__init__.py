@@ -12,6 +12,7 @@ from pybot.database import(
     query_question,
     check_user_already_answered_qid,
     record_reaction_event,
+    get_next_user_questionare_qid,
 )
 from pybot.schemas import QuestionType
 from pybot.translation import QUESTION_ANSWERED_REMINDER
@@ -140,7 +141,14 @@ class PyBot22(commands.Bot):
         # Get question info dict
         question_id = init_message[channel_id]['emoji_to_qid'][emoji]
         q_info = await query_question(question_id, client_lang)
+
+        if q_info['q_type'] == QuestionType.QUESTIONARE:   
+            q2a = await get_next_user_questionare_qid(str(user.id), str(channel_id), q_info['q_type']) 
+            question_id = q2a['qid']
+            q_info = await query_question(question_id, client_lang)
+
         msg = q_info['description']
+
         if already_answered := await check_user_already_answered_qid(question_id, user.id):
             msg += QUESTION_ANSWERED_REMINDER[client_lang]
 
@@ -168,7 +176,15 @@ class PyBot22(commands.Bot):
                 )
             )
         elif q_info['q_type'] == QuestionType.QUESTIONARE:
-            ...
+            await user.send(
+                msg,
+                view=GameSelectionView(
+                    q_info=q_info,
+                    user=user,
+                    lang=client_lang,
+                    already_answered=already_answered,
+                )
+            )
 
         # Clear the reaction
         await reaction.remove(user)

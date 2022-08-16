@@ -4,8 +4,8 @@ import contextlib
 from typing import Dict, List
 from functools import lru_cache
 
-#import MySQLdb
-#from MySQLdb.cursors import DictCursor
+import MySQLdb
+from MySQLdb.cursors import DictCursor
 
 from pybot.utils import gen_id, timed_cache
 
@@ -292,7 +292,9 @@ async def get_next_user_questionare_qid(uid: str, channel_id: str, q_type) -> di
     for _q in q_table:
         ans = await check_user_already_answered_qid(_q['qid'], uid)
         if ans != True:
-            break 
+            break
+    if ans == True:
+        _q['qid'] = 'u_qa_finished'
     return _q  
 
 def import_questions(q_table: list):

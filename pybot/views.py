@@ -148,7 +148,7 @@ class SponsorshipQuestionModal(discord.ui.Modal):
     async def on_submit(self, interaction: discord.Interaction):
         user_ans = self.answer_input.value
         answer = self.q_info['answer']
-        if user_ans == answer:
+        if user_ans == answer or self.q_info['q_type'] == QuestionType.QUESTIONARE:
             resp_msg = CORRECT_ANSWER_RESPONSE[self.lang]
             if not self.trigger_view.already_answered:
                 reward_msg = CORRECT_ANSWER_REWARD_MSG[self.lang].format(
@@ -204,7 +204,7 @@ class GameDropdown(discord.ui.Select):
         for opt_key, opt_val in q_options.items():
             label = (
                 opt_key
-                if q_type == QuestionType.OPTIONS_ONLY
+                if q_type == QuestionType.OPTION_ONLY
                 else opt_val
             )
             options.append(discord.SelectOption(label=label))
@@ -230,13 +230,12 @@ class GameSelectionView(discord.ui.View):
         self.add_item(
             GameDropdown(
                 placeholder='Click Me!',
-                q_options=self.q_info['options']
+                q_options=self.q_info['options'],
+                q_type=self.q_info['q_type']
             )
         )
-        # TODO, add input for others options
-        #if self.q_info['q_type'] == QuestionType.QUESTIONARE:
-            #self.others_input=discord.ui.TextInput(label='Others', style=discord.TextStyle.short)
-        print('haha')
+           
+        # print('haha')
 
     async def check_ans_and_update_state(self, user_ans: str, interaction: discord.Interaction):
         answer = self.q_info['answer']
@@ -258,10 +257,18 @@ class GameSelectionView(discord.ui.View):
             resp_msg = WRONG_ANSWER_RESPONSE[self.lang]
             is_correct = False
             self.answer_counts += 1
-        await interaction.response.send_message(resp_msg)
-        # TODO, add input for others options
-        #if user_ans == "Others":
-            #user_ans = self.others_input.value
+
+        if (user_ans != "Others") & (user_ans != "其他"):  
+            await interaction.response.send_message(resp_msg)
+        else:
+            await interaction.response.send_modal(
+                SponsorshipQuestionModal(
+                    q_info=self.q_info,
+                    user=self.user, 
+                    lang=self.lang,
+                    trigger_view=self,
+                )
+            )
         await record_answer_event(self.q_info['qid'], interaction.user.id, user_ans, is_correct)
 
 

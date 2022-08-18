@@ -2,7 +2,7 @@ import os
 import toml
 
 
-from pybot import bot, test_bot
+from pybot import bot
 from pybot.commands import *
 from pybot.schedule_events import run_schedule_events
 

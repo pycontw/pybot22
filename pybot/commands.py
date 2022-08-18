@@ -160,5 +160,17 @@ async def staff_add_score(ctx: commands.Context, member: discord.Member, add_coi
 
 @bot.command(hidden=True)
 @commands.check(_check_is_staff)
+async def sync_channel_msg(ctx: commands.Context, channel_id: int):
+    channel = bot.get_channel(channel_id)
+    init_messages = sync_query_init_messages()
+    channel_msg = init_messages[channel_id]
+    msgs = [msg async for msg in channel.history(oldest_first=True)]
+    print(len(msgs[1].content), type(msgs[1].content))
+    print(msgs[1].attachments)
+
+
+
+@bot.command(hidden=True)
+@commands.check(_check_is_staff)
 async def staff_add_question(ctx: commands.Context):
     print('yeah')

@@ -3,3 +3,4 @@ python-ulid
 toml
 sqlclient
 pqdict
+mosql

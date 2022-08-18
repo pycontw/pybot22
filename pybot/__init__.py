@@ -23,8 +23,12 @@ from pybot.views import (
     GameSelectionView,
     GROUPING_QS,
 )
-from pybot.database import cursor, record_command_event, sync_query_init_messages
-
+from pybot.database import (
+    cursor,
+    record_command_event,
+    sync_query_init_messages,
+    query_next_questionnaire,
+)
 from pybot.rank import rank_init
 
 
@@ -99,7 +103,7 @@ class PyBot22(commands.Bot):
 
         # Register init_client to the command
         self._init_command = self.command(name='init_client', hidden=True)(_init_client)
-        
+
         rank_init()
 
     async def get_context(self, message, *, cls=PyBot22Context):
@@ -156,6 +160,8 @@ class PyBot22(commands.Bot):
             # Custom emoji, which is type of discord.emoji.Emoji
             emoji = reaction.emoji.name
 
+        print(reaction.emoji)
+
         # Check emoji in question pool
         if emoji not in init_message[channel_id]['emoji_to_qid']:
             await reaction.remove(user)
@@ -171,13 +177,19 @@ class PyBot22(commands.Bot):
         q_info = await query_question(question_id, client_lang)
 
         if q_info['q_type'] == QuestionType.QUESTIONARE:   
-            q2a = await get_next_user_questionare_qid(str(user.id), str(channel_id), q_info['q_type']) 
-            question_id = q2a['qid']
-            q_info = await query_question(question_id, client_lang)
+            q_info = await query_next_questionnaire()
+            if not q_info:
+                await user.send('You have already answered all questionnaires~')
+                return
+        elif q_info['q_type'] == QuestionType.SERVICE:
+            # Actually not a question, but command utility.
+            pass
 
         msg = q_info['description']
-
-        if already_answered := await check_user_already_answered_qid(question_id, user.id):
+        if (
+            q_info['q_type'] != QuestionType.QUESTIONARE
+            and (already_answered := await check_user_already_answered_qid(question_id, user.id))
+        ):
             msg += QUESTION_ANSWERED_REMINDER[client_lang]
 
         # Response with different view according to the question type

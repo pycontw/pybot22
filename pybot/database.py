@@ -147,7 +147,56 @@ async def query_question(qid: str, lang: str) -> dict:
         result = cur.fetchone()
     if result and result['options']:
         result['options'] = json.loads(result['options'])
-    #print(result)      
+    return result
+
+
+async def query_next_questionnaire(uid: str, lang: str) -> dict:
+    params = {'lang': lang, 'uid': uid}
+    with cursor() as cur:
+        cur.execute('''
+            SELECT
+                q.qid,
+                q.lang,
+                q.description,
+                q.answer,
+                qm.coin,
+                qm.star,
+                qm.emoji,
+                qm.q_type,
+                qm.channel_id,
+                qo.options
+            FROM
+                question as q
+            JOIN
+                question_meta as qm
+                ON qm.qid=q.qid
+            LEFT JOIN
+                question_options as qo
+                ON qo.qid=q.qid AND qo.lang=q.lang
+            WHERE
+                q.qid LIKE "u_qa_%%"
+                AND q.lang=%(lang)s
+                AND q.qid not in (
+                    SELECT qid
+                    FROM question as q
+                    LEFT JOIN
+                        answer_event as ans
+                        ON ans.question_id=q.qid
+                    WHERE
+                        ans.uid=%(uid)s
+                        AND q.qid LIKE "u_qa_%%"
+                )
+            ORDER BY
+                q.qid
+            LIMIT 1
+        ''', params)
+        result = cur.fetchone()
+
+    if not result:
+        # Already finished answering all questionnaires.
+        return None
+
+    result['options'] = json.loads(result['options'])
     return result
 
 
@@ -161,9 +210,9 @@ def sync_query_init_messages() -> Dict[int, dict]:
                 ch.channel_id,
                 ch.welcome_msg
             FROM
-                question_meta as qm
-            JOIN
                 channel as ch
+            LEFT JOIN
+                question_meta as qm
                 ON qm.channel_id=ch.channel_id
         ''')
         data = cur.fetchall()
@@ -253,6 +302,7 @@ async def query_user_rank_by_coin(limit=10) -> List[dict]:
         ''', {'limit': limit})
         return cur.fetchall()
 
+
 async def query_user_has_starts(limit=200, low_bound=5) -> List[dict]:
     with cursor() as cur:
         cur.execute('''
@@ -269,6 +319,7 @@ async def query_user_has_starts(limit=200, low_bound=5) -> List[dict]:
         ''', {'limit': limit, 'low_bound': low_bound})
         return cur.fetchall()
 
+
 async def get_channel_questionare_table(channel_id: str, q_type: str) -> List[dict]:
     with cursor() as cur:
         cur.execute('''
@@ -284,6 +335,7 @@ async def get_channel_questionare_table(channel_id: str, q_type: str) -> List[di
         ''', {'channel_id': channel_id, 'q_type': q_type})
         return cur.fetchall()
 
+
 async def get_next_user_questionare_qid(uid: str, channel_id: str, q_type) -> dict:
 
     q_table = await get_channel_questionare_table(channel_id, q_type)
@@ -296,24 +348,3 @@ async def get_next_user_questionare_qid(uid: str, channel_id: str, q_type) -> di
     if ans == True:
         _q['qid'] = 'u_qa_finished'
     return _q  
-
-def import_questions(q_table: list):
-
-    for _q in q_table:
-        with cursor() as cur:
-            cur.execute('''
-                REPLACE INTO question (qid, lang, description, answer)
-                VALUES (%(qid)s, %(lang)s, %(description)s, %(answer)s)
-            ''', {'qid': _q['qid'], 'lang': _q['lang'], 'description': _q['description'], 'answer': _q['answer']})
-
-            cur.execute('''
-                REPLACE INTO question_meta (qid, emoji, coin, star, q_type, channel_id)
-                VALUES (%(qid)s, %(emoji)s, %(coin)s, %(star)s, %(q_type)s, %(channel_id)s)
-            ''', {'qid': _q['qid'], 'emoji': _q['emoji'], 'coin': _q['coin'], 'star': _q['star'], 'q_type': _q['q_type'], 'channel_id': _q['channel_id']})    
-    
-            cur.execute('''
-                REPLACE INTO question_options (qid, lang, options)
-                VALUES (%(qid)s, %(lang)s, %(options)s)
-            ''', {'qid': _q['qid'], 'lang': _q['lang'], 'options': _q['options']})  
-
-    return

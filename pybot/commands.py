@@ -6,7 +6,13 @@ from discord.errors import HTTPException
 
 from pybot import bot
 from pybot.settings import DEV_ENV, DEV_CHANNELS
-from pybot.database import query_user_has_starts, query_user_rank_by_coin, sync_query_init_messages, sync_check_user_is_staff, update_user_rewards
+from pybot.database import (
+    query_user_has_starts,
+    query_user_rank_by_coin,
+    sync_query_init_messages,
+    sync_check_user_is_staff,
+    update_user_rewards
+)
 from pybot.translation import COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG
 from pybot.views import (
     CKPDropdownView,
@@ -139,6 +145,8 @@ async def init_game(ctx: commands.Context):
         ctx.channel = channel
         new_msg = await ctx.send(welcome_msg)
         for emoji in info_d['emoji_to_qid']:
+            if emoji is None:
+                continue
             try:
                 await new_msg.add_reaction(emoji)
             except HTTPException:

@@ -15,3 +15,4 @@ class QuestionType(BaseEnum):
     OPTION_ONLY = 'option_only'  # Will only show A, B, C, and D.
     QUESTIONARE= 'questionare'
     PURE_MESSAGE = 'pure_message'
+    SERVICE = 'service'

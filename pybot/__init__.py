@@ -13,7 +13,6 @@ from pybot.database import(
     query_question,
     check_user_already_answered_qid,
     record_reaction_event,
-    get_next_user_questionare_qid,
 )
 from pybot.schemas import QuestionType
 from pybot.translation import QUESTION_ANSWERED_REMINDER
@@ -215,7 +214,7 @@ class PyBot22(commands.Bot):
                     already_answered=already_answered,
                 )
             )
-        elif q_info['q_type'] == QuestionType.SELECTION:
+        elif q_info['q_type'] in (QuestionType.SELECTION, QuestionType.OPTION_ONLY):
             await user.send(
                 msg,
                 view=GameSelectionView(

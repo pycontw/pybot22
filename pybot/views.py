@@ -6,6 +6,7 @@ from pybot.schemas import QuestionType
 from pybot.database import (
     update_client_lang,
     record_answer_event,
+    update_client_email,
     sync_update_client_lang,
     update_user_rewards,
 )
@@ -330,6 +331,24 @@ GROUPING_QS = [
     InitGroupingQ4,
     InitGroupingQ5,
 ]
+
+
+class EmailInputModal(discord.ui.Modal):
+    email_input = discord.ui.TextInput(
+        label='email',
+        placeholder='e.g. pycon.2022@gmail.com',
+        required=True,
+    )
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await update_client_email(interaction.user.id, self.email_input.value)
+        await interaction.response.send_message(f'Received your email: {self.email_input.value}')
+
+
+class EmailInputView(discord.ui.View):
+    @discord.ui.button(label='開始填寫/Start filling')
+    async def fill_in_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_modal(EmailInputModal(title='Email Filling Form'))
 
 
 ## -------- Admin commands -------- ##

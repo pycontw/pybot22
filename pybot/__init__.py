@@ -22,6 +22,7 @@ from pybot.views import (
     SponsorshipQuestionView,
     GameSelectionView,
     GROUPING_QS,
+    EmailInputView,
 )
 from pybot.database import (
     cursor,
@@ -53,12 +54,12 @@ async def _init_client(ctx):
     )
 
 
-async def _init_grouping(user_id: str, send_func):
+async def _init_grouping(user_id: str, send_func) -> str:
     timeout_seconds = 180
 
     await send_func(
-        '請回答以下問題以進行遊戲分組\n' \
-        'Please also answer the following questions for game grouping.'
+        '在正式開始前先來做個小測驗吧～\n' \
+        'Before starting, let\'t have a small test first~'
     )
 
     for grouping_inst in GROUPING_QS:
@@ -67,11 +68,12 @@ async def _init_grouping(user_id: str, send_func):
             view=grouping_inst(timeout=timeout_seconds),
         )
 
-    group = random.choice(['Cat', 'Dog', 'Bird'])
+    group = random.choice(['Red', 'Yellow', 'Blue'])
     await send_func(
         f'根據你的回答，你被分配到 **{group}** 組\n' \
         f'According to your answer, you are distributed to group **{group}**.'
     )
+    return group
 
 
 async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Callable):
@@ -86,7 +88,15 @@ async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Calla
             'Hi hi :wave: Please select your language first.',
         view=LanguageSelectionView(uid=user_id, sync_update=True),
     )
-    await _init_grouping(user_id, send_func)
+    await send_func(
+        '填寫 Email 以收到大地遊戲得獎通知～\n' \
+        'Fill your email for receiving game award notification~',
+        view=EmailInputView(),
+    )
+    group = await _init_grouping(user_id, send_func)
+    with cursor() as cur:
+        params = {'group': group, 'uid': user_id}
+        cur.execute('UPDATE profile SET team=%(group)s WHERE uid=%(uid)s', params)
 
     idx = 50
     client_lang = None

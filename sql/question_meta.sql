@@ -2,7 +2,7 @@ USE pycon22;
 
 CREATE TABLE `question_meta` (
     `qid` VARCHAR(32) NOT NULL PRIMARY KEY,
-    `emoji` VARCHAR(1) NOT NULL,
+    `emoji` VARCHAR(32) NOT NULL,
     `coin` SMALLINT UNSIGNED DEFAULT 0,
     `star` SMALLINT UNSIGNED DEFAULT 0,
     `q_type` VARCHAR(16) NOT NULL,

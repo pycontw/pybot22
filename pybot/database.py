@@ -105,6 +105,12 @@ async def check_client_has_lang(uid: str) -> str:
         return cur.fetchone()['lang'] if cur.rowcount > 0 else None
 
 
+async def update_client_email(uid: str, email: str):
+    with cursor() as cur:
+        params = {'uid': uid, 'email': email}
+        cur.execute('UPDATE profile SET email=%(email)s WHERE uid=%(uid)s', params)
+
+
 async def update_client_lang(uid: str, lang: str):
     params = {'lang': lang, 'uid': uid}
     with cursor() as cur:

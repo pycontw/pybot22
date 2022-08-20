@@ -6,6 +6,6 @@ CREATE TABLE `question_meta` (
     `coin` SMALLINT UNSIGNED DEFAULT 0,
     `star` SMALLINT UNSIGNED DEFAULT 0,
     `q_type` VARCHAR(16) NOT NULL,
-    `channel_id` VARCHAR(19) NOT NULL,
+    `channel_id` VARCHAR(19) NULL,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

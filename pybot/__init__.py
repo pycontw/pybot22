@@ -186,7 +186,7 @@ class PyBot22(commands.Bot):
         q_info = await query_question(question_id, client_lang)
 
         if q_info['q_type'] == QuestionType.QUESTIONARE:   
-            q_info = await query_next_questionnaire()
+            q_info = await query_next_questionnaire(str(user.id), client_lang)
             if not q_info:
                 await user.send('You have already answered all questionnaires~')
                 return
@@ -231,7 +231,7 @@ class PyBot22(commands.Bot):
                     q_info=q_info,
                     user=user,
                     lang=client_lang,
-                    already_answered=already_answered,
+                    already_answered=False,
                 )
             )
 

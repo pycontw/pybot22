@@ -1,4 +1,3 @@
-import time
 import asyncio
 import random
 from functools import partial
@@ -20,7 +19,7 @@ from pybot.views import (
     LanguageSelectionView,
     SponsorshipQuestionView,
     GameSelectionView,
-    GROUPING_QS,
+    InitGroupingQ1,
     EmailInputView,
 )
 from pybot.database import (
@@ -61,26 +60,21 @@ async def _init_grouping(user_id: str, send_func) -> str:
         'Before starting, let\'t have a small test first~'
     )
 
-    for grouping_inst in GROUPING_QS:
-        await send_func(
-            content=grouping_inst.description,
-            view=grouping_inst(timeout=timeout_seconds),
-        )
-
-    group = random.choice(['Red', 'Yellow', 'Blue'])
+    group = random.choice(['Red', 'Yellow', 'Green'])
     await send_func(
-        f'根據你的回答，你被分配到 **{group}** 組\n' \
-        f'According to your answer, you are distributed to group **{group}**.'
+        content=InitGroupingQ1.description,
+        view=InitGroupingQ1(group=group, timeout=timeout_seconds),
     )
+
     return group
 
 
 async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Callable):
     with cursor() as cur:
         cur.execute('''
-            INSERT INTO profile (uid, name)
-            VALUES (%(uid)s, %(name)s)
-        ''', {'uid': user_id, 'name': user_name})
+            INSERT INTO profile (uid, name, lang)
+            VALUES (%(uid)s, %(name)s, %(lang)s)
+        ''', {'uid': user_id, 'name': user_name, 'lang': 'zh_TW'})
 
     await send_func(
         content='嗨嗨你好:wave: 請先選擇您的語言\n' \
@@ -93,6 +87,7 @@ async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Calla
         view=EmailInputView(),
     )
     group = await _init_grouping(user_id, send_func)
+
     with cursor() as cur:
         params = {'group': group, 'uid': user_id}
         cur.execute('UPDATE profile SET team=%(group)s WHERE uid=%(uid)s', params)
@@ -103,7 +98,8 @@ async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Calla
         idx -=1
         client_lang = await check_client_has_lang(user_id)
         await asyncio.sleep(0.3)
-    return client_lang
+
+    return client_lang or 'zh_TW'  # Default to zh_TW
 
 
 class PyBot22(commands.Bot):
@@ -162,6 +158,7 @@ class PyBot22(commands.Bot):
         ):
             return
 
+        # Check emoji is customized or normal one
         if isinstance(reaction.emoji, str):
             # Normal emoji
             emoji = reaction.emoji

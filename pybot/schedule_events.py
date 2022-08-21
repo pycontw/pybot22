@@ -7,7 +7,7 @@ import schedule
 
 from pybot import bot
 from pybot.database import query_user_rank_by_coin
-
+from pybot.settings import LEADER_BOARD_CHANNEL
 
 def run_schedule_events(interval=1):
     cease_continuous_run = threading.Event()
@@ -35,7 +35,7 @@ def task(func):
 
 @task
 async def update_leaderboard():
-    channel_id = 1006167895669223546  # leaderboard channel
+    channel_id = LEADER_BOARD_CHANNEL  # leaderboard channel
     channel = bot.get_channel(channel_id)
     msgs = [msg async for msg in channel.history(oldest_first=True)]
     if msgs:

@@ -203,8 +203,7 @@ def update_view_questions():
             ''', params)
 
 
-
 if __name__ == '__main__':
-    #update_sponsor_questions()
-    # update_travel_questions()
+    update_sponsor_questions()
+    update_travel_questions()
     update_view_questions()

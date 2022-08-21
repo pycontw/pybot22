@@ -74,7 +74,6 @@ def export_question_options():
             out.write(');\n')
 
 
-
 if __name__ == '__main__':
     export_channel()
     export_question()

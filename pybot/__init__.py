@@ -192,7 +192,7 @@ class PyBot22(commands.Bot):
                 return
         elif q_info['q_type'] == QuestionType.SERVICE:
             # Actually not a question, but command utility.
-            pass
+            return
 
         msg = q_info['description']
         if (

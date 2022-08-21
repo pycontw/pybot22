@@ -235,11 +235,14 @@ class GameSelectionView(discord.ui.View):
                 q_type=self.q_info['q_type']
             )
         )
-           
-        # print('haha')
 
     async def check_ans_and_update_state(self, user_ans: str, interaction: discord.Interaction):
-        answer = self.q_info['answer']
+        if self.q_info['q_type'] == QuestionType.SELECTION:
+            ans_opt = self.q_info['answer']
+            answer = self.q_info['options'][ans_opt]
+        else:
+            answer = self.q_info['answer']
+
         if user_ans == answer or self.q_info['q_type'] == QuestionType.QUESTIONARE:
             # Calculate rewards
             reward_coin = int(max(1, self.q_info['coin'] * pow(0.5, self.answer_counts)))

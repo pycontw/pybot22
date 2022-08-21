@@ -1,10 +1,10 @@
-en_description	tw_description	opt1	opt2	opt3	opt4	en_opt1	en_opt2	en_opt3	en_opt4	ans	coins	stars
-Which city is the capital of Taiwan?	台灣的首都在那裡？	台南	高雄	台北	台中	Tainan	Kaohsiung 	Taipei 	Taichung 	3	400	0
-Which county has the longest coastline in Taiwan?	請問下列哪一個縣市有台灣最長的海岸線？	屏東	花蓮	台東	嘉義	Pingtung 	Hualien 	Taitung 	Chiayi 	3	400	0
-Which city has the highest density of traditional religious places in Taiwan?	下列哪一個縣市是宮廟最密集的地方	南投	臺中	臺南	新北	Nantou 	Taichung 	Tainan 	New Taipei City	3	400	0
-Guess which city in Taiwan is least likely to have Typhoon Day off?	請問下列哪一個是全臺最少放颱風假的縣市	彰化	屏東	桃園	花蓮	Changhua	Pingtung 	Taoyuan	Hualien 	1	400	0
-Which city has the highest density of handmade drink shops 	根據統計臺灣手搖飲一年賣出 10 億杯以上，請問飲料店密度最高的是哪個縣市	臺北	臺中	臺南	嘉義	Taipei 	Taichung 	Tainan 	Chiayi 	4	400	0
-Where is the first underwater tunnel in Taiwan located?	全國第一條海底隧道在哪個縣市?	屏東	高雄	新竹	宜蘭	Pingtung 	Kaohsiung 	Hsinchu	Yilan	2	400	0
-Which county is the geographic center of Taiwan?	哪一個縣市是台灣的地理中心？	南投	雲林	台中	嘉義	Nantou 	Yunlin 	Taichung 	Chiayi 	1	400	0
-Which area in Taiwan has most geological parks?	哪個區域有最多地質公園?	北部	中部	南部	東部	Northern Region	Central Region 	Southern Region 	Eastern Region	1	400	0
-Do you know what Chiluba (ちくわ) is? Which place in Taiwan is famous for the chikura tempura (fried fish cake)?	吉古拉是哪一個城市的有名小吃？	高雄	基隆	雲林	新竹	Kaohsiung	Keelung 	Yunlin 	Hsinchu 	2	400	0
+qid	en_description	tw_description	opt1	opt2	opt3	opt4	en_opt1	en_opt2	en_opt3	en_opt4	ans	coins	stars
+view_q1	Which city is the capital of Taiwan?	臺灣的首都在那裡？	臺南	高雄	臺北	臺中	Tainan	Kaohsiung 	Taipei 	Taichung 	3	400	0
+view_q2	Which county has the longest coastline in Taiwan?	請問下列哪一個縣市有臺灣最長的海岸線？	屏東	花蓮	臺東	嘉義	Pingtung 	Hualien 	Taitung 	Chiayi 	3	400	0
+view_q3	Which city has the highest density of traditional religious places in Taiwan?	下列哪一個縣市是宮廟最密集的地方	南投	臺中	臺南	新北	Nantou 	Taichung 	Tainan 	New Taipei City	3	400	0
+view_q4	Guess which city in Taiwan is least likely to have Typhoon Day off?	請問下列哪一個是全臺最少放颱風假的縣市	彰化	屏東	桃園	花蓮	Changhua	Pingtung 	Taoyuan	Hualien 	1	400	0
+view_q5	Which city has the highest density of handmade drink shops 	根據統計臺灣手搖飲一年賣出 10 億杯以上，請問飲料店密度最高的是哪個縣市	臺北	臺中	臺南	嘉義	Taipei 	Taichung 	Tainan 	Chiayi 	4	400	0
+view_q6	Where is the first underwater tunnel in Taiwan located?	全國第一條海底隧道在哪個縣市?	屏東	高雄	新竹	宜蘭	Pingtung 	Kaohsiung 	Hsinchu	Yilan	2	400	0
+view_q7	Which county is the geographic center of Taiwan?	哪一個縣市是臺灣的地理中心？	南投	雲林	臺中	嘉義	Nantou 	Yunlin 	Taichung 	Chiayi 	1	400	0
+view_q8	Which area in Taiwan has most geological parks?	哪個區域有最多地質公園?	北部	中部	南部	東部	Northern Region	Central Region 	Southern Region 	Eastern Region	1	400	0
+view_q9	Do you know what Chiluba (ちくわ) is? Which place in Taiwan is famous for the chikura tempura (fried fish cake)?	吉古拉是哪一個城市的有名小吃？	高雄	基隆	雲林	新竹	Kaohsiung	Keelung 	Yunlin 	Hsinchu 	2	400	0

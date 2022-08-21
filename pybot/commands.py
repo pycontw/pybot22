@@ -102,7 +102,7 @@ async def embed(ctx: commands.Context):
 _check_is_staff = lambda ctx: sync_check_user_is_staff(ctx.author.id)
 
 CHANNELS_TO_EXCLUDE_FROM_INIT = {
-    1006167895669223546
+    1006167895669223546,  # leader-board
 }
 
 
@@ -147,6 +147,7 @@ async def init_game(ctx: commands.Context):
         for emoji in info_d['emoji_to_qid']:
             if emoji is None:
                 continue
+
             try:
                 await new_msg.add_reaction(emoji)
             except HTTPException:

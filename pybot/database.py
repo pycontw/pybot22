@@ -281,6 +281,12 @@ async def update_user_rewards(uid: str, add_coin: int, add_star: int) -> bool:
         return cur.rowcount == 1
 
 
+async def query_user_rewards(uid: str):
+    with cursor() as cur:
+        cur.execute('SELECT coin, star FROM profile WHERE uid=%(uid)s', {'uid': uid})
+        return cur.fetchone()
+
+
 async def query_user_name(uid: str) -> str:
     with cursor() as cur:
         cur.execute('SELECT name FROM profile WHERE uid=%(uid)s', {'uid': uid})

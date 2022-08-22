@@ -34,3 +34,8 @@ CORRECT_ANSWER_REWARD_MSG = {
     'zh_TW': '獲得金幣：{coin} / 星星：{star}',
     'EN': 'Get coins: {coin} / stars: {star}',
 }
+
+CHECK_COINS_RESP = {
+    'zh_TW': '你擁有 {coins} 金幣與 {stars} 星星。',
+    'EN': 'You have {coins} coins and {stars} stars.',
+}

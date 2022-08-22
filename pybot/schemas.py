@@ -16,3 +16,9 @@ class QuestionType(BaseEnum):
     QUESTIONARE= 'questionare'
     PURE_MESSAGE = 'pure_message'
     SERVICE = 'service'
+
+
+class ServiceType(BaseEnum):
+    CHECK_COINS = 'check_coins'
+    CHANGE_LANGUAGE = 'change_language'
+    INIT_PROFILE = 'init_profile'

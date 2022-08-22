@@ -28,6 +28,7 @@ from pybot.database import (
     sync_query_init_messages,
     query_next_questionnaire,
 )
+from pybot.service_desk import command_distributor
 from pybot.rank import rank_init
 
 
@@ -182,13 +183,15 @@ class PyBot22(commands.Bot):
         question_id = init_message[channel_id]['emoji_to_qid'][emoji]
         q_info = await query_question(question_id, client_lang)
 
+        # Check question type
         if q_info['q_type'] == QuestionType.QUESTIONARE:   
             q_info = await query_next_questionnaire(str(user.id), client_lang)
             if not q_info:
                 await user.send('You have already answered all questionnaires~')
                 return
         elif q_info['q_type'] == QuestionType.SERVICE:
-            # Actually not a question, but command utility.
+            # Actually an event to run a command, not to answer a question
+            await command_distributor(q_info, reaction, user)
             return
 
         msg = q_info['description']

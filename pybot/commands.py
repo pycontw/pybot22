@@ -147,6 +147,7 @@ async def init_game(ctx: commands.Context):
         for emoji in info_d['emoji_to_qid']:
             if emoji is None:
                 continue
+
             try:
                 await new_msg.add_reaction(emoji)
             except HTTPException:

@@ -1,3 +1,4 @@
+import random
 from typing import Dict
 
 import discord
@@ -235,11 +236,14 @@ class GameSelectionView(discord.ui.View):
                 q_type=self.q_info['q_type']
             )
         )
-           
-        # print('haha')
 
     async def check_ans_and_update_state(self, user_ans: str, interaction: discord.Interaction):
-        answer = self.q_info['answer']
+        if self.q_info['q_type'] == QuestionType.SELECTION:
+            ans_opt = self.q_info['answer']
+            answer = self.q_info['options'][ans_opt]
+        else:
+            answer = self.q_info['answer']
+
         if user_ans == answer or self.q_info['q_type'] == QuestionType.QUESTIONARE:
             # Calculate rewards
             reward_coin = int(max(1, self.q_info['coin'] * pow(0.5, self.answer_counts)))
@@ -259,7 +263,10 @@ class GameSelectionView(discord.ui.View):
             is_correct = False
             self.answer_counts += 1
 
-        if (user_ans != "Others") & (user_ans != "其他"):  
+        if (
+            self.q_info['q_type'] == QuestionType.QUESTIONARE
+            and user_ans not in ('其他', 'Others')
+        ):  
             await interaction.response.send_message(resp_msg)
         else:
             await interaction.response.send_modal(
@@ -283,54 +290,68 @@ class InitGroupButton(discord.ui.Button):
 
         self.style = discord.ButtonStyle.green
         await interaction.response.edit_message(view=view)
+        if view.next_view:
+            if view.next_view.is_final:
+                await interaction.followup.send(
+                    f'根據你的回答，你被分配到 **{view.group}** 組\n' \
+                    f'According to your answer, you are distributed to group **{view.group}**.'
+                )
+            else:
+                await interaction.followup.send(
+                    content=view.next_view.description,
+                    view=view.next_view(group=view.group, timeout=view.timeout),
+                )
 
 
 class BaseInitGroupingView(discord.ui.View):
     description = ''
     lables = []
+    next_view = None
+    is_final = False
 
-    def __init__(self, timeout: int = 180):
+    def __init__(self, group: str, timeout: int = 180):
         super().__init__(timeout=timeout)
+        self.group = group
         for label in self.labels:
             self.add_item(InitGroupButton(label=label))
 
 
-class InitGroupingQ1(BaseInitGroupingView):
-    description = '哪個程式語言最讚?\nWhich programming language is the best?'
-    labels = ['Java', 'Python', 'JavaScript']
-
-
-class InitGroupingQ2(BaseInitGroupingView):
-    description = '喜歡哪種食物?\nWhich food do you like more?'
-    labels = ['披薩/Pizza', '小籠包/xiaolongbao (soup dumplings)', '壽司/Sushi']
-
-
-class InitGroupingQ3(BaseInitGroupingView):
-    description = '夢想成為...?\nDream to be a...?'
-    labels = ['海賊王/Pirate king', '世界富豪/Magnate', '貓咪/Cat']
-
-
-class InitGroupingQ4(BaseInitGroupingView):
-    description = '最想擁有...?\nWish to have...?'
-    labels = ['阿拉丁神燈/Aladdin\'s lamp', '妹妹/Younger sister', '貓咪/Cat']
+class InitGroupingFinish(BaseInitGroupingView):
+    is_final = True
 
 
 class InitGroupingQ5(BaseInitGroupingView):
-    description = '當程式寫不出來的時候你會...?\nWhat would do while you stuck in coding...?'
+    description = '5/5\n當程式寫不出來的時候你會...?\nWhat would do while you stuck in coding...?'
     labels = [
         '蹲在馬桶上思考 20 分鐘/Sit on the toilet and think for 20 minutes',
         '先睡一個小時的午覺/Take an 1-hour nap',
         '求神拜佛跪貓貓/Pray to God and cat',
     ]
+    next_view = InitGroupingFinish
 
 
-GROUPING_QS = [
-    InitGroupingQ1,
-    InitGroupingQ2,
-    InitGroupingQ3,
-    InitGroupingQ4,
-    InitGroupingQ5,
-]
+class InitGroupingQ4(BaseInitGroupingView):
+    description = '4/5\n最想擁有...?\nWish to have...?'
+    labels = ['阿拉丁神燈/Aladdin\'s lamp', '妹妹/Younger sister', '貓咪/Cat']
+    next_view = InitGroupingQ5
+
+
+class InitGroupingQ3(BaseInitGroupingView):
+    description = '3/5\n夢想成為...?\nDream to be a...?'
+    labels = ['海賊王/Pirate king', '世界富豪/Magnate', '貓咪/Cat']
+    next_view = InitGroupingQ4
+
+
+class InitGroupingQ2(BaseInitGroupingView):
+    description = '2/5\n喜歡哪種食物?\nWhich food do you like more?'
+    labels = ['披薩/Pizza', '小籠包/xiaolongbao (soup dumplings)', '壽司/Sushi']
+    next_view = InitGroupingQ3
+
+
+class InitGroupingQ1(BaseInitGroupingView):
+    description = '1/5\n哪個程式語言最讚?\nWhich programming language is the best?'
+    labels = ['Java', 'Python', 'JavaScript']
+    next_view = InitGroupingQ2
 
 
 class EmailInputModal(discord.ui.Modal):

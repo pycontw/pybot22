@@ -222,6 +222,8 @@ def sync_query_init_messages() -> Dict[int, dict]:
             LEFT JOIN
                 question_meta as qm
                 ON qm.channel_id=ch.channel_id
+            ORDER BY
+                qm.qid
         ''')
         data = cur.fetchall()
 

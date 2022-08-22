@@ -189,26 +189,25 @@ async def staff_add_question(ctx: commands.Context):
 @commands.check(_check_is_staff)
 async def user_lotto(ctx: commands.Context, reward_n: int):
     # reward_n: numbers of rewards, the first 1 is the first reward, etc
-    result = await query_user_has_stars(800, 5)
-    total_stars = 0
-    reward_list = []
-    for user in result:
-        total_stars += user["star"]
+    users = await query_user_has_stars(800, 5)
 
-    for _ in range(reward_n):
-        rand = random.randint(1, total_stars)
-        star_n = 0
-        for user in result:
-            star_n += user["star"]
-            if star_n >= rand:
-                reward_list.append(user)
-                total_stars -= user["star"]
-                result.remove(user)
-                break
+    flatten_users = []
+    for user in users:
+        flatten_users.extend(
+            [(user['uid'], user['name'])] * user['star']
+        )
+
+    random.shuffle(flatten_users)
+
+    chosen_users = set()
+    for uid, user_name in flatten_users:
+        chosen_users.add((uid, user_name))
+        if len(chosen_users) == reward_n:
+            break
 
     messages = []
-    for idx, user_d in enumerate(reward_list):
-        messages.append(f'#{idx+1} <@{user_d["uid"]}>')
+    for idx, (uid, user_name) in enumerate(chosen_users):
+        messages.append(f'#{idx+1} <@{uid}>')
 
     description = '\n'.join(messages)
     embed = discord.Embed(title='Sponsor Rewards', description=description)

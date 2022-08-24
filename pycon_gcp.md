@@ -10,13 +10,13 @@
   - $ ssh -i ~/.ssh/gcp_key user@35.194.156.158
 
 ## install necessary packages on GCP VM instance (don't need to repeat, if already done)
-1. install git
+1. install git if not installed, check with `git --version`
   - $ sudo apt-get install git
 
-2. install docker by following 
+2. install docker if not installed by following, check with `docker --version`
   - https://docs.docker.com/engine/install/debian/#install-using-the-repository
 
-3. install netcat (nc) command for mysql server socket check
+3. install netcat (nc) command for mysql server socket check, check with `docker --version`
   - $sudo apt-get install netcat
 
 
@@ -30,7 +30,7 @@ ssh-ed25519 XXXXC3NzaC1lZDI1NTE5XXXXIEXJmi/nOJtDHc3j+EbOvPDaVtfr1v+6u3rZK2uRDkmq
   - $ git clone git@github.com:BreezeWhite/pybot22.git
 
 ## update the env variables, and prepare the mysql docker
-1. $ vi env.test
+1. $ vi env.test  `change DISCORD_TOKEN for discord bot`
 2. $ ./db_setup.sh
 
 ## build and deploy the pybot docker

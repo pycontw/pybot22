@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 # Construct a network
 sudo docker network create -d bridge my-network
 
@@ -10,14 +10,14 @@ sudo docker pull mysql
 
 mkdir db_data
 
-. ./env.test
+source ./env.test
 
-sudo docker run -p 3306:3306 -d --name mysql-server --network my-network -v $PWD/db_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="$DB_PASSWORD" mysql
+sudo docker run -p 3306:3306 -d --name $SQL_SERVER_HOST --network my-network -v $PWD/db_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="$DB_PASSWORD" mysql:5.7
 
-until nc -z localhost 3307; do sleep 1; echo "Waiting for DB to come up..."; done
+until nc -z localhost 3306; do sleep 1; echo "Waiting for DB to come up..."; done
 
-. ./init_db.sh
-. ./import_data.sh
+source ./init_db.sh
+source ./import_data.sh
 
 # Enter Mysql for test
 # sudo docker run -it --rm --network my-network mysql:5.7 sh -c 'exec mysql -h"mysql-server" -P"3306" -uroot -p"$DB_PASSWORD"'

@@ -1,6 +1,6 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 
-. ./env.test
+source ./env.test
 
 # pycat bot server
 # Build pybot image

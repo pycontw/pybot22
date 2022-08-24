@@ -1,4 +1,5 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
+source ./env.test
 sudo docker exec -i $SQL_SERVER_HOST sh -c "exec mysql -uroot -p$DB_PASSWORD --default-character-set=utf8mb4" < ./sql/data/channel.sql
 sudo docker exec -i $SQL_SERVER_HOST sh -c "exec mysql -uroot -p$DB_PASSWORD --default-character-set=utf8mb4" < ./sql/data/question_meta.sql
 sudo docker exec -i $SQL_SERVER_HOST sh -c "exec mysql -uroot -p$DB_PASSWORD --default-character-set=utf8mb4" < ./sql/data/question_options.sql

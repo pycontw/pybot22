@@ -25,9 +25,12 @@
   - $ ssh-keygen -t ed25519 -C "user@mail.com"
   - $ cat ~/.ssh/*.pub
 ssh-ed25519 XXXXC3NzaC1lZDI1NTE5XXXXIEXJmi/nOJtDHc3j+EbOvPDaVtfr1v+6u3rZK2uRDkmq user@mail.com
+  -  add the pub key to https://github.com/settings/keys
+
   - $ ssh -T git@github.com  #(Test the SSH connection)
 2. Clone the repo  
   - $ git clone git@github.com:BreezeWhite/pybot22.git
+  - $ cd pybot22
 
 ## update the env variables, and prepare the mysql docker
 1. $ vi env.test  `change DISCORD_TOKEN for discord bot`

@@ -293,7 +293,13 @@ class InitGroupButton(discord.ui.Button):
             if view.next_view.is_final:
                 await interaction.followup.send(
                     f'根據你的回答，你被分配到 **{view.group}** 組\n' \
-                    f'According to your answer, you are distributed to group **{view.group}**.'
+                    f'According to your answer, you are distributed to group **{view.group}**.\n'
+		    f'恭喜你完成了大地遊戲的註冊程序！接下來趕緊到我們的 Gather 場地來場台灣旅遊吧！\n'
+		    f'Game registration completed! The next step is landing our Gather space to start your journey to Taiwan virtually!\n'
+		    f'偷偷告訴你，沿著格子走可能會有意想不到的驚喜！\n'
+		    f'Find and walk along squares in the venue to get surprising!\n'
+		    f'趕快展開冒險吧 :partying_face:  盡可能的蒐集印章、拿金幣！\n'
+		    f'Collect Pawprint Stamps and coins as many as you can! Enjoy your journey!\n'
                 )
             else:
                 await interaction.followup.send(

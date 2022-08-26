@@ -300,6 +300,8 @@ class InitGroupButton(discord.ui.Button):
 		    f'Find and walk along squares in the venue to get surprising!\n'
 		    f'趕快展開冒險吧 :partying_face:  盡可能的蒐集印章、拿金幣！\n'
 		    f'Collect Pawprint Stamps and coins as many as you can! Enjoy your journey!\n'
+		    f'Space A : https://app.gather.town/app/nGOG11wkRybqeJff/PyCon%20APAC%202022%20-%20Space%20A\n'
+		    f'Space B : https://app.gather.town/app/NiHQgKoi7Bj0slmj/PyCon%20APAC%202022%20-%20Space%20B\n'
                 )
             else:
                 await interaction.followup.send(

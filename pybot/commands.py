@@ -119,6 +119,7 @@ async def _init_leaderbaord_channel(ctx: commands.Context, clear_msgs: bool = Fa
 
 
 @bot.command(hidden=True)
+@commands.check(_check_is_staff)
 async def init_leaderboard(ctx: commands.Context):
     await _init_leaderbaord_channel(ctx, clear_msgs=True)
 
@@ -172,17 +173,24 @@ async def staff_add_score(ctx: commands.Context, member: discord.Member, add_coi
 async def sync_channel_msg(ctx: commands.Context, channel_id: int):
     channel = bot.get_channel(channel_id)
     init_messages = sync_query_init_messages()
-    channel_msg = init_messages[channel_id]
+    info_d = init_messages[channel_id]
     msgs = [msg async for msg in channel.history(oldest_first=True)]
-    print(len(msgs[1].content), type(msgs[1].content))
-    print(msgs[1].attachments)
+    if not msgs:
+        return
 
+    first_msg = msgs[0]
+    await first_msg.clear_reactions()
+    new_msg = await first_msg.edit(content=info_d['welcome_msg'])
+    for emoji in info_d['emoji_to_qid']:
+        if emoji is None:
+            continue
 
-
-@bot.command(hidden=True)
-@commands.check(_check_is_staff)
-async def staff_add_question(ctx: commands.Context):
-    print('yeah')
+        try:
+            await new_msg.add_reaction(emoji)
+        except HTTPException:
+            guild = bot.get_guild(1000406827491676170)  # main server
+            emoji = discord.utils.get(guild.emojis, name=emoji)
+            await new_msg.add_reaction(emoji)
 
 
 @bot.command(hidden=True)
@@ -212,3 +220,10 @@ async def user_lotto(ctx: commands.Context, reward_n: int):
     description = '\n'.join(messages)
     embed = discord.Embed(title='Sponsor Rewards', description=description)
     await ctx.send(embed=embed)
+
+
+@bot.command(hiddent=True)
+async def test(ctx: commands.Context):
+    guild = bot.get_guild(1000406827491676170)
+    for member in guild.members:
+        print(member.name, member.roles)

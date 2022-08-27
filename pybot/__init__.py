@@ -54,7 +54,7 @@ async def _init_client(ctx):
 
 
 async def _init_grouping(user_id: str, send_func) -> str:
-    timeout_seconds = 180
+    timeout_seconds = None
 
     await send_func(
         '在正式開始前先來做個小測驗吧～\n' \
@@ -75,6 +75,8 @@ async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Calla
         cur.execute('''
             INSERT INTO profile (uid, name, lang)
             VALUES (%(uid)s, %(name)s, %(lang)s)
+            ON DUPLICATE KEY UPDATE
+                uid = VALUES(uid)
         ''', {'uid': user_id, 'name': user_name, 'lang': 'zh_TW'})
 
     await send_func(
@@ -168,6 +170,7 @@ class PyBot22(commands.Bot):
             emoji = reaction.emoji.name
 
         print(reaction.emoji)
+        print(user.roles)
 
         # Check emoji in question pool
         if emoji not in init_message[channel_id]['emoji_to_qid']:
@@ -175,9 +178,11 @@ class PyBot22(commands.Bot):
             return
 
         # Init profile and language if first time
-        client_lang = await check_client_has_lang(user.id)
-        if not client_lang:
+        has_init_role = any(role.name == '初始化完成' for role in user.roles)
+        if not has_init_role:
             client_lang = await _init_lang_and_grouping(user.id, user.name, user.send)
+        else:
+            client_lang = await check_client_has_lang(user.id)
 
         # Get question info dict
         question_id = init_message[channel_id]['emoji_to_qid'][emoji]
@@ -188,52 +193,51 @@ class PyBot22(commands.Bot):
             q_info = await query_next_questionnaire(str(user.id), client_lang)
             if not q_info:
                 await user.send('You have already answered all questionnaires~')
-                return
         elif q_info['q_type'] == QuestionType.SERVICE:
             # Actually an event to run a command, not to answer a question
-            await command_distributor(q_info, reaction, user)
-            return
+            q_info = await command_distributor(q_info, user)  # Should return None
 
-        msg = q_info['description']
-        if (
-            q_info['q_type'] != QuestionType.QUESTIONARE
-            and (already_answered := await check_user_already_answered_qid(question_id, user.id))
-        ):
-            msg += QUESTION_ANSWERED_REMINDER[client_lang]
+        if q_info:
+            msg = q_info['description']
+            if (
+                q_info['q_type'] != QuestionType.QUESTIONARE
+                and (already_answered := await check_user_already_answered_qid(question_id, user.id))
+            ):
+                msg += QUESTION_ANSWERED_REMINDER[client_lang]
 
-        # Response with different view according to the question type
-        if q_info['q_type'] == QuestionType.PURE_MESSAGE:
-            await user.send(q_info['description'])
-        elif q_info['q_type'] == QuestionType.TEXT:
-            await user.send(
-                msg,
-                view=SponsorshipQuestionView(
-                    q_info=q_info,
-                    user=user,
-                    lang=client_lang,
-                    already_answered=already_answered,
+            # Response with different view according to the question type
+            if q_info['q_type'] == QuestionType.PURE_MESSAGE:
+                await user.send(q_info['description'])
+            elif q_info['q_type'] == QuestionType.TEXT:
+                await user.send(
+                    msg,
+                    view=SponsorshipQuestionView(
+                        q_info=q_info,
+                        user=user,
+                        lang=client_lang,
+                        already_answered=already_answered,
+                    )
                 )
-            )
-        elif q_info['q_type'] in (QuestionType.SELECTION, QuestionType.OPTION_ONLY):
-            await user.send(
-                msg,
-                view=GameSelectionView(
-                    q_info=q_info,
-                    user=user,
-                    lang=client_lang,
-                    already_answered=already_answered,
+            elif q_info['q_type'] in (QuestionType.SELECTION, QuestionType.OPTION_ONLY):
+                await user.send(
+                    msg,
+                    view=GameSelectionView(
+                        q_info=q_info,
+                        user=user,
+                        lang=client_lang,
+                        already_answered=already_answered,
+                    )
                 )
-            )
-        elif q_info['q_type'] == QuestionType.QUESTIONARE:
-            await user.send(
-                msg,
-                view=GameSelectionView(
-                    q_info=q_info,
-                    user=user,
-                    lang=client_lang,
-                    already_answered=False,
+            elif q_info['q_type'] == QuestionType.QUESTIONARE:
+                await user.send(
+                    msg,
+                    view=GameSelectionView(
+                        q_info=q_info,
+                        user=user,
+                        lang=client_lang,
+                        already_answered=False,
+                    )
                 )
-            )
 
         # Clear the reaction
         await reaction.remove(user)

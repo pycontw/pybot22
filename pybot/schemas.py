@@ -13,7 +13,7 @@ class QuestionType(BaseEnum):
     TEXT = 'text'
     SELECTION = 'selection'  # Will show the full text of every option.
     OPTION_ONLY = 'option_only'  # Will only show A, B, C, and D.
-    QUESTIONARE= 'questionare'
+    QUESTIONARE = 'questionare'
     PURE_MESSAGE = 'pure_message'
     SERVICE = 'service'
 

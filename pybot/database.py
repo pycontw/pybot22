@@ -309,6 +309,8 @@ async def query_user_rank_by_coin(limit=10) -> List[dict]:
                 coin
             FROM
                 profile
+            WHERE
+                is_staff = 0
             ORDER BY
                 coin DESC
             LIMIT

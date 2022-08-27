@@ -81,8 +81,18 @@ INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('
 https://tw.pycon.org/2022/zh-hant','');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('micron_q2','zh_TW','歡迎到我們的網站看更多資訊～
 https://tw.pycon.org/2022#sponsor','');
-INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('open_q1','zh_TW','紅肉木瓜搭上濃醇奶香，滑順綿密的口感…大熊想喝木瓜牛奶！你可以幫助他嗎？
-(請到 xx 格子尋找線索，成功通關後於下方輸入通關密語)','大熊喝到木瓜牛奶');
+INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('open_q1','EN','Would you like to buy a really delicious papaya milk for our old friend Brown🐻?
+Get hints on the Gather town venue and enter the passcode here so you can make it.','700ml');
+INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('open_q1','zh_TW','#大熊想喝木瓜牛奶
+紅肉木瓜搭上濃醇奶香，滑順綿密的口感…大熊想喝木瓜牛奶！你可以幫助他嗎？
+
+請至 gather 會場找尋相關線索，成功通關後於下方輸入通關密語','700ml');
+INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('open_q2','EN','','py universe 2022');
+INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('open_q2','zh_TW','#平行宇宙的夜市漫遊
+你在 py 夜市誤入平行宇宙，被困在三個相似的時空
+請找到這三個時空的不同處，那就是回到原時空的出口！
+
+請至 gather 會場找尋相關線索，成功通關後於下方輸入通關密語','py universe 2021');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('pinkoi_q1','EN','Which continent does Pinkoi bring design brands to the international market?','D');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('pinkoi_q1','zh_TW','請到 Pinkoi (B15) 贊助攤位查看選項
 您將獲得 肉球印章 + 貓金幣 1600，回答錯誤有扣分機制，請謹慎填答
@@ -122,12 +132,12 @@ INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('py_q13','EN','```
 def multiply_number(num):
     def product(number):
-        ''product() here is a closure''
         return num * number
     return product
 
 num_2 = multiply_number(2)
 print(num_2(11))
+print(num_2(24))
 
 num_6 = multiply_number(6)
 print(num_6(1))
@@ -136,7 +146,6 @@ The output is ?','A');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('py_q13','zh_TW','```
 def multiply_number(num):
     def product(number):
-        ''product() here is a closure''
         return num * number
     return product
 
@@ -159,16 +168,16 @@ print (os.path.expanduser(''~''))
 The output is?','A');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('py_q15','EN','```
 def make_list(v, the_list=[]):
-    the_list.append(v)
-    return the_list
+...    the_list.append(v)
+...    return the_list
 make_list(12)
 print(make_list(47))
 ```
 The output is?','C');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('py_q15','zh_TW','```
 def make_list(v, the_list=[]):
-    the_list.append(v)
-    return the_list
+...    the_list.append(v)
+...    return the_list
 make_list(12)
 print(make_list(47))
 ```
@@ -177,14 +186,14 @@ INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('
 nums = [1,3,5,7,9]
 gen = (n for n in nums if n in nums)
 nums = [1,2,3,4]
-list(gen)
+print(list(gen))
 ```
 The output is?','C');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('py_q16','zh_TW','```
 nums = [1,3,5,7,9]
 gen = (n for n in nums if n in nums)
 nums = [1,2,3,4]
-list(gen)
+print(list(gen))
 ```
 The output is?','C');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('rl_q1','EN','What is Reuven Learner’s offer in a programming language for more than 30 fast-paced, lab-heavy courses?','A');
@@ -197,6 +206,12 @@ INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('
 https://tw.pycon.org/2022/zh-hant','');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('rl_q2','zh_TW','歡迎到我們的網站看更多資訊～
 https://tw.pycon.org/2022#sponsor','');
+INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('service_q00','EN','init_profile','');
+INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('service_q00','zh_TW','init_profile','');
+INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('service_q01','EN','check_coins','');
+INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('service_q01','zh_TW','check_coins','');
+INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('service_q02','EN','change_language','');
+INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('service_q02','zh_TW','change_language','');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('sony_q1','EN','Test Sony question 1','Hello');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('sony_q1','zh_TW','索尼測試問題一','哈哈');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('sony_q2','EN','Does sony earphone good?','XM5 good');

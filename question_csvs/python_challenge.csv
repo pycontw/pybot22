@@ -1,0 +1,78 @@
+Title	Difficulty	en_description	tw_description	tw_opt1	tw_opt2	tw_opt3	tw_opt4	en_opt1	en_opt2	en_opt3	en_opt4	ans	coins	stars	discord_channel	emoji	qid
+CPython I	Medium	Which CPython version started to support Walrus operator?	CPython 從第幾版開始支援 Walrus operator?	3.8	3.9	3.10	3.11	3.8	3.9	3.10	3.11	1	400	0	Python	:0_:	py_q01
+CPython II	Medium	Dictionaries are ordered since which version of CPython?	CPython 的 dictionary 從第幾版開始有序？	3.3	3.4	3.5	3.6	3.3	3.4	3.5	3.6	4	400	0	Python	:1_:	py_q02
+Python Module I	Medium	Which of these Python modules provides functions similar to binary search?	以下哪個 Python module 可以達到 binary search 的效果？	bisect	heapq	graphlib	random	bisect	heapq	graphlib	random	1	400	0	Python	:2_:	py_q03
+Python Module II	Medium	Which of these Python modules can calculate the number of different elements in a list?	以下哪個 Python module 可以統計 list 內不同 element 的數目？	counter	namedtuple	defaultdict	orderdict	counter	namedtuple	defaultdict	orderdict	1	400	0	Python	:3_:	py_q04
+Python standard library	Medium	Which data structure was not included in the Python standard library?	Python 標準函式庫不包含哪種資料結構？	Array	Hash Map	Priority Queue	AVL-tree	Array	Hash Map	Priority Queue	AVL-tree	4	400	0	Python	:4_:	py_q05
+CPython III	Hard	What’s the default size for an empty dict?	請問 CPython 初始化一個空 dict 的預設大小為？	8	128	1024	65536	8	128	1024	65536	1	400	0	Python	:5_:	py_q06
+CPython IV	Hard	In CPython, which is faster? a+=b or a=a+b?	請問對 CPython 來說， a+=b 跟 a=a+b 哪個比較快？	a+=b	a=a+b	一樣	無法直接比較	a+=b	a=a+b	same	unknown	4	400	0	Python	:6_:	py_q07
+CPython V	Hard	Which hash algorithm hasn’t been implemented in CPython before?	請問在下列哪個 hash 算法沒有在 CPython 被實作？	MurmurHash	FNV hash	Siphash	DJBX33A	MurmurHash	FNV hash	Siphash	DJBX33A	1	400	0	Python	:7_:	py_q08
+Metadata for Python Software Packages	Hard	Which Python package’s metadata proposal is withdrawn?	請問哪個 Python 套件的 Metadata 提案未被採用？	1.0	1.1	2.0	2.1	1.0	1.1	2.0	2.1	3	400	0	Python	:8_:	py_q09
+Origin of Python 	Medium	Where did the name “Python” came from?	Python 這個名字的靈感來自於？	動物	樂團	喜劇團	啤酒品牌	 An animal	 A band	A comedy troupe	A beer brand	3	400	0	Python	:9_:	py_q10
+PyCon History	Medium	Which of the following is the oldest conference?	下面哪個年會最老？	PyCon US	EuroPython	PyCon TW	PyCon NL	PyCon US	EuroPython	PyCon TW	PyCon NL	2	400	0	Python	:A_:	py_q11
+Boolean Challenge	Medium	"What is the result of each of the following judgements?
+1 > 2, “b” > “a”, 1 == “one”"	"What is the result of each of the following judgements?
+1 > 2, “b” > “a”, 1 == “one”"	FTF	FTT	FFT	FFF	FTF	FTT	FFT	FFF	1	400	0	Python	:B_:	py_q12
+What's the output? I	Easy	"```
+def multiply_number(num):
+    def product(number):
+        return num * number
+    return product
+
+num_2 = multiply_number(2)
+print(num_2(11))
+print(num_2(24))
+
+num_6 = multiply_number(6)
+print(num_6(1))
+```
+The output is ?"	"```
+def multiply_number(num):
+    def product(number):
+        return num * number
+    return product
+
+num_2 = multiply_number(2)
+print(num_2(11))
+
+num_6 = multiply_number(6)
+print(num_6(1))
+```
+The output is ?"	22,6	11,1	2,6	6,22	22, 6	11,1	2,6	6,22	1	400	0	Python	:C_:	py_q13
+What's the output? II	Medium	"```
+import os
+print (os.path.expanduser('~'))
+```
+The output is?"	"```
+import os
+print (os.path.expanduser('~'))
+```
+The output is?"	/home/runner	/home	~/runner	~	/home/runner	/home	~/runner	~	1	400	0	Python	:D_:	py_q14
+What's the output? III	Easy	"```
+def make_list(v, the_list=[]):
+...    the_list.append(v)
+...    return the_list
+make_list(12)
+print(make_list(47))
+```
+The output is?"	"```
+def make_list(v, the_list=[]):
+...    the_list.append(v)
+...    return the_list
+make_list(12)
+print(make_list(47))
+```
+The output is?"	[12]	[47]	[12, 47]	[]	[12]	[47]	[12, 47]	[]	3	400	0	Python	:E_:	py_q15
+What's the output? IV	Medium	"```
+nums = [1,3,5,7,9]
+gen = (n for n in nums if n in nums)
+nums = [1,2,3,4]
+print(list(gen))
+```
+The output is?"	"```
+nums = [1,3,5,7,9]
+gen = (n for n in nums if n in nums)
+nums = [1,2,3,4]
+print(list(gen))
+```
+The output is?"	[1,3,5,7,9]	[1,2,3,4]	[1,3]	[1,2,3,4,5,6,7,9]	[1,3,5,7,9]	[1,2,3,4]	[1,3]	[1,2,3,4,5,6,7,9]	3	400	0	Python	:F_:	py_q16

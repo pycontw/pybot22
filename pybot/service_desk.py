@@ -3,11 +3,11 @@ import discord
 
 from pybot.views import LanguageSelectionView
 from pybot.schemas import ServiceType
-from pybot.database import query_user_rewards, record_reaction_event
+from pybot.database import query_user_rewards
 from pybot.translation import CHECK_COINS_RESP
 
 
-async def command_distributor(q_info: dict, reaction: discord.Reaction, user: discord.Member):
+async def command_distributor(q_info: dict, user: discord.Member):
     desc = q_info['description']
     if desc == ServiceType.INIT_PROFILE:
         # Do nothing. Any first reaction to the bot will trigger the initialization
@@ -26,11 +26,4 @@ async def command_distributor(q_info: dict, reaction: discord.Reaction, user: di
             stars=rewards['star'],
         )
         await user.send(resp)
-
-    await reaction.remove(user)
-    await record_reaction_event(
-        qid=q_info['qid'],
-        uid=user.id,
-        channel_id=reaction.message.channel.id,
-        channel_name=reaction.message.channel.name,
-    )
+    return None

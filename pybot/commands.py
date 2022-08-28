@@ -124,6 +124,18 @@ async def init_leaderboard(ctx: commands.Context):
     await _init_leaderbaord_channel(ctx, clear_msgs=True)
 
 
+async def _upload_additional_images_to_map_channel(ctx: commands.Context):
+    figure_paths = [
+        './figures/map_a.png',
+        './figures/map_b.png',
+    ]
+    files = [
+        discord.File(open(fig_path, 'rb'))
+        for fig_path in figure_paths
+    ]
+    await ctx.send(files=files)
+
+
 @bot.command(hidden=True)
 @commands.check(_check_is_staff)
 async def init_game(ctx: commands.Context):
@@ -155,6 +167,10 @@ async def init_game(ctx: commands.Context):
                 guild = bot.get_guild(1000406827491676170)  # main server
                 emoji = discord.utils.get(guild.emojis, name=emoji)
                 await new_msg.add_reaction(emoji)
+
+        if target_channel == 1008236974999613501:
+            # map channel
+            await _upload_additional_images_to_map_channel(ctx)
 
     await _init_leaderbaord_channel(ctx)
 
@@ -224,6 +240,4 @@ async def user_lotto(ctx: commands.Context, reward_n: int):
 
 @bot.command(hiddent=True)
 async def test(ctx: commands.Context):
-    guild = bot.get_guild(1000406827491676170)
-    for member in guild.members:
-        print(member.name, member.roles)
+    await ctx.send(file=discord.File(open('./figures/map_a.png', 'rb')))

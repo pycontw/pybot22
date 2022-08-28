@@ -22,3 +22,4 @@ class ServiceType(BaseEnum):
     CHECK_COINS = 'check_coins'
     CHANGE_LANGUAGE = 'change_language'
     INIT_PROFILE = 'init_profile'
+    GAME_DIE = 'game_die'

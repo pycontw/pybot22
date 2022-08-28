@@ -170,7 +170,6 @@ class PyBot22(commands.Bot):
             emoji = reaction.emoji.name
 
         print(reaction.emoji)
-        print(user.roles)
 
         # Check emoji in question pool
         if emoji not in init_message[channel_id]['emoji_to_qid']:

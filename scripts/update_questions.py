@@ -353,6 +353,7 @@ if __name__ == '__main__':
     # update_sponsor_questions()
     # update_travel_questions()
     # update_view_questions()
+    # update_open_questions()
     # update_python_questions()
     # update_channel_msg()
     update_game_channel_msg()

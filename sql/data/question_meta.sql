@@ -5,6 +5,7 @@ INSERT INTO `pycon22`.`question_meta` (`qid`,`emoji`,`coin`,`star`,`q_type`,`cha
 INSERT INTO `pycon22`.`question_meta` (`qid`,`emoji`,`coin`,`star`,`q_type`,`channel_id`) VALUES ('cat_q1','👊','1600','1','selection','997710004087967827');
 INSERT INTO `pycon22`.`question_meta` (`qid`,`emoji`,`coin`,`star`,`q_type`,`channel_id`) VALUES ('cfh_q1','🐱','2000','1','option_only','1001111220310523945');
 INSERT INTO `pycon22`.`question_meta` (`qid`,`emoji`,`coin`,`star`,`q_type`,`channel_id`) VALUES ('cfh_q2','py','0','0','pure_message','1001111220310523945');
+INSERT INTO `pycon22`.`question_meta` (`qid`,`emoji`,`coin`,`star`,`q_type`,`channel_id`) VALUES ('chance_q1','🎲','0','0','service','1009488095911096340');
 INSERT INTO `pycon22`.`question_meta` (`qid`,`emoji`,`coin`,`star`,`q_type`,`channel_id`) VALUES ('dcard_q1','🐱','1600','1','option_only','1004348679370584124');
 INSERT INTO `pycon22`.`question_meta` (`qid`,`emoji`,`coin`,`star`,`q_type`,`channel_id`) VALUES ('dcard_q2','py','0','0','pure_message','1004348679370584124');
 INSERT INTO `pycon22`.`question_meta` (`qid`,`emoji`,`coin`,`star`,`q_type`,`channel_id`) VALUES ('esun_q1','🐱','1600','1','option_only','1004348775915073567');

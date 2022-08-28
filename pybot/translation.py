@@ -39,3 +39,8 @@ CHECK_COINS_RESP = {
     'zh_TW': '你擁有 {coins} 金幣與 {stars} 星星。',
     'EN': 'You have {coins} coins and {stars} stars.',
 }
+
+GAME_DIE_MSG = {
+    'zh_TW': '機會與命運，來試試你的手氣～',
+    'EN': 'Chance and destiny, check you luckiness today~',
+}

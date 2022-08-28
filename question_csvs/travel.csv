@@ -1,49 +1,92 @@
 qid	en_description	tw_description	opt1	opt2	opt3	opt4	en_opt1	en_opt2	en_opt3	en_opt4	ans	coins	stars	channel_name	emoji_text	emoji	link
-travel_q01	Suncakes are a must-buy specialty  in Taichung. It is made out of butter. What's the most common stuffing in the sun cakes? 	"臺中名產太陽餅，是以油餅皮包覆內餡的傳統酥餅，請問其內餡通常以什麼製成？
-
-請至 gather 會場查看選項與提示"	麥芽糖	太陽	芋頭	冬瓜醬	Malt sugar	Sun	Taro	Gourd sugar	1	400	0	food	:flatbread:	🫓	"The must-buy snake in Taichung is suncake. The filling is prepared with sugar, maltose, butter, salt, flour, and milk, after being wrapped into the pastry.
+travel_q01	"**# TaichungSuncake**
+Suncakes are a must-buy specialty  in Taichung. It is made out of butter. What's the most common stuffing in the sun cakes? 
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 臺中太陽餅**
+臺中名產太陽餅，是以油餅皮包覆內餡的傳統酥餅，請問其內餡通常以什麼製成？
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `"	麥芽糖	太陽	芋頭	冬瓜醬	Malt sugar	Sun	Taro	Gourd sugar	1	400	0	food	:flatbread:	🫓	"The must-buy snake in Taichung is suncake. The filling is prepared with sugar, maltose, butter, salt, flour, and milk, after being wrapped into the pastry.
 
 太陽餅是到臺中必買的點心。其餡料是由糖、麥芽糖、鹽巴、黃油、鹽、麵粉、奶油混合製成。"	https://avenueone.sg/travel/best-suncakes-taiwan/	"臺中太陽餅
 #TaichungSuncake"	https://docs.google.com/presentation/d/1-YpDnM4JWfTaRUBtCnNzjDTztGRh7T6qB_eNqD8EXUM/preview
-travel_q02	How does the beef soup is usually cooked in the famous Beef culture festival in Tainan?	臺南每年舉辦牛肉文化節，其中觀光客必吃的牛肉湯，其牛肉大多以什麼方式料理？	清燙	紅燒	油炸	快炒	Stewed	Braised	Fried	Stir fried	1	400	0	food	:ramen:	🍜	"Beef culture festival is held every year in Tainan. In addition, the tourist must-try dish is beef soup. Most  beef soups are made of a clear broth, ultra-thin strips of medium rare beef, and occasionally a side of raw ginger and soy sauce for dipping.
+travel_q02	"**# TainanBeefNoodleSoup**
+How does the beef soup is usually cooked in the famous Beef culture festival in Tainan?
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 臺南牛肉麵**
+臺南每年舉辦牛肉文化節，其中觀光客必吃的牛肉湯，其牛肉大多以什麼方式料理？
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `"	清燙	紅燒	油炸	快炒	Stewed	Braised	Fried	Stir fried	1	400	0	food	:ramen:	🍜	"Beef culture festival is held every year in Tainan. In addition, the tourist must-try dish is beef soup. Most  beef soups are made of a clear broth, ultra-thin strips of medium rare beef, and occasionally a side of raw ginger and soy sauce for dipping.
 
 臺南每年都會舉辦牛肉文化節。觀光客每次來臺南必吃牛肉湯，牛肉湯是由清湯，牛肉切片所熬煮的，有時還會加上生薑與醬油。"	https://www.furama.com/vanilla/travel-tips/4-must-try-street-foods-in-tainan-to-get-your-munch-on	"臺南牛肉麵
 #TainanBeefNoodleSoup"	https://docs.google.com/presentation/d/1PyTrBreE9QXtRhiQNXO7mzkICZFqVZHTlQIoLxih3Vs/preview
-travel_q03	Which mountain is the tallest one in Taiwan?	請問臺灣最高的山是哪一座山？	阿里山	喜馬拉雅山	玉山	阿爾卑斯山	Alishan (Mount Ali)	Himalayas	Yushan (Mount Yu)	Alps	3	400	0	nature	:mountain:	⛰️ 	"Taiwan is a mountainous island in Asia with the largest and most dense mountains in the world. Most of her mountains have high peaks with elevations of more than 3000 m above sea level. Yushan is the tallest mountain in Taiwan at an elevation of 3952 m.
+travel_q03	"**# HighestPeakTaiwan**
+Which mountain is the tallest one in Taiwan?
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 臺灣最高山**
+請問臺灣最高的山是哪一座山？
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `"	阿里山	喜馬拉雅山	玉山	阿爾卑斯山	Alishan (Mount Ali)	Himalayas	Yushan (Mount Yu)	Alps	3	400	0	nature	:mountain:	⛰️ 	"Taiwan is a mountainous island in Asia with the largest and most dense mountains in the world. Most of her mountains have high peaks with elevations of more than 3000 m above sea level. Yushan is the tallest mountain in Taiwan at an elevation of 3952 m.
 臺灣是世界上擁有最密集山脈的島嶼。臺灣大部分的山峰都超過 3000 公尺的海拔。玉山的高度為 3952 公尺，是臺灣最高的一座山。"	https://www.worldatlas.com/articles/tallest-mountains-in-taiwan.html	"臺灣最高山
 #HighestPeakTaiwan"	https://docs.google.com/presentation/d/1QI-_A7Xa8f81eaIyulyG_7gtHEWpQQninfIItg_u5c0/preview
-travel_q04	Which of the following is not included in the Kinmen souvenirs?	請問金門伴手禮不包括下列哪個？	高粱酒	貢糖	菜刀	年糕	Sorghum liquor	Gong tang	Kitchen knife	Rice cake	4	400	0	culture	":kinmen:
+travel_q04	"**# KinmenSouvenirs**
+Which of the following is not included in the Kinmen souvenirs?
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 金門伴手禮**
+請問金門伴手禮不包括下列哪個？
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `"	高粱酒	貢糖	菜刀	年糕	Sorghum liquor	Gong tang	Kitchen knife	Rice cake	4	400	0	culture	":kinmen:
 :bridge_at_night: "	":kinmen:
 🌉"	"Reminders of the military past are everywhere in Kinmen. The souvenirs of Kinmen include the special Kinmen knives, peanut candies (gong tang). kaoliang liquor, noodles, and wind lion god products.
 
 金門因其地理位置，過去被定位為戰略據點，也因此留下許多的戰後遺跡，成為金門獨具的觀光景色。金門有很多值得帶走的伴手禮，像是金門菜刀、貢糖、高粱酒、金門麵線，以及風獅爺的周邊商品。"	https://kinmen.travel/en/shop/souvenir	"金門伴手禮
 #KinmenSouvenirs"	https://docs.google.com/presentation/d/1QZ49Yf1MZbm27HORt9Nk74kdEIeOlEr9vJ1YMQ6L1vY/preview
-travel_q05	Penghu as the largest outlying island of Taiwan attracts many visitors every year, which listed selection is not Penghu famous for?	澎湖作為臺灣最大的離島，其澎湖花火節每年都吸引大量觀光客，請問下列哪一項不是澎湖相關景點？	藍眼淚	雙心石滬	觀音亭	海底郵筒	Sea of stars	Twin-Hearts Stone Weir	Kuanyin Pavilion	Underwater Postbox	1	400	0	nature	:desert:	🏜️ 	"The Penghu Islands are a cluster of 90 small islands and islets in the Taiwan Strait, which is  just off the west coast of Taiwan. This gorgeous archipelago offers amazing ocean views and is rich in history and culture. There are lots of famous tourist attractions, such as Twin-Hearts Stone Weir, Kuanyin Pavilion and Underwater Postbox, etc.
+travel_q05	"**# PenghuAttractions**
+Penghu as the largest outlying island of Taiwan attracts many visitors every year, which listed selection is not Penghu famous for?
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 澎湖旅遊景點**
+澎湖作為臺灣最大的離島，其澎湖花火節每年都吸引大量觀光客，請問下列哪一項不是澎湖相關景點？
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `"	藍眼淚	雙心石滬	觀音亭	海底郵筒	Sea of stars	Twin-Hearts Stone Weir	Kuanyin Pavilion	Underwater Postbox	1	400	0	nature	:desert:	🏜️ 	"The Penghu Islands are a cluster of 90 small islands and islets in the Taiwan Strait, which is  just off the west coast of Taiwan. This gorgeous archipelago offers amazing ocean views and is rich in history and culture. There are lots of famous tourist attractions, such as Twin-Hearts Stone Weir, Kuanyin Pavilion and Underwater Postbox, etc.
 
 澎湖群島位於臺灣海峽上，由 90 座島嶼組成。除了壯麗的海洋景觀，也蘊含著歷史人文的氣息。澎湖知名的觀光景點有雙心石滬、觀音亭以及全台第一個海底郵筒等，每年吸引許多遊客慕名而來。"	"https://eng.taiwan.net.tw/m1.aspx?sNo=0002125&id=653
 
 https://kinmen.travel/en/discover/tour/92"	"澎湖旅遊景點
 #PenghuAttractions"	https://docs.google.com/presentation/d/1hC6FEpjlefZ0quH64AMtoOhIjrqaoV6IafgS-vJv4Yg/preview
-travel_q06	How many floors does the highest building in Taiwan have?	臺灣最高的建築「101」有幾層樓?	89	92	101	110	89	92	101	110	3	400	0	culture	:cityscape:	🏙	"The Taipei 101 was the highest building in the world from 2004-2010, with 101 floors above ground (hence the name 101) and 5 floors below ground.
+travel_q06	"**# TallestBuildingTaiwan**
+How many floors does the highest building in Taiwan have?
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 臺灣最高建築**
+臺灣最高的建築「101」有幾層樓?
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `
+"	89	92	101	110	89	92	101	110	3	400	0	culture	:cityscape:	🏙	"The Taipei 101 was the highest building in the world from 2004-2010, with 101 floors above ground (hence the name 101) and 5 floors below ground.
 
 臺北 101 在 2004 年到 2010 年是世界最高的建築。臺北 101 地上樓層有 101 層，地下有 5 層樓。"	https://www.foreignersintaiwan.com/blog-370963385326684/the-taipei-101	"臺灣最高建築
 #TallestBuildingTaiwan"	https://docs.google.com/presentation/d/1pBUXibUOwkUY6sCFJsPE4BZH7_ERQuAROgyMObazOvw/preview
-travel_q07	Which of the following festival is held in Miaoli?	下列何者是苗栗觀光活動？	客家桐花祭	鹽水蜂炮	童玩節	耶誕城	Tung blossom of Hakka Festival	Yanshui Beehive Fireworks Festival	International Children's Folklore & Folkgame Festival	Christmas Town	1	400	0	culture	:airplane:	✈️	"Every April and May, for two full months, Tung flowers bloom throughout Taiwan, especially in the Hakka settlements in Miaoli County. The Hakka Tung Blossom Festival is held annually amid much fanfare, and a series of fun activities are held to promote tourism in Miaoli County.
+travel_q07	"**# MiaoliFestivals**
+Which of the following festival is held in Miaoli?
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 苗栗觀光活動**
+下列何者是苗栗觀光活動？
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `"	客家桐花祭	鹽水蜂炮	童玩節	耶誕城	Tung blossom of Hakka Festival	Yanshui Beehive Fireworks Festival	International Children's Folklore & Folkgame Festival	Christmas Town	1	400	0	culture	:airplane:	✈️	"Every April and May, for two full months, Tung flowers bloom throughout Taiwan, especially in the Hakka settlements in Miaoli County. The Hakka Tung Blossom Festival is held annually amid much fanfare, and a series of fun activities are held to promote tourism in Miaoli County.
 
 每年四月到五月，是桐花盛開的月份，尤其是在苗栗客家族群的聚落更可看到花開的盛況。 苗栗縣政府每年都會舉辦客家桐花節，並舉辦一系列有趣的活動。"	https://miaolitravel.net/article.aspx?sNo=04004349&lang=2	"苗栗觀光活動
 #MiaoliFestivals"	https://docs.google.com/presentation/d/18VidZqcVtHIUwGhO_28hZGY5rKhge66QB7t8ddhlhNY/preview
-travel_q08	What do people do during Lantern Festival?	下列何者是元宵節的節慶活動？	發紅包	放天燈	吃月餅	划龍舟	Give lucky money	Release the flying lantern	Eat moon cakes	Row the Dragon Boat	2	400	0	culture	:izakaya_lantern: 	🏮	"There are many activities held across Taiwan during the Lantern Festival. During the festival, thousands of sky lanterns are lit over Pingxi District in Taiwan.
+travel_q08	"**# LanternFestivalTradition**
+What do people do during Lantern Festival?
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 元宵節要幹嘛**
+下列何者是元宵節的節慶活動？
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `"	發紅包	放天燈	吃月餅	划龍舟	Give lucky money	Release the flying lantern	Eat moon cakes	Row the Dragon Boat	2	400	0	culture	:izakaya_lantern: 	🏮	"There are many activities held across Taiwan during the Lantern Festival. During the festival, thousands of sky lanterns are lit over Pingxi District in Taiwan.
 
 「北天燈、南蜂炮」已成臺灣元宵節最負盛名活動；平溪放天燈每年都吸引十多萬民眾參加；有傳說是民眾要躲避盜匪，互報平安施放信號，而稱為祈福燈或平安燈。"	"https://en.wikipedia.org/wiki/Taiwan_Lantern_Festival
 
 https://www.sim.org.tw/festival16.html"	"元宵節要幹嘛
 #LanternFestivalTradition"	https://docs.google.com/presentation/d/1Gw42HUJ-9j5dM6pWZGHGb2nVSflo7L27AW4F0lYKVQ8/preview
-travel_q09	Which sport is called the national sport in Taiwan?	臺灣哪種運動曾經被譽為「國球」？	籃球	棒球	網球	桌球	Basketball	Baseball	Tennis	Table tennis	2	400	0	culture	:person_bouncing_ball: 	⛹️	"Baseball is famous in Taiwan since 1970s. Also, Taiwan is the third country to have a national team of baseball in Asia.
+travel_q09	"**# TaiwanSports**
+Which sport is called the national sport in Taiwan?
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 臺灣運動**
+臺灣哪種運動曾經被譽為「國球」？
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `"	籃球	棒球	網球	桌球	Basketball	Baseball	Tennis	Table tennis	2	400	0	culture	:person_bouncing_ball: 	⛹️	"Baseball is famous in Taiwan since 1970s. Also, Taiwan is the third country to have a national team of baseball in Asia.
 從 1970 年代開始，臺灣就很瘋迷棒球。臺灣也是亞洲第 3 個擁有棒球國家隊的國家。"	https://zh.wikipedia.org/zh-tw/%E8%87%BA%E7%81%A3#cite_note-185	"臺灣運動
 #TaiwanSports"	https://docs.google.com/presentation/d/1Il62vMHDQQL7JhwRLbMx33hXC1F4sqCB2cJQWh4lnho/preview
-travel_q10	Which one is not an outlying island of Taiwan?	下列哪個不是臺灣離島？	蘭嶼	綠島	金門	夏威夷	Lanyu	Green Island	Kinmen	Hawaii	4	400	0	nature	:island:  	🏝️ 	"There are in total of 166 islands, which include Lanyu, Green Island, Kinmen, Penghu, and Matsu, around Taiwan.
+travel_q10	"**# TaiwanOffshoreIslands**
+Which one is not an outlying island of Taiwan?
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 臺灣離島**
+下列哪個不是臺灣離島？
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `"	蘭嶼	綠島	金門	夏威夷	Lanyu	Green Island	Kinmen	Hawaii	4	400	0	nature	:island:  	🏝️ 	"There are in total of 166 islands, which include Lanyu, Green Island, Kinmen, Penghu, and Matsu, around Taiwan.
 在臺灣附近有澎湖、金門、馬祖、綠島、蘭嶼、小琉球等離島。"	https://en.wikipedia.org/wiki/List_of_islands_of_Taiwan	"臺灣離島
 #TaiwanOffshoreIslands"	https://docs.google.com/presentation/d/1Yvg2F5Jbjkx30Br4FI8u9QtSqfEuSHm70S2l-o05R_g/preview
-travel_q11	Which of the following animal is not native to Taiwan?	下列哪一個不是臺灣本土動物？	臺灣獼猴	臺灣黑熊	櫻花鉤吻鮭	北極熊	Formosan Macaque	Taiwan Black Bear	Taiwan Landlocked Masu Salmon	Polar Bear	4	400	0	nature	:bear:	🐻 	"Taiwan has rich biological resources, and is famous for its biodiversity. Also, there are several endemic species such as Formosan Macaque, Taiwan Landlocked Masu Salmon, Taiwan Black Bear, and Taiwan Blue Magpie.
+travel_q11	"**# TaiwanEndemicSpecies**
+Which of the following animal is not native to Taiwan?
+`   400 PyCat coins   |   Get prompts and hints on the Gather town venue.   `"	"**# 特色動物**
+下列哪一個不是臺灣本土動物？
+`   400 貓金幣   |   請至 Gather.Town 會場查看選項與提示   `"	臺灣獼猴	臺灣黑熊	櫻花鉤吻鮭	北極熊	Formosan Macaque	Taiwan Black Bear	Taiwan Landlocked Masu Salmon	Polar Bear	4	400	0	nature	:bear:	🐻 	"Taiwan has rich biological resources, and is famous for its biodiversity. Also, there are several endemic species such as Formosan Macaque, Taiwan Landlocked Masu Salmon, Taiwan Black Bear, and Taiwan Blue Magpie.
 臺灣擁有豐富的生物資源，野生動物之多樣舉世聞名。臺灣有許多特有種像是臺灣黑熊、臺灣獼猴、櫻花鉤吻鮭、臺灣藍鵲等。"	https://www.tesri.gov.tw/htmlarea_file/web_articles/tesri/434/taiwan_wildlife_conservation_atlas.pdf	"特色動物
 #TaiwanEndemicSpecies"	https://docs.google.com/presentation/d/1rTrsJMN1ck_R1TNVC8C6VCsBrFOsqf8mks3fR3q4VGo/preview

@@ -121,9 +121,10 @@ class LanguageSelectionView(discord.ui.View):
         self.uid = uid
         self.sync_update = sync_update
         tw_copy = '你選擇了中文，之後所有對話將預設語言為中文顯示。'\
-            '若是想更改語言，可隨時在對話框輸入指令 `!change_language` 修改。'
+            '若是想更改語言，可回到 <#1000406828024336435> 按下 :abc: 進行更改～'
         en_copy = 'You\'ve choose English. All the following conversation will be shown in English.' \
-            'If you want to change the language setting, type command `!change_language` anytime to modify.'
+            'If you want to change the language setting, you can go back to <#1000406828024336435>' \
+            'and press :abc: to change~'
         self.add_item(LanguageButton(resp_copy=tw_copy, label='中文'))
         self.add_item(LanguageButton(resp_copy=en_copy, label='English'))
 
@@ -243,7 +244,11 @@ class GameSelectionView(discord.ui.View):
         else:
             answer = self.q_info['answer']
 
-        if user_ans == answer or self.q_info['q_type'] == QuestionType.QUESTIONARE:
+        # Check answer
+        if (
+            self.q_info['q_type'] == QuestionType.QUESTIONARE
+            or user_ans == answer
+        ):
             # Calculate rewards
             reward_coin = int(max(1, self.q_info['coin'] * pow(0.5, self.answer_counts)))
 
@@ -262,12 +267,11 @@ class GameSelectionView(discord.ui.View):
             is_correct = False
             self.answer_counts += 1
 
+        # Dispatch message according to answer/question type.
         if (
             self.q_info['q_type'] == QuestionType.QUESTIONARE
-            and user_ans not in ('其他', 'Others')
-        ):  
-            await interaction.response.send_message(resp_msg)
-        else:
+            and user_ans in ('其他', 'Others')
+        ):
             await interaction.response.send_modal(
                 SponsorshipQuestionModal(
                     q_info=self.q_info,
@@ -276,6 +280,8 @@ class GameSelectionView(discord.ui.View):
                     trigger_view=self,
                 )
             )
+        else:
+            await interaction.response.send_message(resp_msg)
         await record_answer_event(self.q_info['qid'], interaction.user.id, user_ans, is_correct)
 
 
@@ -291,6 +297,11 @@ class InitGroupButton(discord.ui.Button):
         await interaction.response.edit_message(view=view)
         if view.next_view:
             if view.next_view.is_final:
+                from pybot import bot  # avoid circular import
+                guild = bot.get_guild(1000406827491676170)
+                role = guild.get_role(1012006097919430746)
+                member = guild.get_member(interaction.user.id)
+                await member.add_roles(role)
                 await interaction.followup.send(
                     f'根據你的回答，你被分配到 **{view.group}** 組\n' \
                     f'According to your answer, you are distributed to group **{view.group}**.\n'

@@ -126,8 +126,39 @@ def load_travel_questions(csv_path, dry_run=True):
     )
 
 
+def load_open_questions(csv_path):
+    with open(csv_path) as ff:
+        reader = DictReader(ff, delimiter='\t')
+        q_list = [q for q in reader]
+
+    with cursor() as cur:
+        for q in q_list:
+            cur.execute('''
+                INSERT INTO
+                    question
+                    (`qid`, `lang`, `description`, `answer`)
+                VALUES
+                    (%(qid)s, 'zh_TW', %(tw_description)s, %(tw_ans)s)
+            ''', q)
+
+            cur.execute('''
+                INSERT INTO
+                    question
+                    (`qid`, `lang`, `description`, `answer`)
+                VALUES
+                    (%(qid)s, 'EN', %(en_description)s, %(en_ans)s)
+            ''', q)
+
+            cur.execute('''
+                INSERT INTO
+                    question_meta
+                    (`qid`, `emoji`, `coin`, `star`, `q_type`, `channel_id`)
+                VALUES
+                    (%(qid)s, %(emoji)s, %(coins)s, %(stars)s, 'text', %(channel_id)s)
+            ''', q)
+
 
 if __name__ == '__main__':
     #out = load_view_questions('./question_csvs/view.csv', dry_run=False)
-    out = load_travel_questions('./question_csvs/travel.csv', dry_run=True)
-
+    #out = load_travel_questions('./question_csvs/travel.csv', dry_run=True)
+    out = load_open_questions('./question_csvs/open_question.csv')

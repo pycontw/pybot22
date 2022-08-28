@@ -13,7 +13,7 @@ class QuestionType(BaseEnum):
     TEXT = 'text'
     SELECTION = 'selection'  # Will show the full text of every option.
     OPTION_ONLY = 'option_only'  # Will only show A, B, C, and D.
-    QUESTIONARE= 'questionare'
+    QUESTIONARE = 'questionare'
     PURE_MESSAGE = 'pure_message'
     SERVICE = 'service'
 
@@ -22,3 +22,4 @@ class ServiceType(BaseEnum):
     CHECK_COINS = 'check_coins'
     CHANGE_LANGUAGE = 'change_language'
     INIT_PROFILE = 'init_profile'
+    GAME_DIE = 'game_die'

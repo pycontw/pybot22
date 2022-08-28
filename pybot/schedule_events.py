@@ -9,6 +9,7 @@ from pybot import bot
 from pybot.database import query_user_rank_by_coin
 from pybot.settings import LEADER_BOARD_CHANNEL
 
+
 def run_schedule_events(interval=1):
     cease_continuous_run = threading.Event()
 

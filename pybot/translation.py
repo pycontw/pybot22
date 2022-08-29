@@ -36,8 +36,8 @@ CORRECT_ANSWER_REWARD_MSG = {
 }
 
 CHECK_COINS_RESP = {
-    'zh_TW': '你擁有 {coins} 金幣與 {stars} 星星。',
-    'EN': 'You have {coins} coins and {stars} stars.',
+    'zh_TW': '你擁有 <:paw_stamp_pink:1010770490111033414> {stars} 肉球印章 + 💸 {coins} 貓金幣。',
+    'EN': 'You have <:paw_stamp_pink:1010770490111033414> {stars} Pawprint Stamps + 💸 {coins} PyCat coins.',
 }
 
 GAME_DIE_MSG = {

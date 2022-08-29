@@ -26,6 +26,4 @@ async def command_distributor(q_info: dict, user: discord.Member):
             stars=rewards['star'],
         )
         await user.send(resp)
-    elif desc == ServiceType.GAME_DIE:
-        ...
     return None

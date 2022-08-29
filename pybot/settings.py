@@ -24,5 +24,5 @@ DEV_CHANNELS = {
     1004352415698522233,  # python-challenge
     1008231762599612446,  # coinchat
     1004351730256978062,  # mystery-space
-    1009488095911096340,  # chance and destine
+    # 1009488095911096340,  # chance and destiny
 }

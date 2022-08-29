@@ -1,6 +1,8 @@
 discord.py
 python-ulid
 toml
-sqlclient
+mysqlclient
 pqdict
 mosql
+schedule
+

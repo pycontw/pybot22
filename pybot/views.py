@@ -249,19 +249,17 @@ class GameSelectionView(discord.ui.View):
             self.q_info['q_type'] == QuestionType.QUESTIONARE
             or user_ans == answer
         ):
-            # Calculate rewards
-            reward_coin = int(max(1, self.q_info['coin'] * pow(0.5, self.answer_counts)))
-
             resp_msg = CORRECT_ANSWER_RESPONSE[self.lang]
             if not self.already_answered:
+                reward_coin = int(max(1, self.q_info['coin'] * pow(0.5, self.answer_counts)))
                 reward_msg = CORRECT_ANSWER_REWARD_MSG[self.lang].format(
                     coin=reward_coin,
                     star=self.q_info['star'],
                 )
                 resp_msg = f'{resp_msg}\n{reward_msg}'
+                await update_user_rewards(interaction.user.id, reward_coin, self.q_info['star'])
             is_correct = True
             self.stop()
-            await update_user_rewards(interaction.user.id, reward_coin, self.q_info['star'])
         else:
             resp_msg = WRONG_ANSWER_RESPONSE[self.lang]
             is_correct = False

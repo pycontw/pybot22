@@ -31,13 +31,13 @@ QUESTION_ANSWERED_REMINDER = {
 }
 
 CORRECT_ANSWER_REWARD_MSG = {
-    'zh_TW': '獲得金幣：{coin} / 星星：{star}',
-    'EN': 'Get coins: {coin} / stars: {star}',
+    'zh_TW': '獲得貓金幣：{coin} / 肉球印章：{star}',
+    'EN': 'Get PyCat coins: {coin} / Pawprint Stamps: {star}',
 }
 
 CHECK_COINS_RESP = {
-    'zh_TW': '你擁有 <:paw_stamp_pink:1010770490111033414> {stars} 肉球印章 + 💸 {coins} 貓金幣。',
-    'EN': 'You have <:paw_stamp_pink:1010770490111033414> {stars} Pawprint Stamps + 💸 {coins} PyCat coins.',
+    'zh_TW': '你擁有 <:paw_stamp:1013827816787288134> {stars} 肉球印章 + <:cat_coin:1013823752418623509> {coins} 貓金幣。',
+    'EN': 'You have <:paw_stamp:1013827816787288134> {stars} Pawprint Stamps + <:cat_coin:1013823752418623509> {coins} PyCat coins.',
 }
 
 GAME_DIE_MSG = {

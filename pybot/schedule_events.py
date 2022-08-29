@@ -54,3 +54,5 @@ async def update_leaderboard():
 
 
 schedule.every(5).minutes.do(update_leaderboard)
+# 8:20 ~ 20:10
+# 9:20 ~ 16:00

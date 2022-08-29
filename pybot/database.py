@@ -2,15 +2,16 @@ import os
 import json
 import contextlib
 from typing import Dict, List
-from functools import lru_cache
 
 import MySQLdb
 from MySQLdb.cursors import DictCursor
 
 from pybot.utils import gen_id, timed_cache
 
+
 sql_server_host = os.getenv('SQL_SERVER_HOST') 
-g_sql_server = sql_server_host if sql_server_host else "localhost"
+g_sql_server = sql_server_host if sql_server_host else 'localhost'
+
 
 @contextlib.contextmanager
 def db_conn():
@@ -332,7 +333,14 @@ async def query_user_has_stars(limit=200, low_bound=5) -> List[dict]:
                 profile
             WHERE
                 star >= %(low_bound)s
+                AND reward IS NULL
             LIMIT
                 %(limit)s
         ''', {'limit': limit, 'low_bound': low_bound})
         return cur.fetchall()
+
+
+async def update_user_lotto_reward(uid: str, reward_name: str):
+    params = {'uid': uid, 'reward': reward_name}
+    with cursor() as cur:
+        cur.execute('UPDATE profile SET reward=%(reward)s WHERE uid=%(uid)s', params)

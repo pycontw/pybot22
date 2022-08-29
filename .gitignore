@@ -5,3 +5,4 @@ export_cred.sh
 cred.env
 TODO.md
 db_data
+gcp_key*

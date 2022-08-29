@@ -11,6 +11,7 @@ from pybot.database import (
     query_user_rank_by_coin,
     sync_query_init_messages,
     sync_check_user_is_staff,
+    update_user_lotto_reward,
     update_user_rewards
 )
 from pybot.translation import COMMAND_ONLY_AVAILABLE_PRIVATE_CHAT_MSG
@@ -211,9 +212,9 @@ async def sync_channel_msg(ctx: commands.Context, channel_id: int):
 
 @bot.command(hidden=True)
 @commands.check(_check_is_staff)
-async def user_lotto(ctx: commands.Context, reward_n: int):
-    # reward_n: numbers of rewards, the first 1 is the first reward, etc
-    users = await query_user_has_stars(800, 5)
+async def user_lotto(ctx: commands.Context, reward_cnt: int, reward_name: str, min_stars: int = 5):
+    # reward_cnt: numbers of rewards, the first 1 is the first reward, etc
+    users = await query_user_has_stars(800, min_stars)
 
     flatten_users = []
     for user in users:
@@ -226,7 +227,7 @@ async def user_lotto(ctx: commands.Context, reward_n: int):
     chosen_users = set()
     for uid, user_name in flatten_users:
         chosen_users.add((uid, user_name))
-        if len(chosen_users) == reward_n:
+        if len(chosen_users) == reward_cnt:
             break
 
     messages = []
@@ -236,6 +237,8 @@ async def user_lotto(ctx: commands.Context, reward_n: int):
     description = '\n'.join(messages)
     embed = discord.Embed(title='Sponsor Rewards', description=description)
     await ctx.send(embed=embed)
+    for uid, _ in chosen_users:
+        await update_user_lotto_reward(uid, reward_name)
 
 
 @bot.command(hiddent=True)

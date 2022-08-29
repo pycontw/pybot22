@@ -7,7 +7,7 @@ INSERT INTO `pycon22`.`question_options` (`qid`,`lang`,`options`) VALUES ('cfh_q
 INSERT INTO `pycon22`.`question_options` (`qid`,`lang`,`options`) VALUES ('cfh_q1','zh_TW','{"A": "一路發中心", "B": "發發數中心", "C": "國泰大數據中心", "D": "數數發中心"}');
 INSERT INTO `pycon22`.`question_options` (`qid`,`lang`,`options`) VALUES ('dcard_q1','EN','{"A": "internationalcompany", "B": "Asiacompany", "C": "universecompany", "D": "taiwancompany"}');
 INSERT INTO `pycon22`.`question_options` (`qid`,`lang`,`options`) VALUES ('dcard_q1','zh_TW','{"A": "世界級網路公司", "B": "亞洲級網路公司", "C": "宇宙級網路公司", "D": "臺灣級網路公司"}');
-INSERT INTO `pycon22`.`question_options` (`qid`,`lang`,`options`) VALUES ('esun_q1','EN','{"A": "AI", "B": "stock", "C": "futures", "D": "insurance\n"}');
+INSERT INTO `pycon22`.`question_options` (`qid`,`lang`,`options`) VALUES ('esun_q1','EN','{"A": "AI", "B": "stock", "C": "futures", "D": "insurance"}');
 INSERT INTO `pycon22`.`question_options` (`qid`,`lang`,`options`) VALUES ('esun_q1','zh_TW','{"A": "AI", "B": "證券投資", "C": "期貨交易", "D": "保險業務"}');
 INSERT INTO `pycon22`.`question_options` (`qid`,`lang`,`options`) VALUES ('ichef_q1','EN','{"A": "HongKong", "B": "Japan", "C": "Singapore", "D": "Malaysia"}');
 INSERT INTO `pycon22`.`question_options` (`qid`,`lang`,`options`) VALUES ('ichef_q1','zh_TW','{"A": "香港", "B": "日本", "C": "新加坡", "D": "馬來西亞"}');

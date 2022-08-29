@@ -5,7 +5,7 @@ from discord.ext import commands
 from discord.errors import HTTPException
 
 from pybot import bot
-from pybot.settings import DEV_ENV, DEV_CHANNELS
+from pybot.settings import DEV_ENV, DEV_CHANNELS, LEADER_BOARD_CHANNEL
 from pybot.database import (
     query_user_has_stars,
     query_user_rank_by_coin,
@@ -93,7 +93,7 @@ async def embed(ctx: commands.Context):
     embed = discord.Embed(title='Rankings', description=description)
     embed.set_thumbnail(url=avatar_url)
 
-    ctx.channel = bot.get_channel(1006167895669223546)  # leaderboard channel
+    ctx.channel = bot.get_channel(LEADER_BOARD_CHANNEL)  # leaderboard channel
     await ctx.send(embed=embed)
 
 
@@ -102,12 +102,12 @@ async def embed(ctx: commands.Context):
 _check_is_staff = lambda ctx: sync_check_user_is_staff(ctx.author.id)
 
 CHANNELS_TO_EXCLUDE_FROM_INIT = {
-    1006167895669223546,  # leader-board
+    LEADER_BOARD_CHANNEL
 }
 
 
 async def _init_leaderbaord_channel(ctx: commands.Context, clear_msgs: bool = False):
-    channel  = bot.get_channel(1006167895669223546)
+    channel  = bot.get_channel(LEADER_BOARD_CHANNEL)
     msgs = [msg async for msg in channel.history(oldest_first=True, limit=10)]
     if clear_msgs:
         await channel.delete_messages(msgs)

@@ -4,3 +4,4 @@ __pycache__/
 export_cred.sh
 cred.env
 TODO.md
+db_data

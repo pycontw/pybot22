@@ -9,12 +9,14 @@ from MySQLdb.cursors import DictCursor
 
 from pybot.utils import gen_id, timed_cache
 
+sql_server_host = os.getenv('SQL_SERVER_HOST') 
+g_sql_server = sql_server_host if sql_server_host else "localhost"
 
 @contextlib.contextmanager
 def db_conn():
     conn = MySQLdb.connect(
         use_unicode=True,
-        host='localhost',
+        host=g_sql_server,
         user='root',
         passwd=os.getenv('DB_PASSWORD'),
         db='pycon22',

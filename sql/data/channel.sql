@@ -4,7 +4,7 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 > Join quizzes provided by our sponsors to get a Pawprint Stamp. You'll be eligible for a lucky draw after five Pawprint Stamps are collected. The more you collect the higher your chance of winning! 
 
 
-<:cat_coin:1013823752418623509>**賺「貓金幣」拿特殊獎勵 ! **
+<:cat_coin:1013823752418623509>** 賺「貓金幣」拿特殊獎勵 ! **
 > 完成指定任務可獲得貓金幣，獲得金幣數前 10 名的參加者會得到特殊獎勵
 <:cat_coin:1013823752418623509>** Earn PyCat coins to get the special reward! **
 > You can earn PyCat coins by participating in assigned tasks, e.g., joining quizzes provided by our sponsors. The top 10 richest will get a special reward. 

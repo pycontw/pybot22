@@ -47,9 +47,9 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 :flag_white: **Team credit  |  貓將軍集靈氣**
 > 
 > 會場上設有紅隊、黃隊、綠隊集氣點，經過集氣點計數會+1
-> 最終集氣數最高的隊伍獲得貓金幣 3000！
-> All participants will belong to "Yellow", "Red", or "Green" team.
-> There are "check-in sites" owned by each team at the venue. You can increase your team credit by visiting these check-in sites. Team with the highest credit will win 3000 PyCat coins exclusively!
+> 最終統計後我們將依各隊集氣數幫每個人加上相對應的貓金幣數量！
+> All participants will belong to either "Yellow", "Red", or "Green" teams.
+> There are "check-in sites" owned by each team at the venue. You can increase your team credit by visiting these check-in sites. At Last, everyone will get extra PyCat coins according group points!
 
 
 **:small_orange_diamond:Get paid to chat   |   閒聊拿金幣**                                        |    <:cat_coin:1013823752418623509> 100    <#1008231762599612446>

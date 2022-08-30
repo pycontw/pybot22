@@ -52,7 +52,5 @@ async def update_leaderboard():
         embed.set_thumbnail(url=avatar_url)
         await msgs[0].reply(embed=embed)
 
-
-schedule.every(5).minutes.do(update_leaderboard)
-# 8:20 ~ 20:10
-# 9:20 ~ 16:00
+schedule.every().saturday.at('08:20').until('20:10').do(update_leaderboard)
+schedule.every().sunday.at('09:20').until('16:00').do(update_leaderboard)

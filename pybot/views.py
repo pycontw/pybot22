@@ -188,7 +188,6 @@ class SponsorshipQuestionView(discord.ui.View):
             self.q_info['star'] = 0
         else:
             self.q_info['coin'] = int(max(1, pow(0.5, self.answer_counts) * self.q_info['coin']))
-            self.q_info['star'] = int(max(1, pow(0.5, self.answer_counts) * self.q_info['star']))
         self.answer_counts += 1
         await interaction.response.send_modal(
             SponsorshipQuestionModal(

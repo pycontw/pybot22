@@ -1,7 +1,7 @@
 INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1000406828024336435','game-start','<:paw_stamp:1013827816787288134> **收集「肉球印章」參加抽獎！**
 > 回答贊助問題拿肉球印章，收集 5 個印章可參加抽獎，集越多中獎機會越高！
 <:paw_stamp:1013827816787288134> **Earn Pawprint Stamps to join the lucky draw!**
-> Join quizzes provided by our sponsors to get a Pawprint Stamp. You'll be eligible for a lucky draw after five Pawprint Stamps are collected. The more you collect the higher your chance of winning! 
+> Join quizzes provided by our sponsors to get a Pawprint Stamp. You''ll be eligible for a lucky draw after five Pawprint Stamps are collected. The more you collect the higher your chance of winning! 
 
 
 <:cat_coin:1013823752418623509>** 賺「貓金幣」拿特殊獎勵 ! **
@@ -15,7 +15,7 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 > You will get a private message from PyCat by clicking Discord reactions in channels.
 > If you are new here, click :comet: to set your language and team first.
 
-:small_blue_diamond: 回答錯誤有扣分機制，請謹慎填答！Don't answer questions indiscriminately or you'll be punished!
+:small_blue_diamond: 回答錯誤有扣分機制，請謹慎填答！Don''t answer questions indiscriminately or you''ll be punished!
 :small_blue_diamond: 遊戲時間到 9/4 16:00 分截止！Your score will freeze at  16:00 Sep 4th (+8). Try your best and have fun!
 
 
@@ -36,9 +36,9 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 
 **:crown:   SPONSOR MISSIONS   |   贊助任務   :crown:** 
 > 到 Gather 贊助攤位查看題目，根據 PyCon 官網的提示回答問題
-> Check out quizzes at our sponsor's booths. ps: You can get hints from sponsor introductions on our website.
+> Check out quizzes at our sponsor''s booths. ps: You can get hints from sponsor introductions on our website.
 > 
-> <:paw_stamp:1013827816787288134> + <:cat_coin:1013823752418623509> 2000
+> <:paw_stamp:1013827816787288134> + <:cat_coin:1013823752418623509>  2000
 > <#1001111220310523945> <#1004348381042323566>
 > <:paw_stamp:1013827816787288134> + <:cat_coin:1013823752418623509> 1600
 > <#1004348628862775296> <#1004348679370584124> <#1004348729857421423> <#1004348775915073567>
@@ -47,15 +47,14 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 :flag_white: **Team credit  |  貓將軍集靈氣**
 > 
 > 會場上設有紅隊、黃隊、綠隊集氣點，經過集氣點計數會+1
-> 最終集氣數最高的隊伍獲得貓金幣 3000！
-> All participants will belong to "Yellow", "Red", or "Green" team.
-> There are "check-in sites" owned by each team at the venue. You can increase your team credit by visiting these check-in sites. Team with the highest credit will win 3000 PyCat coins exclusively!
+> 最終統計後我們將依各隊集氣數幫每個人加上相對應的貓金幣數量！
+> All participants will belong to either "Yellow", "Red", or "Green" teams.
+> There are "check-in sites" owned by each team at the venue. You can increase your team credit by visiting these check-in sites. At Last, everyone will get extra PyCat coins according group points!
 
-
-**:small_orange_diamond:Get paid to chat   |   閒聊拿金幣**                                        |    <:cat_coin:1013823752418623509> 100    <#1008231762599612446>
-**:small_orange_diamond:Taiwan trivia quizzes   |   貓將軍繞境**                              |    <:cat_coin:1013823752418623509> 400   <#1008291016668880936> <#1001111382739132426> <#1001111420215246968>
-**:small_orange_diamond:Python puzzle   |   python 挑戰**                                          |    <:cat_coin:1013823752418623509> 400   <#1004352415698522233>
-**:small_orange_diamond:Secret missions on Gather space   |  神秘空間闖關**     |    <:cat_coin:1013823752418623509> 800   <#1004351730256978062>
+**:small_orange_diamond:Get paid to chat   |   閒聊拿金幣**                                       |    <:cat_coin:1013823752418623509>  100    <#1008231762599612446>
+**:small_orange_diamond:Taiwan trivia quizzes   |   貓將軍繞境**                              |    <:cat_coin:1013823752418623509>  400   <#1008291016668880936> <#1001111382739132426> <#1001111420215246968>
+**:small_orange_diamond:Python puzzle   |   python 挑戰**                                          |    <:cat_coin:1013823752418623509>  400   <#1004352415698522233>
+**:small_orange_diamond:Secret missions on Gather space   |  神秘空間闖關**     |    <:cat_coin:1013823752418623509>  800   <#1004351730256978062>
 
 
 <:paw_stamp:1013827816787288134> ` 肉球印章 Pawprint Stamps `
@@ -68,7 +67,7 @@ Hi，這是【Cathay Financial Holdings 國泰金控】贊助遊戲頻道，請�
 This is a puzzle provided by our sponsor Cathay Financial Holdings.
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 2000 貓金幣 
-You'll get Pawprint Stamps + 2000 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 2000 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：A7 & B1
@@ -128,7 +127,7 @@ Hi，這是【Micron 美光】贊助遊戲頻道，請至 Gather.town 攤位查�
 This is a puzzle provided by our sponsor Micron.
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 2000 貓金幣 
-You'll get Pawprint Stamps + 2000 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 2000 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：A6 & B4
@@ -142,7 +141,7 @@ Hi，這是【Pinkoi】贊助遊戲頻道，請至 Gather.town 攤位查看題�
 This is a puzzle provided by our sponsor Pinkoi.
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 1600 貓金幣 
-You'll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：B5
@@ -156,7 +155,7 @@ Hi，這是【Dcard】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor Dcard.
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 1600 貓金幣 
-You'll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：A1
@@ -170,7 +169,7 @@ Hi，這是【SinoPac Securities 永豐金證券】贊助遊戲頻道，請至 G
 This is a puzzle provided by our sponsor SinoPac Securities .
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 1600 貓金幣 
-You'll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：A4
@@ -184,7 +183,7 @@ Hi，這是【E.SUN Bank 玉山銀行】贊助遊戲頻道，請至 Gather.town 
 This is a puzzle provided by our sponsor E.SUN Bank.
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 1600 貓金幣 
-You'll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：B3
@@ -198,7 +197,7 @@ Hi，這是【Berry AI】贊助遊戲頻道，請至 Gather.town 攤位查看題
 This is a puzzle provided by our sponsor Berry AI.
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 1600 貓金幣 
-You'll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：B2
@@ -212,7 +211,7 @@ Hi，這是【KKCompany】贊助遊戲頻道，請至 Gather.town 攤位查看�
 This is a puzzle provided by our sponsor KKCompany.
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 1600 貓金幣 
-You'll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：A5
@@ -226,7 +225,7 @@ Hi，這是【Reuven Lerner】贊助遊戲頻道，請至 Gather.town 攤位查�
 This is a puzzle provided by our sponsor Reuven Lerner.
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 1600 貓金幣 
-You'll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：A3
@@ -240,7 +239,7 @@ Hi，這是【Appier 沛星互動科技】贊助遊戲頻道，請至 Gather.tow
 This is a puzzle provided by our sponsor Appier.
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 1600 貓金幣 
-You'll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：A2
@@ -254,7 +253,7 @@ Hi，這是【iCHEF 資廚】贊助遊戲頻道，請至 Gather.town 攤位查�
 This is a puzzle provided by our sponsor iCHEF.
 Checkout the questions on their booth on the Gather Town space. ```
 **回答問題將獲得 <:paw_stamp:1013827816787288134> 肉球印章 + <:cat_coin:1013823752418623509> 1600 貓金幣 
-You'll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
+You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 > 
 > :point_right:  Answer questions | 玩遊戲：click :cat:
 > :point_right:  booth location：B6
@@ -276,7 +275,7 @@ Find and clear secret missions on our Gather space to earn 800 PyCat coins
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>');
 INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004352415698522233','python-challenge','**幫貓將軍解 python 將獲得 < <:cat_coin:1013823752418623509> 400 貓金幣 >**
-**Solve PyCat's Python puzzle to earn < <:cat_coin:1013823752418623509> 400 PyCat coins >**
+**Solve PyCat''s Python puzzle to earn < <:cat_coin:1013823752418623509> 400 PyCat coins >**
 
 **number   |      difficulty     |         title**
      <:0_:1011963480863150171>      |    :star: :star: <:X_:1011980140009492533>    |    CPython I
@@ -291,10 +290,10 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
      <:9_:1011963478887645194>      |    :star: :star: <:X_:1011980140009492533>    |    Origin of Python 
      <:A_:1011963482909970474>      |    :star: :star: <:X_:1011980140009492533>    |    PyCon History
      <:B_:1011963485426569347>      |    :star: :star: <:X_:1011980140009492533>    |    Boolean Challenge
-     <:C_:1011963488006062152>      |    :star: <:X_:1011980140009492533> <:X_:1011980140009492533>    |    What's the output? I
-     <:D_:1011963491457974362>      |    :star: :star: <:X_:1011980140009492533>    |    What's the output? II
-     <:E_:1011963494251372614>      |    :star: <:X_:1011980140009492533> <:X_:1011980140009492533>    |    What's the output? III
-     <:F_:1011963496621146202>      |    :star: :star: <:X_:1011980140009492533>    |    What's the output? IV
+     <:C_:1011963488006062152>      |    :star: <:X_:1011980140009492533> <:X_:1011980140009492533>    |    What''s the output? I
+     <:D_:1011963491457974362>      |    :star: :star: <:X_:1011980140009492533>    |    What''s the output? II
+     <:E_:1011963494251372614>      |    :star: <:X_:1011980140009492533> <:X_:1011980140009492533>    |    What''s the output? III
+     <:F_:1011963496621146202>      |    :star: :star: <:X_:1011980140009492533>    |    What''s the output? IV
 
 ---------------- Quick links ----------------
 How to play：<#1000406828024336435>
@@ -336,7 +335,7 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 Seeking help here if you have any questions. Plz do NOT share any answers here.');
 INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1008291016668880936','food','```Hi，歡迎大家來到台灣旅遊！在台灣，我們有許多各式各樣的食物，富有美食王國的美稱，以下是在台灣的一些銅板小吃，你能夠答出美食所對應的製作方法嗎？
 以下我們列出了一些問題關鍵字！快到 Gather 主會場找線索以及對應的答案吧！
-This is a quiz for introducing Taiwanese food you'll like to tucking into.
+This is a quiz for introducing Taiwanese food you''ll like to tucking into.
 You can find hints on the Gather space.```
 **回答問題將獲得 < <:cat_coin:1013823752418623509> 400 貓金幣 >**
 > 

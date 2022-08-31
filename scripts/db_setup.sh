@@ -12,7 +12,15 @@ SCRIPT_PATH=$(cd "$( dirname "$0")"; pwd -P)
 
 source $SCRIPT_PATH/../env.test
 
-sudo docker run -p 3306:3306 -d --name $SQL_SERVER_HOST --network my-network -v $PWD/db_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="$DB_PASSWORD" mysql
+sudo docker run \
+    -i \
+    -p 3306:3306 \
+    --name $SQL_SERVER_HOST \
+    --network my-network \
+    -v $PWD/db_data:/var/lib/mysql \
+    -e MYSQL_ROOT_PASSWORD="$DB_PASSWORD" \
+    -e MYSQL_ALLOW_EMPTY_PASSWORD=yes \
+    mysql
 
 echo "Connection to MySQL server: $SQL_SERVER_HOST"
 

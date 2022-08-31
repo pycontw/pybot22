@@ -116,7 +116,11 @@ async def _init_leaderbaord_channel(ctx: commands.Context, clear_msgs: bool = Fa
 
     if not msgs:
         ctx.channel = channel
-        await ctx.send('大地遊戲的排行榜，依照每個人獲得的金幣進行排名，每隔 XX 分鐘更新一次')
+        await ctx.send(
+            '**Ranking board  貓金幣排行榜**'
+            '貓金幣數排名前 10 可獲得特殊獎勵，多賺些貓金幣讓自己上榜吧'
+            'Top 10 richest will get the special reward.'
+        )
 
 
 @bot.command(hidden=True)

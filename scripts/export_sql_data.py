@@ -13,7 +13,10 @@ def export_channel():
         for d in ds:
             line = f"INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ("
             out.write(line)
-            v_str = ','.join([f"'{d[k]}'" for k in keys])
+            v_list = []
+            for k in keys:
+                v_list.append(d[k].replace("'", "''"))
+            v_str = ','.join([f"'{v}'" for v in v_list])
             out.write(v_str)
             out.write(');\n')
 

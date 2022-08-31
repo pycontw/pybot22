@@ -48,7 +48,7 @@ async def update_leaderboard():
         top_one_user = bot.get_user(int(ranked_users[0]['uid']))
         avatar_url = top_one_user.display_avatar.url
         description = '\n'.join(messages)
-        embed = discord.Embed(title='Rankings', description=description)
+        embed = discord.Embed(title='<:cat_coin:1013823752418623509> Rankings', description=description)
         embed.set_thumbnail(url=avatar_url)
         await msgs[0].reply(embed=embed)
 

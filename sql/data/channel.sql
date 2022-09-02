@@ -16,7 +16,7 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 > If you are new here, click :comet: to set your language and team first.
 
 :small_blue_diamond: 回答錯誤有扣分機制，請謹慎填答！Don''t answer questions indiscriminately or you''ll be punished!
-:small_blue_diamond: 遊戲時間到 9/4 16:00 分截止！Your score will freeze at  16:00 Sep 4th (+8). Try your best and have fun!
+:small_blue_diamond: 遊戲時間到 9/4 16:00 截止！Your score will freeze at  16:00 Sep 4th (+8). Try your best and have fun!
 
 
 --------- **Features  |  功能介紹** ---------
@@ -24,6 +24,7 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 > Mission list | 任務列表：<#1000406828024336436>
 > Leaderboard | 排行榜：<#1006167895669223546>
 > 
+> Initialization | 初始化 : click :comet: 
 > Check your score | 查看分數：click :trophy:
 > Switch language | 切換語言：click :abc:
 

@@ -96,13 +96,13 @@ Would you like to buy a really delicious papaya milk for our old friend PyBear?
 Get hints on the Gather town venue and enter the passcode here so you can make it.','700ml');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('open_q1','zh_TW','**# 大熊想喝木瓜牛奶**
 紅肉木瓜搭上濃醇奶香，滑順綿密的口感…大熊想喝木瓜牛奶！你可以幫助他嗎？
-`   400 貓金幣   |   請至 Gather.Town 會場找尋相關線索，成功通關後於下方輸入通關密語   `','700ml');
+`   800 貓金幣   |   請至 Gather.Town 會場找尋相關線索，成功通關後於下方輸入通關密語   `','700ml');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('open_q2','EN','**# The multiverse**  `   800 PyCat coins   `
 You visit the night market scene on our Gather space but it''s a trap! It''s a kind of group of three universes. They are similar but different. Exit is prompted by their difference, find it to get out of there! 
-Get hints on the Gather town venue and enter the passcode here so you can make it.','py universe 2022');
+Get hints on the Gather town venue and enter the passcode here so you can make it.','py_universe_2022');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('open_q2','zh_TW','**# 平行宇宙的夜市漫遊**
 你在 py 夜市誤入平行宇宙，被困在三個相似的時空。請找到這三個時空的不同處，那就是回到原時空的出口！
-`   400 貓金幣   |   請至 Gather.Town 會場找尋相關線索，成功通關後於下方輸入通關密語   `','py universe 2022');
+`   800 貓金幣   |   請至 Gather.Town 會場找尋相關線索，成功通關後於下方輸入通關密語   `','py_universe_2022');
 INSERT INTO `pycon22`.`question` (`qid`,`lang`,`description`,`answer`) VALUES ('pinkoi_q1','EN','**# Pinkoi**
 Which continent does Pinkoi bring design brands to the international market?
 `   Pawprint Stamp + 1600 PyCat coins   |   Get prompts on booth of Pinkoi (B5) on Gather town.   `','D');

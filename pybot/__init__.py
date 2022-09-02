@@ -178,10 +178,9 @@ class PyBot22(commands.Bot):
 
         # Init profile and language if first time
         has_init_role = any(role.name == '初始化完成' for role in user.roles)
-        if not has_init_role:
+        client_lang = await check_client_has_lang(user.id)
+        if not has_init_role or not client_lang:
             client_lang = await _init_lang_and_grouping(user.id, user.name, user.send)
-        else:
-            client_lang = await check_client_has_lang(user.id)
 
         # Get question info dict
         question_id = init_message[channel_id]['emoji_to_qid'][emoji]

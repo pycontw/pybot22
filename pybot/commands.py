@@ -117,8 +117,8 @@ async def _init_leaderbaord_channel(ctx: commands.Context, clear_msgs: bool = Fa
     if not msgs:
         ctx.channel = channel
         await ctx.send(
-            '**Ranking board  貓金幣排行榜**'
-            '貓金幣數排名前 10 可獲得特殊獎勵，多賺些貓金幣讓自己上榜吧'
+            '**Ranking board  貓金幣排行榜**\n'
+            '貓金幣數排名前 10 可獲得特殊獎勵，多賺些貓金幣讓自己上榜吧\n'
             'Top 10 richest will get the special reward.'
         )
 

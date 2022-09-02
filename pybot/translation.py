@@ -21,8 +21,8 @@ CORRECT_ANSWER_RESPONSE = {
 }
 
 WRONG_ANSWER_RESPONSE = {
-    'zh_TW': '喔喔...答錯了:broken_heart:',
-    'EN': 'Ohoh...The answer is not correct :broken_heart:',
+    'zh_TW': '喔喔...答錯了:broken_heart: 再試一次看看吧！',
+    'EN': 'Ohoh...The answer is not correct :broken_heart: Don\'t mind, try again!',
 }
 
 QUESTION_ANSWERED_REMINDER = {

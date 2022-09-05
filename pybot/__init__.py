@@ -223,7 +223,6 @@ class PyBot22(commands.Bot):
                         q_info=q_info,
                         user=user,
                         lang=client_lang,
-                        already_answered=already_answered,
                     )
                 )
             elif q_info['q_type'] == QuestionType.QUESTIONARE:
@@ -233,7 +232,6 @@ class PyBot22(commands.Bot):
                         q_info=q_info,
                         user=user,
                         lang=client_lang,
-                        already_answered=False,
                     )
                 )
 

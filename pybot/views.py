@@ -4,6 +4,7 @@ import discord
 
 from pybot.schemas import QuestionType
 from pybot.database import (
+    check_user_already_answered_qid,
     update_client_lang,
     record_answer_event,
     update_client_email,
@@ -218,15 +219,13 @@ class GameDropdown(discord.ui.Select):
 
 
 class GameSelectionView(discord.ui.View):
-    def __init__(self, q_info: dict, user: discord.Member, lang: str, already_answered: bool):
+    def __init__(self, q_info: dict, user: discord.Member, lang: str):
         super().__init__()
 
         self.q_info = q_info
         self.lang = lang
         self.user = user
         self.answer_counts = 0
-
-        self.already_answered = already_answered
 
         self.add_item(
             GameDropdown(
@@ -249,7 +248,11 @@ class GameSelectionView(discord.ui.View):
             or user_ans == answer
         ):
             resp_msg = CORRECT_ANSWER_RESPONSE[self.lang]
-            if not self.already_answered:
+            already_answered = await check_user_already_answered_qid(
+                self.q_info['qid'],
+                self.user.id,
+            )
+            if not already_answered:
                 reward_coin = int(max(1, self.q_info['coin'] * pow(0.5, self.answer_counts)))
                 reward_msg = CORRECT_ANSWER_REWARD_MSG[self.lang].format(
                     coin=reward_coin,
@@ -292,6 +295,7 @@ class InitGroupButton(discord.ui.Button):
 
         self.style = discord.ButtonStyle.green
         await interaction.response.edit_message(view=view)
+        await record_answer_event(view.qid, interaction.user.id, self.label, True)
         if view.next_view:
             if view.next_view.is_final:
                 from pybot import bot  # avoid circular import
@@ -319,6 +323,7 @@ class InitGroupButton(discord.ui.Button):
 
 
 class BaseInitGroupingView(discord.ui.View):
+    qid = ''
     description = ''
     lables = []
     next_view = None
@@ -332,10 +337,12 @@ class BaseInitGroupingView(discord.ui.View):
 
 
 class InitGroupingFinish(BaseInitGroupingView):
+    qid = 'init_q6'
     is_final = True
 
 
 class InitGroupingQ5(BaseInitGroupingView):
+    qid = 'init_q5'
     description = '5/5\n當程式寫不出來的時候你會...?\nWhat would do while you stuck in coding...?'
     labels = [
         '蹲在馬桶上思考 20 分鐘/Sit on the toilet and think for 20 minutes',
@@ -346,24 +353,28 @@ class InitGroupingQ5(BaseInitGroupingView):
 
 
 class InitGroupingQ4(BaseInitGroupingView):
+    qid = 'init_q4'
     description = '4/5\n最想擁有...?\nWish to have...?'
     labels = ['阿拉丁神燈/Aladdin\'s lamp', '妹妹/Younger sister', '貓咪/Cat']
     next_view = InitGroupingQ5
 
 
 class InitGroupingQ3(BaseInitGroupingView):
+    qid = 'init_q3'
     description = '3/5\n夢想成為...?\nDream to be a...?'
     labels = ['海賊王/Pirate king', '世界富豪/Magnate', '貓咪/Cat']
     next_view = InitGroupingQ4
 
 
 class InitGroupingQ2(BaseInitGroupingView):
+    qid = 'init_q2'
     description = '2/5\n喜歡哪種食物?\nWhich food do you like more?'
     labels = ['披薩/Pizza', '小籠包/xiaolongbao (soup dumplings)', '壽司/Sushi']
     next_view = InitGroupingQ3
 
 
 class InitGroupingQ1(BaseInitGroupingView):
+    qid = 'init_q1'
     description = '1/5\n哪個程式語言最讚?\nWhich programming language is the best?'
     labels = ['Java', 'Python', 'JavaScript']
     next_view = InitGroupingQ2

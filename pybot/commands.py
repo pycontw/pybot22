@@ -239,7 +239,10 @@ async def user_lotto(ctx: commands.Context, reward_cnt: int, reward_name: str, m
         messages.append(f'#{idx+1} <@{uid}>')
 
     description = '\n'.join(messages)
-    embed = discord.Embed(title='Sponsor Rewards', description=description)
+    embed = discord.Embed(
+        title=f'<:PyCat:1010987183831789579> Prize - {reward_name} <:PyCat:1010987183831789579>',
+        description=description,
+    )
     await ctx.send(embed=embed)
     for uid, _ in chosen_users:
         await update_user_lotto_reward(uid, reward_name)

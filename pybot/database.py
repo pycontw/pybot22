@@ -17,7 +17,8 @@ g_sql_server = sql_server_host if sql_server_host else 'localhost'
 def db_conn():
     conn = MySQLdb.connect(
         use_unicode=True,
-        host=g_sql_server,
+        host='localhost',
+        #port=3307,
         user='root',
         passwd=os.getenv('DB_PASSWORD'),
         db='pycon22',
@@ -344,3 +345,23 @@ async def update_user_lotto_reward(uid: str, reward_name: str):
     params = {'uid': uid, 'reward': reward_name}
     with cursor() as cur:
         cur.execute('UPDATE profile SET reward=%(reward)s WHERE uid=%(uid)s', params)
+
+
+async def update_channel_id(channel_name: str, new_id: int):
+    params = {
+        'channel_name': channel_name,
+        'new_id': new_id,
+    }
+    with cursor() as cur:
+        cur.execute('''
+            UPDATE
+                channel as c
+            LEFT JOIN
+                question_meta as q
+                ON c.channel_id = q.channel_id
+            SET
+                c.channel_id = %(new_id)s,
+                q.channel_id = %(new_id)s
+            WHERE
+                c.channel_name = %(channel_name)s
+        ''', params)

@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=PyCon2022_SS
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    env_file:
+      - ./env.var
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - /tmp/pybot22/mysqld:/var/run/mysqld
+    networks:
+      - bot-network
+    ports:
+      - 3307:3306
+
+  bot:
+    build: .
+    command: python /data/pybot22/pybot/main.py
+    env_file:
+      - ./env.var
+    environment:
+      PYTHONPATH: ./pybot22
+    depends_on:
+      - db
+    networks:
+      - bot-network
+    volumes:
+      - ./:/data/pybot22
+      - /tmp/pybot22/mysqld:/var/run/mysqld
+
+volumes:
+  db_data:
+  sql:
+  scripts:
+
+networks:
+  bot-network:

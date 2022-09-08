@@ -12,8 +12,10 @@ from pybot.database import(
     query_question,
     check_user_already_answered_qid,
     record_reaction_event,
+    update_channel_id,
 )
 from pybot.schemas import QuestionType
+from pybot.settings import CHANNELS_TO_CREATE
 from pybot.translation import QUESTION_ANSWERED_REMINDER
 from pybot.views import (
     LanguageSelectionView,
@@ -103,6 +105,62 @@ async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Calla
         await asyncio.sleep(0.3)
 
     return client_lang or 'zh_TW'  # Default to zh_TW
+
+
+async def _init_guild_channels(bot: commands.Bot):
+    # Create all necessary channels.
+    guild = next((guild for guild in bot.guilds if 'booth game' in guild.name.lower()), None)
+    if not guild:
+        print('[Error] No available guild for setting up the booth game.')
+        return
+
+    guild_channel_names = {ch for ch in guild.channels}
+    diff = set(CHANNELS_TO_CREATE.keys()) - guild_channel_names
+    if not diff:
+        # Already setup
+        return
+
+    initialized_role = guild.create_role(name='Initialized')
+    default_overwrites = {
+        guild.default_role: discord.PermissionOverwrite(
+            read_messages=False,
+            send_messages=False,
+            send_messages_in_threads=False,
+            send_tts_messages=False,
+        ),
+        initialized_role: discord.PermissionOverwrite(read_messages=True),
+    }
+
+    cat_idx = 0
+    ch_idx = len(guild_channel_names)
+    for ch_name, info_d in CHANNELS_TO_CREATE.items():
+        if ch_name == 'help':
+            # One of the channels that can be seen before user initialization.
+            # The only channel that is allowed to send messages.
+            overwrites = default_overwrites.copy()
+            overwrites[guild.default_role] = discord.PermissionOverwrite(
+                read_messages=True,
+                send_messages=True,
+            )
+        elif ch_name == 'game-start':
+            # One of the channels that can be seen before user initialization.
+            overwrites = default_overwrites.copy()
+            overwrites[guild.default_role] = discord.PermissionOverwrite(
+                read_messages=True,
+                send_messages=False,
+                send_messages_in_threads=False,
+                send_tts_messages=False,
+            )
+        else:
+            overwrites = default_overwrites
+
+        if info_d['type'] == 'cat':
+            cat_channel = await guild.create_category_channel(ch_name, overwrites=overwrites, position=cat_idx)
+            cat_idx += 1
+        elif info_d['type'] == 'text':
+            channel = await guild.create_text_channel(ch_name, category=cat_channel, overwrites=overwrites, position=ch_idx)
+            await update_channel_id(ch_name, channel.id)
+            ch_idx += 1
 
 
 class PyBot22(commands.Bot):

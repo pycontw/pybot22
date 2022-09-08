@@ -58,15 +58,15 @@ async def update_leaderboard():
     today = datetime.now(TPE_TIMEZONE).weekday()
     start, end = UPDATE_TIME_RANGE.get(today, (None, None))
     now = datetime.now(TPE_TIMEZONE)
-    if (
-        now < datetime(2022, 8, 1, 1, 0, tzinfo=TPE_TIMEZONE)
-        or not (
-            start is not None
-            and end is not None
-            and (start <= now <= end)
-        )
-    ):
-        return
+    # if (
+    #     now < datetime(2022, 8, 1, 1, 0, tzinfo=TPE_TIMEZONE)
+    #     or not (
+    #         start is not None
+    #         and end is not None
+    #         and (start <= now <= end)
+    #     )
+    # ):
+    #     return
 
     channel_id = LEADER_BOARD_CHANNEL  # leaderboard channel
     channel = bot.get_channel(channel_id)

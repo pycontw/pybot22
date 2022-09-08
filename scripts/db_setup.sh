@@ -10,10 +10,11 @@ mkdir db_data
 
 SCRIPT_PATH=$(cd "$( dirname "$0")"; pwd -P)
 
-source $SCRIPT_PATH/../env.test
+source $SCRIPT_PATH/../env.var
 
 sudo docker run \
     -i \
+    --rm \
     -p 3306:3306 \
     --name $SQL_SERVER_HOST \
     --network my-network \

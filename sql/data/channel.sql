@@ -16,7 +16,7 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 > If you are new here, click :comet: to set your language and team first.
 
 :small_blue_diamond: 回答錯誤有扣分機制，請謹慎填答！Don''t answer questions indiscriminately or you''ll be punished!
-:small_blue_diamond: 遊戲時間到 9/4 16:00 截止！Your score will freeze at  16:00 Sep 4th (+8). Try your best and have fun!
+:small_blue_diamond: 遊戲時間到 9/4 16:00 分截止！Your score will freeze at  16:00 Sep 4th (+8). Try your best and have fun!
 
 
 --------- **Features  |  功能介紹** ---------
@@ -24,7 +24,6 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 > Mission list | 任務列表：<#1000406828024336436>
 > Leaderboard | 排行榜：<#1006167895669223546>
 > 
-> Initialization | 初始化 : click :comet: 
 > Check your score | 查看分數：click :trophy:
 > Switch language | 切換語言：click :abc:
 
@@ -63,7 +62,7 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 ---------------------- Quick links ----------------------
 How to play：<#1000406828024336435>
 Map：<#1008236974999613501>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1001111220310523945','Cathay Financial Holdings','**【Cathay Financial Holdings 國泰金控】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1001111220310523945','cathay-financial-holdings','**【Cathay Financial Holdings 國泰金控】**```
 Hi，這是【Cathay Financial Holdings 國泰金控】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor Cathay Financial Holdings.
 Checkout the questions on their booth on the Gather Town space. ```
@@ -123,7 +122,7 @@ You can find hints on the Gather Town space.```
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>
 ');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348381042323566','Micron','**【Micron 美光】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348381042323566','micron','**【Micron 美光】**```
 Hi，這是【Micron 美光】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor Micron.
 Checkout the questions on their booth on the Gather Town space. ```
@@ -137,7 +136,7 @@ You''ll get Pawprint Stamps + 2000 PyCat coins after you solve this puzzle.**
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>
 Map：<#1008236974999613501>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348628862775296','Pinkoi','**【Pinkoi】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348628862775296','pinkoi','**【Pinkoi】**```
 Hi，這是【Pinkoi】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor Pinkoi.
 Checkout the questions on their booth on the Gather Town space. ```
@@ -151,7 +150,7 @@ You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>
 Map：<#1008236974999613501>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348679370584124','Dcard','**【Dcard】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348679370584124','dcard','**【Dcard】**```
 Hi，這是【Dcard】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor Dcard.
 Checkout the questions on their booth on the Gather Town space. ```
@@ -165,7 +164,7 @@ You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>
 Map：<#1008236974999613501>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348729857421423','SinoPac Securities ','**【SinoPac Securities 永豐金證券】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348729857421423','sinopac-securities ','**【SinoPac Securities 永豐金證券】**```
 Hi，這是【SinoPac Securities 永豐金證券】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor SinoPac Securities .
 Checkout the questions on their booth on the Gather Town space. ```
@@ -179,7 +178,7 @@ You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>
 Map：<#1008236974999613501>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348775915073567','E.SUN Bank','**【E.SUN Bank 玉山銀行】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348775915073567','esun-bank','**【E.SUN Bank 玉山銀行】**```
 Hi，這是【E.SUN Bank 玉山銀行】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor E.SUN Bank.
 Checkout the questions on their booth on the Gather Town space. ```
@@ -193,7 +192,7 @@ You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>
 Map：<#1008236974999613501>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348844412252170','Berry AI','**【Berry AI】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348844412252170','berry-ai','**【Berry AI】**```
 Hi，這是【Berry AI】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor Berry AI.
 Checkout the questions on their booth on the Gather Town space. ```
@@ -207,7 +206,7 @@ You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>
 Map：<#1008236974999613501>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348898422304889','KKCompany','**【KKCompany】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004348898422304889','kkcompany','**【KKCompany】**```
 Hi，這是【KKCompany】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor KKCompany.
 Checkout the questions on their booth on the Gather Town space. ```
@@ -221,7 +220,7 @@ You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>
 Map：<#1008236974999613501>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004350820302733392','Reuven Lerner','**【Reuven Lerner】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004350820302733392','reuven-lerner','**【Reuven Lerner】**```
 Hi，這是【Reuven Lerner】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor Reuven Lerner.
 Checkout the questions on their booth on the Gather Town space. ```
@@ -235,7 +234,7 @@ You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>
 Map：<#1008236974999613501>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004350847943184434','Appier','**【Appier 沛星互動科技】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004350847943184434','appier','**【Appier 沛星互動科技】**```
 Hi，這是【Appier 沛星互動科技】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor Appier.
 Checkout the questions on their booth on the Gather Town space. ```
@@ -249,7 +248,7 @@ You''ll get Pawprint Stamps + 1600 PyCat coins after you solve this puzzle.**
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>
 Map：<#1008236974999613501>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004350894160220250','iCHEF','**【iCHEF 資廚】**```
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1004350894160220250','ichef','**【iCHEF 資廚】**```
 Hi，這是【iCHEF 資廚】贊助遊戲頻道，請至 Gather.town 攤位查看題目
 This is a puzzle provided by our sponsor iCHEF.
 Checkout the questions on their booth on the Gather Town space. ```
@@ -299,7 +298,7 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 ---------------- Quick links ----------------
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1006167895669223546','leader-board','**Ranking board  貓金幣排行榜**
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1006167895669223546','leaderboard','**Ranking board  貓金幣排行榜**
 貓金幣數排名前 10 可獲得特殊獎勵，多賺些貓金幣讓自己上榜吧
 Top 10 richest will get the special reward.');
 INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1008231762599612446','coinchat','來跟貓將軍閒聊將獲得 < <:cat_coin:1013823752418623509> 100 貓金幣 >
@@ -351,7 +350,3 @@ You can find hints on the Gather space.```
 ------------------- Quick links -------------------
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1009488095911096340','Chance and Destine','點選 :game_die: 將獲得隨機金幣或失去金幣
-Are you lucky today? Click :game_die: to earn or loss your coins randomly');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('997710004087967827','test-answer','歡迎來到大地遊戲贊助商關卡。請點選表情符號以選擇要回答的題目，點擊之後你將會收到來自 PyBot22 的私訊，請在與機器人的私訊中回答問題。
-可能的答案們：Unknown, Hello, XM5 good, 哈哈, 超棒, 未知');

@@ -29,15 +29,12 @@
 
   - `$ ssh -T git@github.com  #(Test the SSH connection)`
 2. Clone the repo  
-  - `$ git clone git@github.com:BreezeWhite/pybot22.git`
+  - `$ git clone git@github.com:pycontw/pybot22.git`
   - `$ cd pybot22`
 
 ## update the env variables, and prepare the mysql docker
-1. `$ vi env.test` and change DISCORD_TOKEN for discord bot`
+1. `$ vi env.var` and change DISCORD_TOKEN for discord bot`
 
 
 ## build and deploy the pybot docker
 1. `$ ./deploy.sh`
-
-
-

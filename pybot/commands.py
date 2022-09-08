@@ -5,7 +5,7 @@ from discord.ext import commands
 from discord.errors import HTTPException
 
 from pybot import bot
-from pybot.settings import DEV_ENV, DEV_CHANNELS, LEADER_BOARD_CHANNEL
+from pybot.settings import CHANNELS, LEADER_BOARD_CHANNEL
 from pybot.database import (
     query_user_has_stars,
     query_user_rank_by_coin,
@@ -147,9 +147,8 @@ async def init_game(ctx: commands.Context):
     init_messages = sync_query_init_messages()
     for target_channel, info_d in init_messages.items():
         if (
-            (DEV_ENV and target_channel not in DEV_CHANNELS)
-            or (not DEV_ENV and target_channel in DEV_CHANNELS)
-            or (target_channel in CHANNELS_TO_EXCLUDE_FROM_INIT)
+            target_channel not in CHANNELS
+            or target_channel in CHANNELS_TO_EXCLUDE_FROM_INIT
         ):
             continue
 
@@ -250,4 +249,8 @@ async def user_lotto(ctx: commands.Context, reward_cnt: int, reward_name: str, m
 
 @bot.command(hiddent=True)
 async def test(ctx: commands.Context):
-    await ctx.send(file=discord.File(open('./figures/map_a.png', 'rb')))
+    print(bot.guilds)
+    guild = next((guild for guild in bot.guilds if 'booth game' in guild.name.lower()), None)
+    print(guild)
+    for channel in guild.channels:
+        print(channel.name, channel.position)

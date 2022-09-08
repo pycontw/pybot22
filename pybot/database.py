@@ -218,7 +218,8 @@ def sync_query_init_messages() -> Dict[int, dict]:
                 qm.qid,
                 qm.emoji,
                 ch.channel_id,
-                ch.welcome_msg
+                ch.welcome_msg,
+                ch.channel_name
             FROM
                 channel as ch
             LEFT JOIN
@@ -234,6 +235,7 @@ def sync_query_init_messages() -> Dict[int, dict]:
         channel_id = int(d['channel_id'])
         if channel_id not in results:
             results[channel_id] = {
+                'channel_name': d['channel_name'],
                 'welcome_msg': d['welcome_msg'],
                 'emoji_to_qid': {},
             }

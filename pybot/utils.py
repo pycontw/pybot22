@@ -1,3 +1,4 @@
+import re
 import functools
 from datetime import datetime, timedelta
 from ulid import ULID
@@ -27,3 +28,25 @@ def timed_cache(**timedelta_kwargs):
             return f(*args, **kwargs)
         return _wrapped
     return _wrapper
+
+
+@timed_cache(seconds=1800)
+def _get_custom_emoji_name_id_map(emojis):
+    return {
+        emoji.name: emoji.id
+        for emoji in emojis
+    }
+
+
+EMOJI_STR_MATCHER = re.compile(r'<:(\S*):(\d*)>')
+
+
+def replace_emoji_str(msg: str, emojis) -> str:
+    matched_strs = set(EMOJI_STR_MATCHER.findall(msg))
+    custom_emoji_name_id_map = _get_custom_emoji_name_id_map(emojis)
+    for emoji_name, ori_id in matched_strs:
+        new_id = custom_emoji_name_id_map[emoji_name]
+        ori_str = f'<:{emoji_name}:{ori_id}>'
+        new_str = f'<:{emoji_name}:{new_id}>'
+        msg = msg.replace(ori_str, new_str)
+    return msg

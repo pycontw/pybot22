@@ -1,3 +1,4 @@
+import os
 import asyncio
 import random
 from functools import partial
@@ -107,7 +108,10 @@ async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Calla
     return client_lang or 'zh_TW'  # Default to zh_TW
 
 
-async def _init_guild_channels(bot: commands.Bot):
+async def _init_guild(bot: commands.Bot):
+    # Create role for the game
+    initialized_role = guild.create_role(name='Initialized')
+
     # Create all necessary channels.
     guild = next((guild for guild in bot.guilds if 'booth game' in guild.name.lower()), None)
     if not guild:
@@ -120,7 +124,6 @@ async def _init_guild_channels(bot: commands.Bot):
         # Already setup
         return
 
-    initialized_role = guild.create_role(name='Initialized')
     default_overwrites = {
         guild.default_role: discord.PermissionOverwrite(
             read_messages=False,
@@ -161,6 +164,12 @@ async def _init_guild_channels(bot: commands.Bot):
             channel = await guild.create_text_channel(ch_name, category=cat_channel, overwrites=overwrites, position=ch_idx)
             await update_channel_id(ch_name, channel.id)
             ch_idx += 1
+
+    # Create custom emojis
+    for asset in os.listdir('./assets'):
+        emoji_name = os.path.splitext(asset)[0]
+        with open(f'./assets/{asset}', 'rb') as ff:
+            await guild.create_custom_emoji(name=emoji_name, image=ff)
 
 
 class PyBot22(commands.Bot):

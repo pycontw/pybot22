@@ -5,6 +5,7 @@ from discord.ext import commands
 from discord.errors import HTTPException
 
 from pybot import bot
+from pybot.utils import replace_emoji_str
 from pybot.settings import CHANNELS, LEADER_BOARD_CHANNEL
 from pybot.database import (
     query_user_has_stars,
@@ -152,8 +153,8 @@ async def init_game(ctx: commands.Context):
         ):
             continue
 
-        welcome_msg = info_d['welcome_msg']
         channel = bot.get_channel(target_channel)
+        welcome_msg = replace_emoji_str(info_d['welcome_msg'], channel.guild.emojis)
 
         # Delete all sent messages, or the restarted bot won't be able to receive reactions.
         await channel.delete_messages([msg async for msg in channel.history(oldest_first=True)])
@@ -168,12 +169,11 @@ async def init_game(ctx: commands.Context):
             try:
                 await new_msg.add_reaction(emoji)
             except HTTPException:
-                guild = bot.get_guild(1000406827491676170)  # main server
+                guild = channel.guild  # main server
                 emoji = discord.utils.get(guild.emojis, name=emoji)
                 await new_msg.add_reaction(emoji)
 
-        if target_channel == 1008236974999613501:
-            # map channel
+        if info_d['channel_name'] == 'maps':
             await _upload_additional_images_to_map_channel(ctx)
 
     await _init_leaderbaord_channel(ctx)
@@ -200,7 +200,9 @@ async def sync_channel_msg(ctx: commands.Context, channel_id: int):
 
     first_msg = msgs[0]
     await first_msg.clear_reactions()
-    new_msg = await first_msg.edit(content=info_d['welcome_msg'])
+
+    welcome_msg = replace_emoji_str(info_d['welcome_msg'], channel.guild.emojis)
+    new_msg = await first_msg.edit(content=welcome_msg)
     for emoji in info_d['emoji_to_qid']:
         if emoji is None:
             continue
@@ -208,7 +210,7 @@ async def sync_channel_msg(ctx: commands.Context, channel_id: int):
         try:
             await new_msg.add_reaction(emoji)
         except HTTPException:
-            guild = bot.get_guild(1000406827491676170)  # main server
+            guild = channel.guild  # main server
             emoji = discord.utils.get(guild.emojis, name=emoji)
             await new_msg.add_reaction(emoji)
 
@@ -249,8 +251,6 @@ async def user_lotto(ctx: commands.Context, reward_cnt: int, reward_name: str, m
 
 @bot.command(hiddent=True)
 async def test(ctx: commands.Context):
-    print(bot.guilds)
     guild = next((guild for guild in bot.guilds if 'booth game' in guild.name.lower()), None)
-    print(guild)
-    for channel in guild.channels:
-        print(channel.name, channel.position)
+    for emoji in guild.emojis:
+        print(emoji.name)

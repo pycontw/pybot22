@@ -6,7 +6,8 @@ source $SCRIPT_PATH/../env.var
 SQL_SERVER_HOST=$(docker-compose ps -q db)
 echo "Create database & tables.. on $SQL_SERVER_HOST"
 
-docker exec -i $SQL_SERVER_HOST sh -c "exec mysql -uroot -p$DB_PASSWORD" < ./sql/init_db.sql
+# Create database and tables
+docker exec -i $SQL_SERVER_HOST sh -c "exec mysql -uroot -p$DB_PASSWORD" < ./sql/create_db.sql
 docker exec -i $SQL_SERVER_HOST sh -c "exec mysql -uroot -p$DB_PASSWORD" < ./sql/answer_event.sql
 docker exec -i $SQL_SERVER_HOST sh -c "exec mysql -uroot -p$DB_PASSWORD" < ./sql/channel.sql
 docker exec -i $SQL_SERVER_HOST sh -c "exec mysql -uroot -p$DB_PASSWORD" < ./sql/command_event.sql

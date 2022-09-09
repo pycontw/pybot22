@@ -31,10 +31,5 @@ services:
       - ./:/data/pybot22
       - /tmp/pybot22/mysqld:/var/run/mysqld
 
-volumes:
-  db_data:
-  sql:
-  scripts:
-
 networks:
   bot-network:

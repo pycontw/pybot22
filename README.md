@@ -89,9 +89,22 @@ You also have to modify the value of `MYSQL_ROOT_PASSWORD` in `docker-compose.ym
 
 ### Step
 ``` bash
+# Create the tmp folder for underlying services. Only need to do once.
+mkdir /tmp/pybot22/mysqld
+
 # Start MySQL database and run the bot.
 docker-compose up
 
-# Setup database tables and data
+# Setup database tables and data. Only need to do once.
 ./scripts/init_db.sh
 ```
+
+To stop the services, run `docker-compose stop`.
+To restart the services, run `docker-compose start`.
+
+## (Optional) Connect to the Database
+It's recommened to use the third-party software to connect to the running database.
+Here the recommened software is [TablePlus](https://tableplus.com/download). It's available on all platforms, including Linux distributions.
+
+To setup the connection, fill in the information as below:
+![](./figures/tableplus_setup.png)

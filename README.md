@@ -36,7 +36,7 @@ Scroll down to the **Privileged Gateway Intents** section, turn on the privilege
 
 
 ### Step 2
-Setting up the discord server. Just create an empty discord server. The server name should include the keyword `Booth Game` for bot to recognize which server to use (case insensitive).
+Setting up the discord server. Just create an empty discord server.
 
 Click the '+' icon to create the server.
 
@@ -46,7 +46,7 @@ Click the '+' icon to create the server.
 
 ![](./figures/select_ta_type.png)
 
-Name the server and create. The server name should contain ther keyword `Booth Game` (case insensitive) for the bot to recognize which server to use.
+Name the server and create. The server (guild) ID can be seen from the URL. This ID will be used in the later step.
 
 ![](./figures/name_the_server_and_create.png)
 
@@ -77,6 +77,7 @@ Modify credentials recorded in `env.var`
 ``` bash
 DISCORD_TOKEN=<your_bot_token_here>
 DB_PASSWORD=<type_any_password_you_want>
+TARGET_GUILD=<your_server_id>
 ```
 You also have to modify the value of `MYSQL_ROOT_PASSWORD` in `docker-compose.yml`.
 ``` yaml
@@ -88,6 +89,10 @@ You also have to modify the value of `MYSQL_ROOT_PASSWORD` in `docker-compose.ym
 ```
 
 ### Step
+Run the bot to serve the game.
+
+At the first time running, the bot will automatically create all channels, roles, and custom emojis to the guild (the server), which are necessary for the booth game.
+
 ``` bash
 # Create the tmp folder for underlying services. Only need to do once.
 mkdir /tmp/pybot22/mysqld
@@ -98,6 +103,11 @@ docker-compose up
 # Setup database tables and data. Only need to do once.
 ./scripts/init_db.sh
 ```
+
+After the services' running, go to the discord server and send private message `!init_game` to the bot. This will initialize
+all channels and start receiving events. You can play the booth game now!
+
+If you find the bot doesn't respond to your emoji reactions, send private massage `!init_game` to the bot to re-initialize the messages again.
 
 To stop the services, run `docker-compose stop`.
 To restart the services, run `docker-compose start`.

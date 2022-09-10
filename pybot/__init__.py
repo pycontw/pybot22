@@ -27,6 +27,7 @@ from pybot.views import (
 )
 from pybot.database import (
     cursor,
+    check_the_first_user,
     record_command_event,
     sync_query_init_messages,
     query_next_questionnaire,
@@ -74,13 +75,14 @@ async def _init_grouping(user_id: str, send_func) -> str:
 
 
 async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Callable):
+    check_is_the_first_user = await check_the_first_user()
     with cursor() as cur:
         cur.execute('''
-            INSERT INTO profile (uid, name, lang)
-            VALUES (%(uid)s, %(name)s, %(lang)s)
+            INSERT INTO profile (uid, name, lang, is_staff)
+            VALUES (%(uid)s, %(name)s, %(lang)s, %(is_staff)s)
             ON DUPLICATE KEY UPDATE
                 uid = VALUES(uid)
-        ''', {'uid': user_id, 'name': user_name, 'lang': 'zh_TW'})
+        ''', {'uid': user_id, 'name': user_name, 'lang': 'zh_TW', 'is_staff': check_is_the_first_user})
 
     await send_func(
         content='嗨嗨你好:wave: 請先選擇您的語言\n' \
@@ -109,20 +111,20 @@ async def _init_lang_and_grouping(user_id: str, user_name: str, send_func: Calla
 
 
 async def _init_guild(bot: commands.Bot):
-    # Create role for the game
-    initialized_role = guild.create_role(name='Initialized')
-
-    # Create all necessary channels.
-    guild = next((guild for guild in bot.guilds if 'booth game' in guild.name.lower()), None)
+    guild = bot.get_guild(int(os.getenv('TARGET_GUILD')))
     if not guild:
         print('[Error] No available guild for setting up the booth game.')
         return
 
-    guild_channel_names = {ch for ch in guild.channels}
-    diff = set(CHANNELS_TO_CREATE.keys()) - guild_channel_names
-    if not diff:
+    # Check if guild already setup
+    guild_channel_names = {ch.name for ch in guild.channels}
+    is_superset = guild_channel_names.issuperset(CHANNELS_TO_CREATE.keys())
+    if is_superset:
         # Already setup
         return
+
+    # Create role for the game
+    initialized_role = await guild.create_role(name='Initialized', color=discord.Color.brand_green())
 
     default_overwrites = {
         guild.default_role: discord.PermissionOverwrite(
@@ -134,6 +136,7 @@ async def _init_guild(bot: commands.Bot):
         initialized_role: discord.PermissionOverwrite(read_messages=True),
     }
 
+    # Create all necessary channels.
     cat_idx = 0
     ch_idx = len(guild_channel_names)
     for ch_name, info_d in CHANNELS_TO_CREATE.items():
@@ -166,10 +169,10 @@ async def _init_guild(bot: commands.Bot):
             ch_idx += 1
 
     # Create custom emojis
-    for asset in os.listdir('./assets'):
+    for asset in os.listdir('./pybot22/assets'):
         emoji_name = os.path.splitext(asset)[0]
-        with open(f'./assets/{asset}', 'rb') as ff:
-            await guild.create_custom_emoji(name=emoji_name, image=ff)
+        with open(f'./pybot22/assets/{asset}', 'rb') as ff:
+            await guild.create_custom_emoji(name=emoji_name, image=ff.read())
 
 
 class PyBot22(commands.Bot):
@@ -206,6 +209,10 @@ class PyBot22(commands.Bot):
 
     async def on_ready(self):
         print(f'{self.user.name} has connected!')
+
+        print('Initializing guild')
+        await _init_guild(self)
+        print('Finished')
 
     async def on_command_error(self, ctx: commands.Context, exception: errors.CommandError):
         if isinstance(exception, errors.MissingRequiredArgument):

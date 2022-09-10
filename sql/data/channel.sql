@@ -278,22 +278,22 @@ INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALU
 **Solve PyCat''s Python puzzle to earn < <:cat_coin:1013823752418623509> 400 PyCat coins >**
 
 **number   |      difficulty     |         title**
-     <:0_:1011963480863150171>      |    :star: :star: <:X_:1011980140009492533>    |    CPython I
-     <:1_:1011963459732250646>      |    :star: :star: <:X_:1011980140009492533>    |    CPython II
-     <:2_:1011963462135590912>      |    :star: :star: <:X_:1011980140009492533>    |    Python Module I
-     <:3_:1011963464601837600>      |    :star: :star: <:X_:1011980140009492533>    |    Python Module II
-     <:4_:1011963467357491200>      |    :star: :star: <:X_:1011980140009492533>    |    Python standard library
+     <:0_:1011963480863150171>      |    :star: :star: <:v_:1011980140009492533>    |    CPython I
+     <:1_:1011963459732250646>      |    :star: :star: <:v_:1011980140009492533>    |    CPython II
+     <:2_:1011963462135590912>      |    :star: :star: <:v_:1011980140009492533>    |    Python Module I
+     <:3_:1011963464601837600>      |    :star: :star: <:v_:1011980140009492533>    |    Python Module II
+     <:4_:1011963467357491200>      |    :star: :star: <:v_:1011980140009492533>    |    Python standard library
      <:5_:1011963469962149979>      |    :star: :star: :star:    |    CPython III
      <:6_:1011963472239669269>      |    :star: :star: :star:    |    CPython IV
      <:7_:1011963474517184714>      |    :star: :star: :star:    |    CPython V
      <:8_:1011963476543025153>      |    :star: :star: :star:    |    Metadata for Python Software Packages
-     <:9_:1011963478887645194>      |    :star: :star: <:X_:1011980140009492533>    |    Origin of Python 
-     <:A_:1011963482909970474>      |    :star: :star: <:X_:1011980140009492533>    |    PyCon History
-     <:B_:1011963485426569347>      |    :star: :star: <:X_:1011980140009492533>    |    Boolean Challenge
-     <:C_:1011963488006062152>      |    :star: <:X_:1011980140009492533> <:X_:1011980140009492533>    |    What''s the output? I
-     <:D_:1011963491457974362>      |    :star: :star: <:X_:1011980140009492533>    |    What''s the output? II
-     <:E_:1011963494251372614>      |    :star: <:X_:1011980140009492533> <:X_:1011980140009492533>    |    What''s the output? III
-     <:F_:1011963496621146202>      |    :star: :star: <:X_:1011980140009492533>    |    What''s the output? IV
+     <:9_:1011963478887645194>      |    :star: :star: <:v_:1011980140009492533>    |    Origin of Python 
+     <:A_:1011963482909970474>      |    :star: :star: <:v_:1011980140009492533>    |    PyCon History
+     <:B_:1011963485426569347>      |    :star: :star: <:v_:1011980140009492533>    |    Boolean Challenge
+     <:C_:1011963488006062152>      |    :star: <:v_:1011980140009492533> <:v_:1011980140009492533>    |    What''s the output? I
+     <:D_:1011963491457974362>      |    :star: :star: <:v_:1011980140009492533>    |    What''s the output? II
+     <:E_:1011963494251372614>      |    :star: <:v_:1011980140009492533> <:v_:1011980140009492533>    |    What''s the output? III
+     <:F_:1011963496621146202>      |    :star: :star: <:v_:1011980140009492533>    |    What''s the output? IV
 
 ---------------- Quick links ----------------
 How to play：<#1000406828024336435>
@@ -310,7 +310,7 @@ Chat with PyCat to earn 100 PyCat coins
 ------------------- Quick links -------------------
 How to play：<#1000406828024336435>
 Mission list：<#1000406828024336436>');
-INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1008236974999613501','map','full map：https://lihi2.cc/nL12P
+INSERT INTO `pycon22`.`channel` (`channel_id`,`channel_name`,`welcome_msg`) VALUES ('1008236974999613501','maps','full map：https://lihi2.cc/nL12P
 PyCon APAC Gather space A：https://lihi2.cc/CsNYr
 PyCon APAC Gather space B ：https://lihi2.cc/ukjsc
 How to play：<#1000406828024336435>

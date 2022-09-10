@@ -1,3 +1,4 @@
+import sys
 import random
 
 import discord
@@ -6,8 +7,9 @@ from discord.errors import HTTPException
 
 from pybot import bot
 from pybot.utils import replace_emoji_str
-from pybot.settings import CHANNELS, LEADER_BOARD_CHANNEL
+from pybot.settings import CHANNELS
 from pybot.database import (
+    query_leaderboard_channel_id,
     query_user_has_stars,
     query_user_rank_by_coin,
     sync_query_init_messages,
@@ -95,7 +97,8 @@ async def embed(ctx: commands.Context):
     embed = discord.Embed(title='Rankings', description=description)
     embed.set_thumbnail(url=avatar_url)
 
-    ctx.channel = bot.get_channel(LEADER_BOARD_CHANNEL)  # leaderboard channel
+    leaderboard_ch_id = await query_leaderboard_channel_id()
+    ctx.channel = bot.get_channel(leaderboard_ch_id)  # leaderboard channel
     await ctx.send(embed=embed)
 
 
@@ -103,13 +106,10 @@ async def embed(ctx: commands.Context):
 
 _check_is_staff = lambda ctx: sync_check_user_is_staff(ctx.author.id)
 
-CHANNELS_TO_EXCLUDE_FROM_INIT = {
-    LEADER_BOARD_CHANNEL
-}
-
 
 async def _init_leaderbaord_channel(ctx: commands.Context, clear_msgs: bool = False):
-    channel  = bot.get_channel(LEADER_BOARD_CHANNEL)
+    leaderboard_ch_id = await query_leaderboard_channel_id()
+    channel  = bot.get_channel(leaderboard_ch_id)
     msgs = [msg async for msg in channel.history(oldest_first=True, limit=10)]
     if clear_msgs:
         await channel.delete_messages(msgs)
@@ -132,8 +132,8 @@ async def init_leaderboard(ctx: commands.Context):
 
 async def _upload_additional_images_to_map_channel(ctx: commands.Context):
     figure_paths = [
-        './figures/map_a.png',
-        './figures/map_b.png',
+        './pybot22/figures/map_a.png',
+        './pybot22/figures/map_b.png',
     ]
     files = [
         discord.File(open(fig_path, 'rb'))
@@ -147,10 +147,7 @@ async def _upload_additional_images_to_map_channel(ctx: commands.Context):
 async def init_game(ctx: commands.Context):
     init_messages = sync_query_init_messages()
     for target_channel, info_d in init_messages.items():
-        if (
-            target_channel not in CHANNELS
-            or target_channel in CHANNELS_TO_EXCLUDE_FROM_INIT
-        ):
+        if info_d['channel_name'] not in CHANNELS:
             continue
 
         channel = bot.get_channel(target_channel)
@@ -249,7 +246,24 @@ async def user_lotto(ctx: commands.Context, reward_cnt: int, reward_name: str, m
         await update_user_lotto_reward(uid, reward_name)
 
 
-@bot.command(hiddent=True)
+@bot.command(hidden=True)
+async def reset_guild(ctx: commands.Context):
+    guild = bot.get_guild(1017685267961884712)
+    for channel in guild.channels:
+        if channel.id == 1017685267961884715:
+            continue
+
+        await channel.delete()
+
+    init_role = next((role for role in guild.roles if 'Initialized' in role.name), None)
+    if init_role:
+        await init_role.delete()
+
+    for emoji in guild.emojis:
+        await emoji.delete()
+
+
+@bot.command(hidden=True)
 async def test(ctx: commands.Context):
     guild = next((guild for guild in bot.guilds if 'booth game' in guild.name.lower()), None)
     for emoji in guild.emojis:

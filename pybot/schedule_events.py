@@ -7,8 +7,7 @@ import discord
 import schedule
 
 from pybot import bot
-from pybot.database import query_user_rank_by_coin
-from pybot.settings import LEADER_BOARD_CHANNEL
+from pybot.database import query_leaderboard_channel_id, query_user_rank_by_coin
 
 
 def run_schedule_events(interval=1):
@@ -68,7 +67,8 @@ async def update_leaderboard():
     # ):
     #     return
 
-    channel_id = LEADER_BOARD_CHANNEL  # leaderboard channel
+    leaderboard_ch_id = await query_leaderboard_channel_id()
+    channel_id = leaderboard_ch_id  # leaderboard channel
     channel = bot.get_channel(channel_id)
     msgs = [msg async for msg in channel.history(oldest_first=True)]
 

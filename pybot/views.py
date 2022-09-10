@@ -1,3 +1,4 @@
+import os
 from typing import Dict
 
 import discord
@@ -299,8 +300,8 @@ class InitGroupButton(discord.ui.Button):
         if view.next_view:
             if view.next_view.is_final:
                 from pybot import bot  # avoid circular import
-                guild = bot.get_guild(1000406827491676170)
-                role = guild.get_role(1012006097919430746)
+                guild = bot.get_guild(int(os.getenv('TARGET_GUILD')))
+                role = next((role for role in guild.roles if 'Initialized' in role.name), guild.default_role)
                 member = guild.get_member(interaction.user.id)
                 await member.add_roles(role)
                 await interaction.followup.send(

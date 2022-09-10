@@ -18,7 +18,7 @@ def db_conn():
     conn = MySQLdb.connect(
         use_unicode=True,
         host='localhost',
-        #port=3307,
+        port=3307,
         user='root',
         passwd=os.getenv('DB_PASSWORD'),
         db='pycon22',
@@ -107,6 +107,12 @@ async def check_client_has_lang(uid: str) -> str:
     with cursor() as cur:
         cur.execute('SELECT lang FROM profile WHERE uid=%(uid)s', {'uid': uid})
         return cur.fetchone()['lang'] if cur.rowcount > 0 else None
+
+
+async def check_the_first_user() -> bool:
+    with cursor() as cur:
+        cur.execute('SELECT * FROM profile LIMIT 1')
+        return not bool(cur.fetchone())
 
 
 async def update_client_email(uid: str, email: str):
@@ -208,6 +214,12 @@ async def query_next_questionnaire(uid: str, lang: str) -> dict:
 
     result['options'] = json.loads(result['options'])
     return result
+
+
+async def query_leaderboard_channel_id() -> int:
+    with cursor() as cur:
+        cur.execute('SELECT channel_id FROM channel WHERE channel_name="leaderboard"')
+        return int(cur.fetchone()['channel_id'])
 
 
 @timed_cache(seconds=10)

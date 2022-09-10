@@ -4,7 +4,7 @@ services:
   db:
     image: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=PyCon2022_SS
+      - MYSQL_ROOT_PASSWORD=<your_db_password_here>
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     env_file:
       - ./env.var

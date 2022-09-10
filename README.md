@@ -98,10 +98,9 @@ docker-compose up
 ./scripts/init_db.sh
 ```
 
-After the services' running, go to the discord server and send private message `!init_game` to the bot. This will initialize
-all channels and start receiving events. You can play the booth game now!
+After the services' running, go to the discord server and send private message `!init_game` to the bot. This will initialize channels with  welcome message and start receiving events. You can play the booth game now!
 
-If you find the bot doesn't respond to your emoji reactions, send private massage `!init_game` to the bot to re-initialize the messages again.
+If you find the bot doesn't respond to your emoji reactions, send private massage `!init_game` to the bot again to re-initialize the messages.
 
 To stop the services, run `docker-compose stop`.
 To restart the services, run `docker-compose start`.

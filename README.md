@@ -6,7 +6,7 @@ To run the bot, a running MySQL server is required.
 
 ## Setup
 
-### Step 1
+### Step 1 - Register a Discord Bot
 Go to [Discord Developer portal](https://discord.com/developers/applications), create application, and generate the token for the bot.
 
 Click the **New Application** beside your avatar icon.
@@ -35,10 +35,8 @@ Scroll down to the **Privileged Gateway Intents** section, turn on the privilege
 ![](./figures/setup_intents.png)
 
 
-### Step 2
-Setting up the discord server. Just create an empty discord server.
-
-Click the '+' icon to create the server.
+### Step 2 - Create a discord server
+Go to discord and open the app. On the left hand side, click the '+' icon to create a new server for the game.
 
 ![](./figures/create_server.png)
 
@@ -50,9 +48,7 @@ Name the server and create. The server (guild) ID can be seen from the URL. This
 
 ![](./figures/name_the_server_and_create.png)
 
-### Step 3
-Invite the bot to the server.
-
+### Step 3 - Invite the bot to the server.
 Go back to the developer portal choose the application you've just created.
 On the left, navigate to **OAuth2 -> URL Generator**. Then on the right, first click **bot** in the scope section, then the below **Bot Permissions** section will show up. Click **Administrator** to give the bot admin permissions. 
 
@@ -71,8 +67,7 @@ Confirm the invitation.
 ![](./figures/confirm_invitation.png)
 
 
-### Step
-Modify credentials recorded in `env.var`
+### Step 4 - Modify credentials recorded in `env.var`
 
 ``` bash
 DISCORD_TOKEN=<your_bot_token_here>
@@ -88,8 +83,7 @@ You also have to modify the value of `MYSQL_ROOT_PASSWORD` in `docker-compose.ym
 
 ```
 
-### Step
-Run the bot to serve the game.
+### Step 5 - Run the bot to serve the game.
 
 At the first time running, the bot will automatically create all channels, roles, and custom emojis to the guild (the server), which are necessary for the booth game.
 

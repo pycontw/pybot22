@@ -2,9 +2,8 @@
 
 This is a discord bot for running the PyCon APAC 2022 gather town games.
 
-To run the bot, a running MySQL server is required.
-
 ## Setup
+Here is the step-by-step, hand-by-hand tutorial for how to setting up the bot.
 
 ### Step 1 - Register a Discord Bot
 Go to [Discord Developer portal](https://discord.com/developers/applications), create application, and generate the token for the bot.

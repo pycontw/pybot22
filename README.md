@@ -66,8 +66,16 @@ Confirm the invitation.
 ![](./figures/confirm_invitation.png)
 
 
-### Step 4 - Modify credentials recorded in `env.var`
+### Step 4 - Clone this repo
 
+``` bash
+git clone https://github.com/pycontw/pybot22.git
+
+# Enter the cloned folder
+cd pybot22
+```
+
+Modify credentials recorded in `env.var`
 ``` bash
 DISCORD_TOKEN=<your_bot_token_here>
 DB_PASSWORD=<type_any_password_you_want>
